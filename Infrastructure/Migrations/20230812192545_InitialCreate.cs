@@ -202,7 +202,7 @@ namespace Infrastructure.Migrations
                 {
                     PitchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    Size = table.Column<string>(type: "varchar(200)", unicode: false, maxLength: 200, nullable: false),
+                    Size = table.Column<int>(type: "int", unicode: false, nullable: false),
                     Status = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     LandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

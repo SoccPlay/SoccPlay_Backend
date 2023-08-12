@@ -234,7 +234,7 @@ namespace Infrastructure.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Size)
-                    .HasMaxLength(200)
+                    .HasColumnType(("int"))
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)

@@ -323,11 +323,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("PriceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasMaxLength(200)
+                    b.Property<int>("Size")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()

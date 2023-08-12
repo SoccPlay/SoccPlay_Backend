@@ -17,6 +17,6 @@ namespace Domain.Entities
         public Guid CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; } = null!;
-        public virtual ICollection<Schedule> Schedules { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; } = null!;
     }
 }

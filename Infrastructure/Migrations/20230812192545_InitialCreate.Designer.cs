@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FootBall_PitchContext))]
-    [Migration("20230812172843_InitialCreate")]
+    [Migration("20230812192545_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -325,11 +325,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("PriceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasMaxLength(200)
+                    b.Property<int>("Size")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()

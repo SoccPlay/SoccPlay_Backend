@@ -4,9 +4,11 @@ using Application.Common.Security.Token;
 using Application.Model.Request.RequestAccount;
 using Application.Model.Request.RequestLand;
 using Application.Model.Request.RequestPitch;
+using Application.Model.Request.RequestPrice;
 using Application.Model.Respone;
 using Application.Model.Respone.ResponseAccount;
 using Application.Model.Respone.ResponsePitch;
+using Application.Model.Respone.ResponsePrice;
 using Application.Model.ResponseLand;
 using Domain.Entities;
 using Domain.Enum;
@@ -89,6 +91,29 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
+        
+        
+        //Price
+        CreateMap<RequestPrice, Price>()
+            .ForMember(dest => dest.StarTime, opt => opt.MapFrom(src => src.StarTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.Price1, opt => opt.MapFrom(src => src.Price1))
+            .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.LandLandId, opt => opt.MapFrom(src => src.LandLandId));
+
+        CreateMap<Price, ResponsePrice>()
+            .ForMember(dest => dest.PriceId, opt => opt.MapFrom(src => src.PriceId))
+            .ForMember(dest => dest.StarTime, opt => opt.MapFrom(src => src.StarTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.Price1, opt => opt.MapFrom(src => src.Price1))
+            .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.LandLandId, opt => opt.MapFrom(src => src.LandLandId));
+
+        
+        
+        
+        
+        
     }
 
 }

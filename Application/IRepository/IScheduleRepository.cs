@@ -5,5 +5,5 @@ namespace Application.IRepository;
 
 public interface IScheduleRepository   : IGenericRepository<Schedule>
 {
-    
+    Task<List<Schedule>> GetPitchSchedule(Guid PitchId);
 }
