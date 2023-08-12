@@ -1,0 +1,13 @@
+﻿using Application.IRepository;
+using Domain.Entities;
+using Infrastructure.Entities;
+using Infrastructure.RepositoryImp.Generic;
+
+namespace Infrastructure.RepositoryImp;
+
+public class ScheduleRepository : GenericRepository<Schedule>, IScheduleRepository
+{
+    public ScheduleRepository(FootBall_PitchContext context) : base(context)
+    {
+    }
+}

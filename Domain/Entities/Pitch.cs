@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domain.Entities
+{
+    public partial class Pitch
+    {
+        public Pitch()
+        {
+            Schedules = new HashSet<Schedule>();
+        }
+
+        public Guid PitchId { get; set; }
+        public string Name { get; set; } = null!;
+        public string Size { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public Guid LandId { get; set; }
+        public Guid OwnerId { get; set; }
+        public Guid PriceId { get; set; }
+
+        public virtual Land Land { get; set; } = null!;
+        public virtual Owner Owner { get; set; } = null!;
+        public virtual Price Price { get; set; } = null!;
+        public virtual ICollection<Schedule> Schedules { get; set; }
+    }
+}
