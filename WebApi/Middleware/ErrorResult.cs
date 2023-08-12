@@ -1,4 +1,6 @@
-﻿namespace webbookingfootball.Api.WebApi.Middleware
+﻿using System.Collections.Generic;
+
+namespace webbookingfootball.Api.WebApi.Middleware
 {
     public class ErrorResult
     {

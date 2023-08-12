@@ -10,5 +10,5 @@ public class ResponseBooking
     public string Note { get; set; } = null!;
     public Guid CustomerId { get; set; }
 
-    public virtual ICollection<List<Schedule>> Schedules { get; set; }
+    public virtual List<Schedule> Schedules { get; set; }
 }
