@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using Application.Common.Security.Token;
 using Application.Model.Request.RequestAccount;
+using Application.Model.Request.RequestBooking;
 using Application.Model.Request.RequestLand;
 using Application.Model.Request.RequestPitch;
 using Application.Model.Request.RequestPrice;
 using Application.Model.Respone;
 using Application.Model.Respone.ResponseAccount;
+using Application.Model.Respone.ResponseBooking;
 using Application.Model.Respone.ResponsePitch;
 using Application.Model.Respone.ResponsePrice;
 using Application.Model.ResponseLand;
@@ -108,6 +110,20 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Price1, opt => opt.MapFrom(src => src.Price1))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
             .ForMember(dest => dest.LandLandId, opt => opt.MapFrom(src => src.LandLandId));
+
+        
+        //Booking
+        CreateMap<RequestBooking, Booking>()
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+
+        CreateMap<Booking, ResponseBooking>()
+            .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
 
         
         
