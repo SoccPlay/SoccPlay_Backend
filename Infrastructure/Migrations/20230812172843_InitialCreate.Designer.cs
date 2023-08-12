@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FootBall_PitchContext))]
-    [Migration("20230812171306_InitialCreate")]
+    [Migration("20230812172843_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -373,8 +373,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime");
+                    b.Property<int>("EndTime")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("LandLandId")
                         .HasColumnType("uniqueidentifier");
@@ -385,10 +385,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Size")
                         .HasColumnType("int")
-                        .HasColumnName("SIze");
+                        .HasColumnName("Size");
 
-                    b.Property<DateTime>("StarTime")
-                        .HasColumnType("datetime");
+                    b.Property<int>("StarTime")
+                        .HasColumnType("int");
 
                     b.HasKey("PriceId");
 

@@ -11,8 +11,8 @@ namespace Domain.Entities
         }
 
         public Guid PriceId { get; set; }
-        public DateTime StarTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public int StarTime { get; set; }
+        public int EndTime { get; set; }
         public float Price1 { get; set; }
         public int Size { get; set; }
         public Guid LandLandId { get; set; }

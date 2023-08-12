@@ -180,10 +180,10 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     PriceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StarTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    StarTime = table.Column<int>(type: "int", nullable: false),
+                    EndTime = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
-                    SIze = table.Column<int>(type: "int", nullable: false),
+                    Size = table.Column<int>(type: "int", nullable: false),
                     LandLandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

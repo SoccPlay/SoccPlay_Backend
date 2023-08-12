@@ -371,8 +371,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime");
+                    b.Property<int>("EndTime")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("LandLandId")
                         .HasColumnType("uniqueidentifier");
@@ -383,10 +383,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Size")
                         .HasColumnType("int")
-                        .HasColumnName("SIze");
+                        .HasColumnName("Size");
 
-                    b.Property<DateTime>("StarTime")
-                        .HasColumnType("datetime");
+                    b.Property<int>("StarTime")
+                        .HasColumnType("int");
 
                     b.HasKey("PriceId");
 

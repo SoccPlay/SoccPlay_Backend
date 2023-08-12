@@ -9,8 +9,6 @@ public class RequestPitch
     [Required]
     public string Size { get; set; } = null!;
     [Required]
-    public string Status { get; set; } = null!;
-    [Required]
     public Guid LandId { get; set; }
     [Required]
     public Guid OwnerId { get; set; }

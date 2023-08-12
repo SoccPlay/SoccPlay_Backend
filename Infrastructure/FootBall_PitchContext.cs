@@ -276,13 +276,13 @@ namespace Infrastructure.Entities
             {
                 entity.ToTable("Price");
 
-                entity.Property(e => e.EndTime).HasColumnType("datetime");
+                entity.Property(e => e.EndTime).HasColumnType("int");
 
                 entity.Property(e => e.Price1).HasColumnName("Price");
 
-                entity.Property(e => e.Size).HasColumnName("SIze");
+                entity.Property(e => e.Size).HasColumnName("Size");
 
-                entity.Property(e => e.StarTime).HasColumnType("datetime");
+                entity.Property(e => e.StarTime).HasColumnType("int");
 
                 entity.HasOne(d => d.LandLand)
                     .WithMany(p => p.Prices)
