@@ -29,5 +29,6 @@ public class ScheduleImplement : ScheduleService
         schedule.EndTime = endTime;
         schedule.StarTime = starTime;
         schedule.Status = ScheduleEnum.Active.ToString();
+        return null;
     }
 }

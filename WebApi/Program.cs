@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using WebApi.Configuration;
 using WebApi.Middleware;
-using webbookingfootball.Api.WebApi.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.Development.json")
     .Build();
 
 

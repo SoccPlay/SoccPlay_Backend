@@ -12,10 +12,10 @@ public class PriceRepository : GenericRepository<Price>, IPriceRepository
     {
     }
 
-    public async Task<Guid> GetBySizeAndLand(Guid LandId, int Size)
+    public async Task<Price> GetBySizeAndLand(Guid LandId, int Size)
     {
         var price = _context.Set<Price>().First(p => p.Size == Size && p.LandLandId == LandId);
-        return price.PriceId;
+        return price;
     }
 
     public async Task<List<Price>> GetPriceByLandId(Guid LandId)

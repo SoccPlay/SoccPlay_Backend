@@ -63,9 +63,9 @@ public class BookingImplement : BookingService
         var booking = _mapper.Map<Booking>(requestBooking);
         _unitOfWork.Booking.Add(booking);
         _unitOfWork.Save();
-        
-        
 
 
+
+        return null;
     }
 }
