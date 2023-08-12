@@ -252,12 +252,7 @@ namespace Infrastructure.Entities
                     .HasForeignKey(d => d.OwnerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKPitch585708");
-
-                entity.HasOne(d => d.Price)
-                    .WithMany(p => p.Pitches)
-                    .HasForeignKey(d => d.PriceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKPitch278224");
+                
             });
 
             modelBuilder.Entity<PitchImage>(entity =>

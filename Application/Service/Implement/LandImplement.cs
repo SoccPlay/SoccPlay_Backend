@@ -23,6 +23,7 @@ public class LandImplement : LandService
     public async Task<ResponseLand> CreateLand(RequestLand requestLand)
     {
         var land = _mapper.Map<Land>(requestLand);
+        land.Owner = _unitOfWork.Owner.GetById(requestLand.OwnerId);
         _unitOfWork.Land.Add(land);
         _unitOfWork.Save();
         return _mapper.Map<ResponseLand>(land);

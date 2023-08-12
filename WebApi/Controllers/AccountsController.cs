@@ -10,7 +10,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly FootBall_PitchContext  _context;
+        private readonly FootBall_PitchContext _context;
 
         public AccountsController(FootBall_PitchContext context)
         {
@@ -21,10 +21,11 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
         {
-          if (_context.Accounts == null)
-          {
-              return NotFound();
-          }
+            if (_context.Accounts == null)
+            {
+                return NotFound();
+            }
+
             return await _context.Accounts.ToListAsync();
         }
 
@@ -32,10 +33,11 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Account>> GetAccount(Guid id)
         {
-          if (_context.Accounts == null)
-          {
-              return NotFound();
-          }
+            if (_context.Accounts == null)
+            {
+                return NotFound();
+            }
+
             var account = await _context.Accounts.FindAsync(id);
 
             if (account == null)
@@ -82,10 +84,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-          if (_context.Accounts == null)
-          {
-              return Problem("Entity set 'SanBongContext.Accounts'  is null.");
-          }
+            if (_context.Accounts == null)
+            {
+                return Problem("Entity set 'SanBongContext.Accounts'  is null.");
+            }
+
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
@@ -100,6 +103,7 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
+
             var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {

@@ -11,7 +11,7 @@ namespace Domain.Entities
         public float Price { get; set; }
         public string Status { get; set; } = null!;
         public Guid PitchPitchId { get; set; }
-        public int BookingBookingId { get; set; }
+        public Guid BookingBookingId { get; set; }
 
         public virtual Booking BookingBooking { get; set; } = null!;
         public virtual Pitch PitchPitch { get; set; } = null!;

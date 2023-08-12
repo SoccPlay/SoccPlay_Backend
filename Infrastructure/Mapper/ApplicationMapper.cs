@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Application.Common.Security.Token;
 using Application.Model.Request.RequestAccount;
 using Application.Model.Request.RequestLand;
+using Application.Model.Request.RequestPitch;
 using Application.Model.Respone;
 using Application.Model.Respone.ResponseAccount;
+using Application.Model.Respone.ResponsePitch;
 using Application.Model.ResponseLand;
 using Domain.Entities;
 using Domain.Enum;
@@ -71,6 +73,22 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
         
+        
+        //Pitch
+        CreateMap<RequestPitch, Pitch>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => PitchStatus.Active.ToString()))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
+
+        CreateMap<Pitch, ResponsePitch>()
+            .ForMember(dest => dest.PitchId, opt => opt.MapFrom(src => src.PitchId))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
     }
 
 }
