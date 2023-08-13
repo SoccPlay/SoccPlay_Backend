@@ -6,5 +6,5 @@ namespace Application.Service;
 
 public interface AdminService
 {
-    Task<ResponseAccountAdmin> CreateAdmin(RequestAccountAdmin requestAccountAdmin);
+    Task<ResponseAccountAdmin> CreateAdmin(RequestAccountAdmin request);
 }

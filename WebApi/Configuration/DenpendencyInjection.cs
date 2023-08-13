@@ -1,21 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Application.Common.Security.HashPassword;
+﻿using Application.Common.Security.HashPassword;
 using Application.Common.Security.Token;
 using Application.Implement;
 using Application.IRepository;
-using Application.IRepository.IGeneric;
 using Application.IRepository.IUnitOfWork;
+using Application.Security.HashPassword;
+using Application.Security.Token;
 using Application.Service;
-using Domain.Entities;
-using Infrastructure;
+using Application.Service.Implement;
+using Azure.Storage.Blobs;
+using Infrastructure.Entities;
 using Infrastructure.Implement;
 using Infrastructure.Mapper;
 using Infrastructure.RepositoryImp;
 using Infrastructure.RepositoryImp.UnitOfWork;
 using Infrastructure.Service;
-using Application.Security.HashPassword;
-using Application.Security.Token;
-using Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Configuration
@@ -56,13 +55,14 @@ namespace WebApi.Configuration
             services.AddTransient<PitchImageService, PitchImageImplement>();
             services.AddTransient<PriceService, PriceImplement>();
             services.AddTransient<ScheduleService, ScheduleImplement>();
+            services.AddTransient<FileService, FileServiceImplement>();
 
             // SIGN UP JWTOKEN 
             services.AddScoped<ITokensHandler, TokensHandler>(); // dùng imemory cache save trong suốt quá trình 
             services.AddTransient<IPasswordHasher, PasswordHasher>(); // không dùng lưu trữ vì đã lưu hash trong DB và sử dụng 1 lần
             services.AddScoped<AuthenService, AuthenImplement>();
-
-
+            
+            services.AddScoped(_ => new BlobServiceClient(azureBlobStorage));   
             //AUTOMAPPER
             services.AddAutoMapper(typeof(ApplicationMapper).Assembly);
             return services;

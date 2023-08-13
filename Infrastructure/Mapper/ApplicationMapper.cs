@@ -37,7 +37,6 @@ public class ApplicationMapper : Profile
 
 
         // Create ADMIN
-
         CreateMap<RequestAccountAdmin, Admin>()
             .ForMember(ad=>ad.FullName,act=>act.MapFrom(re=>re.FullName))
             .ForMember(ad=>ad.Email,act=>act.MapFrom(re=>re.Email))
@@ -46,17 +45,50 @@ public class ApplicationMapper : Profile
             .ForPath(ad=>ad.Account.UserName, act=>act.MapFrom(re=>re.UserName))
             .ForPath(ad=>ad.Account.Password, act=>act.MapFrom(re=>re.Password));
         CreateMap<Admin, ResponseAccountAdmin>()
-            .ForMember(ad=>ad.AdminId,act=>act.MapFrom(re=>re.AdminId))
-            .ForMember(ad=>ad.AccountId,act=>act.MapFrom(re=>re.AccountId))
-            .ForMember(ad=>ad.FullName,act=>act.MapFrom(re=>re.FullName))
-            .ForMember(ad=>ad.Email,act=>act.MapFrom(re=>re.Email))
-            .ForMember(ad=>ad.Phone, act=>act.MapFrom(re=>re.Phone))
-            .ForMember(ad=>ad.Address, act=>act.MapFrom(re=>re.Address))
-            .ForPath(ad=>ad.Role,act=>act.MapFrom(re=>re.Account.Role))
-            .ForPath(ad=>ad.UserName,act=>act.MapFrom(re=>re.Account.UserName))
-            .ForPath(ad=>ad.Password,act=>act.MapFrom(re=>re.Account.Password));
+            .ForMember(ad => ad.AdminId, act => act.MapFrom(re => re.AdminId))
+            .ForMember(ad => ad.AccountId, act => act.MapFrom(re => re.AccountId))
+            .ForMember(ad => ad.FullName, act => act.MapFrom(re => re.FullName))
+            .ForMember(ad => ad.Email, act => act.MapFrom(re => re.Email))
+            .ForMember(ad => ad.Phone, act => act.MapFrom(re => re.Phone))
+            .ForMember(ad => ad.Address, act => act.MapFrom(re => re.Address))
+            .ForPath(ad => ad.Role, act => act.MapFrom(re => re.Account.Role))
+            .ForPath(ad => ad.UserName, act => act.MapFrom(re => re.Account.UserName));
 
+        // CREATE CUSTOMER
+        CreateMap<RequestAccountCustomer, Customer>()
+            .ForMember(customer=>customer.FullName,act=>act.MapFrom(re=>re.FullName))
+            .ForMember(customer=>customer.Email,act=>act.MapFrom(re=>re.Email))
+            .ForMember(customer=>customer.Phone, act=>act.MapFrom(re=>re.Phone))
+            .ForMember(customer=>customer.Address, act=>act.MapFrom(re=>re.Address))
+            .ForPath(customer=>customer.Account.UserName, act=>act.MapFrom(re=>re.UserName))
+            .ForPath(customer=>customer.Account.Password, act=>act.MapFrom(re=>re.Password));
+        CreateMap<Customer, ResponseAccountCustomer>()
+            .ForMember(customer => customer.CustomerId, act => act.MapFrom(re => re.CustomerId))
+            .ForMember(customer => customer.AccountId, act => act.MapFrom(re => re.AccountId))
+            .ForMember(customer => customer.FullName, act => act.MapFrom(re => re.FullName))
+            .ForMember(customer => customer.Email, act => act.MapFrom(re => re.Email))
+            .ForMember(customer => customer.Phone, act => act.MapFrom(re => re.Phone))
+            .ForMember(customer => customer.Address, act => act.MapFrom(re => re.Address))
+            .ForPath(customer => customer.Role, act => act.MapFrom(re => re.Account.Role))
+            .ForPath(customer => customer.UserName, act => act.MapFrom(re => re.Account.UserName));
         
+        //CREATE OWNER
+        CreateMap<RequestAccountOwner, Owner>()
+            .ForMember(owner=>owner.FullName,act=>act.MapFrom(re=>re.FullName))
+            .ForMember(owner=>owner.Email,act=>act.MapFrom(re=>re.Email))
+            .ForMember(owner=>owner.Phone, act=>act.MapFrom(re=>re.Phone))
+            .ForMember(owner=>owner.Address, act=>act.MapFrom(re=>re.Address))
+            .ForPath(owner=>owner.Account.UserName, act=>act.MapFrom(re=>re.UserName))
+            .ForPath(owner=>owner.Account.Password, act=>act.MapFrom(re=>re.Password));
+        CreateMap<Owner, ResponseAccountOwner>()
+            .ForMember(owner => owner.OwnerId, act => act.MapFrom(re => re.OwnerId))
+            .ForMember(owner => owner.AccountId, act => act.MapFrom(re => re.AccountId))
+            .ForMember(owner => owner.FullName, act => act.MapFrom(re => re.FullName))
+            .ForMember(owner => owner.Email, act => act.MapFrom(re => re.Email))
+            .ForMember(owner => owner.Phone, act => act.MapFrom(re => re.Phone))
+            .ForMember(owner => owner.Address, act => act.MapFrom(re => re.Address))
+            .ForPath(owner => owner.Role, act => act.MapFrom(re => re.Account.Role))
+            .ForPath(owner => owner.UserName, act => act.MapFrom(re => re.Account.UserName));
         
         //Land
         CreateMap<RequestLand, Land>()

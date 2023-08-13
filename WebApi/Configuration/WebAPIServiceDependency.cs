@@ -19,8 +19,7 @@ namespace WebApi.Configuration
             var jwt = configuration.GetSection("JWT").Get<JWToken>();
             services.AddSwaggerJWT(jwt.JWTSecretKey,jwt.Issuer,jwt.Audience);
             services.AddSingleton(jwt);
-
-
+            
 
             // ALLOW HTTP
             services.AddCors(options =>

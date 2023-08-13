@@ -22,12 +22,12 @@ public class AdminImplement : AdminService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<ResponseAccountAdmin> CreateAdmin(RequestAccountAdmin requestAccountAdmin)
+    public async Task<ResponseAccountAdmin> CreateAdmin(RequestAccountAdmin request)
     {
-        var admin = _mapper.Map<Admin>(requestAccountAdmin);
+        var admin = _mapper.Map<Admin>(request);
         admin.Status = ACCOUNTENUM.ACTIVE.ToString();
         admin.Account.Role = ROLEENUM.ADMIN.ToString();
-        admin.Account.Password = _passwordHasher.HashPassword(requestAccountAdmin.Password);
+        admin.Account.Password = _passwordHasher.HashPassword(request.Password);
         _unitOfWork.Admin.Add(admin);
         _unitOfWork.Account.Add(admin.Account);
         _unitOfWork.Save();
