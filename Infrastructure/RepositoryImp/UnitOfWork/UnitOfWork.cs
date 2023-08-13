@@ -8,7 +8,6 @@ namespace Infrastructure.RepositoryImp.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly FootBall_PitchContext _context;
-    private IUnitOfWork _unitOfWorkImplementation;
 
     public UnitOfWork(FootBall_PitchContext context)
     {

@@ -21,7 +21,7 @@ namespace WebApi.Configuration
 {
     public static class DenpendencyInjection
     {
-        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string databaseConnection, string azureBlobStorage, string containerName)
+        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string databaseConnection, string azureBlobStorage)
         {
             // CONNECT DB
             services.AddDbContext<FootBall_PitchContext>(optionsAction: options => { options.UseSqlServer(databaseConnection); });
@@ -57,8 +57,8 @@ namespace WebApi.Configuration
             services.AddTransient<ScheduleService, ScheduleImplement>();
             services.AddTransient<FileService, FileServiceImplement>();
 
-            // SIGN UP JWTOKEN 
-            services.AddScoped<ITokensHandler, TokensHandler>(); // dùng imemory cache save trong suốt quá trình 
+            // SIGN UP JWT_TOKEN 
+            services.AddScoped<ITokensHandler, TokensHandler>(); // dùng Inmemory cache save trong suốt quá trình 
             services.AddTransient<IPasswordHasher, PasswordHasher>(); // không dùng lưu trữ vì đã lưu hash trong DB và sử dụng 1 lần
             services.AddScoped<AuthenService, AuthenImplement>();
             

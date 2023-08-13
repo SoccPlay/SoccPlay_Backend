@@ -16,7 +16,7 @@ public class FileController : ControllerBase
         _fileService = fileService;
     }
 
-    [HttpPost("add")]
+    [HttpPost]
     public async Task<ActionResult<ResponseFile>>
         Add([FromForm] RequestFile request) //[FromForm] is request type multipart
     {
@@ -28,6 +28,17 @@ public class FileController : ControllerBase
         }
         
         return result == null ? BadRequest() : Ok(new
+        {
+            Success = true,
+            Data = result
+        });
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ResponseFile>> Get(string name)
+    {
+        var result = await _fileService.Get(name);
+        return Ok(new
         {
             Success = true,
             Data = result

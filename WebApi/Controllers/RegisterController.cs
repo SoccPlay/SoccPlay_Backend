@@ -7,7 +7,7 @@ using Application.Model.Respone.ResponseAccount;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RegisterController : ControllerBase
     {
@@ -23,19 +23,19 @@ namespace WebApi.Controllers
             _ownerService = ownerService;
         }
 
-        [HttpPost("Admin")]
+        [HttpPost]
         public async Task<ResponseAccountAdmin> PostAdmin(RequestAccountAdmin request)
         {
             return await _adminService.CreateAdmin(request);
         }
-        [HttpPost("Owner")]
+        [HttpPost]
         public async Task<ResponseAccountOwner> PostOwner(RequestAccountOwner request)
         {
             return await _ownerService.CreateOwner(request);
         }
 
-        [HttpPost("Customer")]
-        public async Task<ResponseAccountCustomer> PostOwner(RequestAccountCustomer request)
+        [HttpPost]
+        public async Task<ResponseAccountCustomer> PostCustomer(RequestAccountCustomer request)
         {
             return await _customerService.CreateCustomer(request);
         }

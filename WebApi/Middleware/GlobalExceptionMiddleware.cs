@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
 using Serilog.Context;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using webbookingfootball.Api.WebApi.Middleware;
 
 namespace WebApi.Middleware

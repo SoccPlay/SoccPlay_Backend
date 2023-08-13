@@ -11,7 +11,7 @@ namespace WebApi.Configuration
         {
             // ADD DB
             var appConfiguration = configuration.GetSection("ConnectString").Get<AppConfiguration>();
-            services.AddInfrastructuresService(appConfiguration.DatabaseConnection,appConfiguration.AzureBlobStorage,appConfiguration.ContainerName);
+            services.AddInfrastructuresService(appConfiguration.DatabaseConnection, appConfiguration.AzureBlobStorage);
             services.AddSingleton(appConfiguration);
 
 
