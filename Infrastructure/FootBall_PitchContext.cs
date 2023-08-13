@@ -34,7 +34,7 @@ namespace Infrastructure.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=1;database=FootBall_Pitch");
+                optionsBuilder.UseSqlServer("Data Source=mssql-139728-0.cloudclusters.net,19689;Initial Catalog=FootBall;User ID=admin;pwd=sMZHCqF7;TrustServerCertificate=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -44,45 +44,48 @@ namespace Infrastructure.Entities
             {
                 entity.ToTable("Account");
 
-                entity.Property(e => e.AccountId).HasColumnName("AccountID");
+                entity.Property(e => e.AccountId).ValueGeneratedOnAdd().HasColumnName("AccountID");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Role)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<Admin>(entity =>
             {
                 entity.ToTable("Admin");
-
+                entity.Property(e => e.AdminId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("AdminId");
                 entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FullName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
+
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
@@ -95,11 +98,13 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.ToTable("Booking");
-
+                entity.Property(e => e.BookingId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("BookingId");
                 entity.Property(e => e.DateBooking).HasColumnType("datetime");
 
                 entity.Property(e => e.Note)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
@@ -112,27 +117,29 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.ToTable("Customer");
-
+                entity.Property(e => e.CustomerId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("CustomerId");
                 entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FullName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
@@ -145,7 +152,9 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Feedback>(entity =>
             {
                 entity.ToTable("Feedback");
-
+                entity.Property(e => e.FeedbackId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("FeedbackId");
                 entity.Property(e => e.Description).IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
@@ -164,29 +173,31 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Land>(entity =>
             {
                 entity.ToTable("Land");
-
+                entity.Property(e => e.LandId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("LandId");
                 entity.Property(e => e.Description)
-                    .HasMaxLength(200)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Policy)
-                    .HasMaxLength(200)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
                 
                 entity.Property(e => e.Location)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.NameLand)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(200)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Owner)
@@ -199,27 +210,29 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Owner>(entity =>
             {
                 entity.ToTable("Owner");
-
+                entity.Property(e => e.OwnerId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("OwnerId");
                 entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FullName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
@@ -232,9 +245,11 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Pitch>(entity =>
             {
                 entity.ToTable("Pitch");
-
+                entity.Property(e => e.PitchId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("PitchId");
                 entity.Property(e => e.Name)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Size)
@@ -242,7 +257,7 @@ namespace Infrastructure.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Land)
@@ -261,11 +276,13 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<PitchImage>(entity =>
             {
                 entity.HasNoKey();
-
                 entity.ToTable("PitchImage");
+                entity.Property(e => e.ImageId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ImageId");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(200)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Land)
@@ -278,7 +295,9 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Price>(entity =>
             {
                 entity.ToTable("Price");
-
+                entity.Property(e => e.PriceId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("PriceId");
                 entity.Property(e => e.EndTime).HasColumnType("int");
 
                 entity.Property(e => e.Price1).HasColumnName("Price");
@@ -297,13 +316,15 @@ namespace Infrastructure.Entities
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.ToTable("Schedule");
-
+                entity.Property(e => e.ScheduleId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ScheduleId");
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
                 entity.Property(e => e.StarTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(50)
+                    .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.BookingBooking)
