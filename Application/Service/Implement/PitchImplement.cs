@@ -20,6 +20,8 @@ public class PitchImplement : PitchService
     public async Task<ResponsePitch> CreatePitch(RequestPitch requestPitch)
     {
         var pitch = _mapper.Map<Pitch>(requestPitch);
+        var land = _unitOfWork.Land.GetById(requestPitch.LandId);
+        land.TotalPitch =land.TotalPitch + 1 ;
         _unitOfWork.Pitch.Add(pitch);
         _unitOfWork.Save();
         return _mapper.Map<ResponsePitch>(pitch);

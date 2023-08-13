@@ -97,7 +97,8 @@ namespace Infrastructure.Migrations
                     TotalPrice = table.Column<float>(type: "real", nullable: false),
                     DateBooking = table.Column<DateTime>(type: "datetime", nullable: false),
                     Note = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +117,7 @@ namespace Infrastructure.Migrations
                     LandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NameLand = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Title = table.Column<string>(type: "varchar(200)", unicode: false, maxLength: 200, nullable: false),
-                    Policy = table.Column<int>(type: "int", nullable: false),
+                    Policy = table.Column<string>(type: "varchar(200)", unicode: false, maxLength: 200, nullable: false),
                     Location = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     TotalPitch = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "varchar(200)", unicode: false, maxLength: 200, nullable: false),

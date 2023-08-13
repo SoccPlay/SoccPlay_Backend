@@ -15,7 +15,7 @@ namespace Domain.Entities
         public Guid LandId { get; set; }
         public string NameLand { get; set; } = null!;
         public string Title { get; set; } = null!;
-        public int Policy { get; set; }
+        public string Policy { get; set; }
         public string Location { get; set; } = null!;
         public int TotalPitch { get; set; }
         public string Description { get; set; } = null!;

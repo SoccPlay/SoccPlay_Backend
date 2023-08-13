@@ -13,9 +13,15 @@ public class ScheduleRepository : GenericRepository<Schedule>, IScheduleReposito
     {
     }
 
-    public async Task<List<Schedule>> GetPitchSchedule(Guid PitchId)
+    public async Task<List<Schedule>> GetScheduleByPitch(Guid PitchId)
     {
         var list = await _context.Schedules.Where(schedule => schedule.PitchPitchId == PitchId && schedule.Status == ScheduleEnum.Active.ToString()).ToListAsync();
+        return list;
+    }
+
+    public async Task<List<Schedule>> GetScheduleByBookingiD(Guid BookingId)
+    {
+        var list = await _context.Schedules.Where(schedule => schedule.BookingBookingId == BookingId).ToListAsync();
         return list;
     }
 }

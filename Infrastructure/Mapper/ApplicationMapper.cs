@@ -11,6 +11,7 @@ using Application.Model.Respone.ResponseAccount;
 using Application.Model.Respone.ResponseBooking;
 using Application.Model.Respone.ResponsePitch;
 using Application.Model.Respone.ResponsePrice;
+using Application.Model.Respone.ResponseSchedule;
 using Application.Model.ResponseLand;
 using Domain.Entities;
 using Domain.Enum;
@@ -114,6 +115,7 @@ public class ApplicationMapper : Profile
         
         //Booking
         CreateMap<RequestBooking, Booking>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
@@ -123,13 +125,21 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
-            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.Schedules, opt => opt.MapFrom(src => src.Schedules));
 
-        
-        
-        
-        
-        
+        //Schedule
+        CreateMap<Schedule, ResponseSchedule>()
+            .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.ScheduleId))
+            .ForMember(dest => dest.StarTime, opt => opt.MapFrom(src => src.StarTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.PitchPitchId, opt => opt.MapFrom(src => src.PitchPitchId));
+
+
+
+
     }
 
 }

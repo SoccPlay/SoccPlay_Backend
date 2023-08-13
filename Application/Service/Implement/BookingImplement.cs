@@ -2,6 +2,7 @@
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestBooking;
 using Application.Model.Respone.ResponseBooking;
+using Application.Model.Respone.ResponseSchedule;
 using Application.Service;
 using AutoMapper;
 using Domain.Entities;
@@ -38,7 +39,7 @@ public class BookingImplement : BookingService
         var pitchsEmpty = new List<Pitch>();
         foreach (var list in pitchs)
         {
-            var schedules = await _scheduleRepository.GetPitchSchedule(list.PitchId);
+            var schedules = await _scheduleRepository.GetScheduleByPitch(list.PitchId);
             if (size5 == 0 && size7 == 0) break;
             if (schedules == null && list.Size == 5)
             {
@@ -83,9 +84,41 @@ public class BookingImplement : BookingService
                 p.PitchId, requestBooking.LandId, p.Size);
             scheduleList.Add(scheduling);
         }
+        
+        //Total Price 
+        float total = (float)scheduleList.Sum(s => s.Price);
+        booking.TotalPrice = total;
+        _unitOfWork.Save();
 
         var getBooking = _mapper.Map<ResponseBooking>(booking);
-        getBooking.Schedules = scheduleList;
-        return _mapper.Map<ResponseBooking>(booking);
+        getBooking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduleList);
+        return getBooking;
+    }
+
+    public async Task<List<ResponseBooking>> GetAllBooking()
+    {
+        var bookingEntities = _unitOfWork.Booking.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
+        var scheduleList = new List<Schedule>();
+        var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
+        foreach (var booking in responseBookings)
+        {
+            var scheduling = await _scheduleRepository.GetScheduleByBookingiD(booking.BookingId);
+            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduling);
+        }
+        return responseBookings;
+    }
+
+    public async Task<bool> CancleBooking(Guid BookingId)
+    {
+        var booking = _unitOfWork.Booking.GetById(BookingId);
+        booking.Status = BookingStatus.Inactive.ToString();
+
+        var schedule = await _scheduleRepository.GetScheduleByBookingiD(BookingId);
+        foreach (var s in schedule)
+        {
+            s.Status = BookingStatus.Inactive.ToString();
+        }
+        _unitOfWork.Save();
+        return true;
     }
 }

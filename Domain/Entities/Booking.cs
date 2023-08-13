@@ -15,6 +15,8 @@ namespace Domain.Entities
         public DateTime DateBooking { get; set; }
         public string Note { get; set; } = null!;
         public Guid CustomerId { get; set; }
+        
+        public string Status { get; set; }
 
         public virtual Customer Customer { get; set; } = null!;
         public virtual ICollection<Schedule> Schedules { get; set; } = null!;

@@ -169,6 +169,10 @@ namespace Infrastructure.Entities
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Policy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+                
                 entity.Property(e => e.Location)
                     .HasMaxLength(50)
                     .IsUnicode(false);

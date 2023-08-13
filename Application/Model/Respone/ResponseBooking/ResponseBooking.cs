@@ -9,6 +9,5 @@ public class ResponseBooking
     public DateTime DateBooking { get; set; }
     public string Note { get; set; } = null!;
     public Guid CustomerId { get; set; }
-
-    public virtual List<Schedule> Schedules { get; set; }
+    public List<ResponseSchedule.ResponseSchedule> Schedules { get; set; } = null!;
 }
