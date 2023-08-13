@@ -1,5 +1,6 @@
 ﻿using Application.IRepository.IGeneric;
 using Domain.Entities;
+using Domain.Enum;
 
 namespace Application.IRepository;
 

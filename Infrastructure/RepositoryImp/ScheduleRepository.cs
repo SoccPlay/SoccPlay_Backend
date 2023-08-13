@@ -1,5 +1,6 @@
 ﻿using Application.IRepository;
 using Domain.Entities;
+using Domain.Enum;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ public class ScheduleRepository : GenericRepository<Schedule>, IScheduleReposito
 
     public async Task<List<Schedule>> GetPitchSchedule(Guid PitchId)
     {
-        var list = await _context.Schedules.Where(schedule => schedule.PitchPitchId == PitchId).ToListAsync();
+        var list = await _context.Schedules.Where(schedule => schedule.PitchPitchId == PitchId && schedule.Status == ScheduleEnum.Active.ToString()).ToListAsync();
         return list;
     }
 }

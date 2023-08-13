@@ -5,6 +5,7 @@ using Application.Model.Respone.ResponseBooking;
 using Application.Service;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enum;
 
 namespace Infrastructure.Implement;
 
@@ -39,23 +40,32 @@ public class BookingImplement : BookingService
         {
             var schedules = await _scheduleRepository.GetPitchSchedule(list.PitchId);
             if (size5 == 0 && size7 == 0) break;
-            if (schedules == null)
+            if (schedules == null && list.Size == 5)
             {
                 pitchsEmpty.Add(list);
                 continue;
             }
-
+            else if (schedules == null && list.Size == 7)
+            {
+                pitchsEmpty.Add(list);
+                continue;
+            }
+            
             var isConflict = schedules.Any(schedule =>
                 (requestBooking.StarTime >= schedule.StarTime && requestBooking.StarTime <= schedule.EndTime) ||
                 (requestBooking.EndTime >= schedule.StarTime && requestBooking.EndTime <= schedule.EndTime) ||
                 (requestBooking.StarTime <= schedule.StarTime && requestBooking.EndTime >= schedule.EndTime)
             );
-            if (isConflict == false && list.Size == 5 && size5 != 0)
+            if (isConflict == true)
+            {
+                throw new Exception("Please Choose Time again");
+            }
+            else if (isConflict == false && list.Size == 5 && size5 != 0)
             {
                 pitchsEmpty.Add(list);
                 size5--;
             }
-            else if (isConflict == false && list.Size == 7 && size7 != 0)
+            else if(isConflict == false && list.Size == 7 && size7 != 0)
             {
                 pitchsEmpty.Add(list);
                 size7--;
