@@ -10,6 +10,7 @@ using Application.Model.Request.RequestPrice;
 using Application.Model.Respone;
 using Application.Model.Respone.ResponseAccount;
 using Application.Model.Respone.ResponseBooking;
+using Application.Model.Respone.ResponseFile;
 using Application.Model.Respone.ResponsePitch;
 using Application.Model.Respone.ResponsePrice;
 using Application.Model.Respone.ResponseSchedule;
@@ -174,7 +175,7 @@ public class ApplicationMapper : Profile
             .ForMember(f => f.LandId, act => act.MapFrom(a=>a.LandId))
             .ForMember(f => f.Name, act => act.MapFrom(a=>a.ImageLogo));
 
-        CreateMap<PitchImage, ResponsePitch>()
+        CreateMap<PitchImage, ResponseFile>()
             .ForMember(p => p.Name, act => act.MapFrom(a => a.Name))
             .ForPath(p => p.OwnerId, act => act.MapFrom(a => a.Land.OwnerId))
             .ForMember(p => p.LandId, act => act.MapFrom(a => a.LandId))

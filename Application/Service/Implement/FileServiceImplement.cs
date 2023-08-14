@@ -41,7 +41,7 @@ public class FileServiceImplement : FileService
         //get container instance
         var containerInstance = _blobServiceClient.GetBlobContainerClient(_appConfiguration.ContainerName);
         // get file name from request and upload to azure blob storage
-        var blobName =  $"{Guid.NewGuid()}{file.ImageLogo}";
+        var blobName =  $"{Guid.NewGuid()}";
         // local file path
         var blobInstance = containerInstance.GetBlobClient(blobName);
         

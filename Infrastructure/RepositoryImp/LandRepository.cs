@@ -14,7 +14,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<Land> GetLandByIdLand(Guid landId)
     {
-        var owner = await _context.Set<Land>()!.FirstOrDefaultAsync(o => o.OwnerId == landId);
+        var owner = await _context.Set<Land>()!.FirstOrDefaultAsync(o => o.LandId == landId);
         if (owner == null)
         {
             throw new Exception("LAND ERROR NULL");

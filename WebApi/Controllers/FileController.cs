@@ -28,13 +28,14 @@ public class FileController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ResponseFile>> Get(string name)
+    public async Task<IActionResult> GetNameFile(string name)
     {
         var result = await _fileService.Get(name);
-        return Ok(new
+        string fileType = "";
+        if (fileType.Contains("png"))
         {
-            Success = true,
-            Data = result
-        });
+            fileType = "png";
+        }
+        return File(result, $"image/{fileType}");
     }
 }
