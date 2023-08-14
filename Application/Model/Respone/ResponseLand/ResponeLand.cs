@@ -8,6 +8,9 @@ public class ResponseLand
     public string NameLand { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string Location { get; set; } = null!;
+    public float AveragePrice { get; set; }
+    public float MinPrice { get; set; }
+    public float MaxPrice { get; set; }
     public int TotalPitch { get; set; }
     public string Description { get; set; } = null!;
     public string Status { get; set; } = null!;

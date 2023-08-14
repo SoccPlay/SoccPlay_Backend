@@ -12,9 +12,10 @@ public class PitchImageRepository : GenericRepository<PitchImage>, IPitchImageRe
     {
     }
 
-    public Task<List<string>> GetAllImageByLandId(Guid LandId)
+    public async Task<List<string>> GetAllImageByLandId(Guid LandId)
     {
-        throw new NotImplementedException();
+        var list = _context.Set<PitchImage>().Where(image => image.LandId == LandId).Select(image => image.Name).ToList();
+        return list;
     }
 
     public async Task<string> GetImageByLandId(Guid LandId)

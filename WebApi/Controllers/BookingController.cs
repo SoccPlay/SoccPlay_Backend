@@ -33,7 +33,7 @@ public class BookingController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<ResponseBooking>> CreateLand(RequestBooking request)
+    public async Task<ActionResult<ResponseBooking>> CreateBooking(RequestBooking request)
     {
         try
         {

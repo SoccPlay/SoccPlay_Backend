@@ -111,7 +111,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
-        
+
         
         //Pitch
         CreateMap<RequestPitch, Pitch>()

@@ -8,4 +8,8 @@ public interface LandService
     Task<ResponseLand> CreateLand(RequestLand requestLand);
     Task<List<ResponseLand>> GetAllLands();
     Task<ResponseLand> LandDetail(Guid landId);
+
+    Task<List<ResponseLand>> SearchLand(string location, string landName);
+    Task<List<ResponseLand>> SearchLandByLocation(string landName);
+    Task<List<ResponseLand>> SearchLandByName(string landName);
 }

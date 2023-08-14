@@ -51,11 +51,13 @@ public class BookingImplement : BookingService
                 pitchsEmpty.Add(list);
                 continue;
             }
-            
+
+            var startTime = requestBooking.StarTime.AddSeconds(1);
+            var endTime = requestBooking.EndTime.AddSeconds(1);
             var isConflict = schedules.Any(schedule =>
-                (requestBooking.StarTime >= schedule.StarTime && requestBooking.StarTime <= schedule.EndTime) ||
-                (requestBooking.EndTime >= schedule.StarTime && requestBooking.EndTime <= schedule.EndTime) ||
-                (requestBooking.StarTime <= schedule.StarTime && requestBooking.EndTime >= schedule.EndTime)
+                (startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
+                (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
+                (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
             );
             if (isConflict == true)
             {

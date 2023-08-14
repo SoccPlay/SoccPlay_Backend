@@ -58,6 +58,52 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName)
+    {
+        try
+        {
+            var lands = await _landService.SearchLand(location, landName);
+            return Ok(lands);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> SearchLandByLocation(string location)
+    {
+        try
+        {
+            var lands = await _landService.SearchLandByLocation(location);
+            return Ok(lands);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> SearchLandByName(string landName)
+    {
+        try
+        {
+            var lands = await _landService.SearchLandByName(landName);
+            return Ok(lands);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
 
     
 }
