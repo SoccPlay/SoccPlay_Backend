@@ -41,12 +41,14 @@ public class LandImplement : LandService
     {
         var landEntities = _unitOfWork.Land.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
-
         foreach (var land in responseLands)
         {
             var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            land.MinPrice = prices.Min(p => p.Price1);
-            land.MinPrice = prices.Max(p => p.Price1);
+            if (prices.Count != 0)
+            {
+                land.MinPrice = prices.Min(p => p.Price1);
+                land.MinPrice = prices.Max(p => p.Price1); 
+            }
         }
 
         foreach (var land in responseLands)
@@ -84,8 +86,11 @@ public class LandImplement : LandService
         foreach (var land in responseLands)
         {
             var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            land.MinPrice = prices.Min(p => p.Price1);
-            land.MinPrice = prices.Max(p => p.Price1);
+            if (prices.Count != 0)
+            {
+                land.MinPrice = prices.Min(p => p.Price1);
+                land.MinPrice = prices.Max(p => p.Price1); 
+            }
         }
 
         foreach (var land in responseLands)
@@ -112,8 +117,11 @@ public class LandImplement : LandService
         foreach (var land in responseLands)
         {
             var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            land.MinPrice = prices.Min(p => p.Price1);
-            land.MinPrice = prices.Max(p => p.Price1);
+            if (prices.Count != 0)
+            {
+                land.MinPrice = prices.Min(p => p.Price1);
+                land.MinPrice = prices.Max(p => p.Price1); 
+            }
         }
 
         foreach (var land in responseLands)
@@ -137,8 +145,11 @@ public class LandImplement : LandService
         foreach (var land in responseLands)
         {
             var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            land.MinPrice = prices.Min(p => p.Price1);
-            land.MinPrice = prices.Max(p => p.Price1);
+            if (prices.Count != 0)
+            {
+                land.MinPrice = prices.Min(p => p.Price1);
+                land.MinPrice = prices.Max(p => p.Price1); 
+            }
         }
 
         foreach (var land in responseLands)
