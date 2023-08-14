@@ -17,20 +17,13 @@ public class FileController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ResponseFile>>
-        Add([FromForm] RequestFile request) //[FromForm] is request type multipart
+    public async Task<ActionResult<ResponseFile>> Add([FromForm]RequestFile requestFile) //[FromForm] is request type multipart
     {
-        string result = null;
-        // var model = _mapper.CarBrandRequestToCar(request);
-        if (request.ImageLogo != null)
-        {
-            result = await _fileService.UploadFile(request.ImageLogo);
-        }
-        
-        return result == null ? BadRequest() : Ok(new
+        var responseFile= await _fileService.UploadFile(requestFile);
+        return responseFile == null ? BadRequest() : Ok(new
         {
             Success = true,
-            Data = result
+            Data = responseFile
         });
     }
 

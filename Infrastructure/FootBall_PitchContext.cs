@@ -275,8 +275,8 @@ namespace Infrastructure.Entities
 
             modelBuilder.Entity<PitchImage>(entity =>
             {
-                entity.HasNoKey();
                 entity.ToTable("PitchImage");
+                entity.HasKey(e => e.ImageId); // Đặt ImageId là primary key
                 entity.Property(e => e.ImageId)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ImageId");

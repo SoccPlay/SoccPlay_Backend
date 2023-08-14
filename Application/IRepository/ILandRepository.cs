@@ -5,5 +5,5 @@ namespace Application.IRepository;
 
 public interface ILandRepository  : IGenericRepository<Land>
 {
-    
+    Task<Land> GetLandByIdLand(Guid landId);
 }

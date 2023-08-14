@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Application.Common.Security.Token;
 using Application.Model.Request.RequestAccount;
 using Application.Model.Request.RequestBooking;
+using Application.Model.Request.RequestFile;
 using Application.Model.Request.RequestLand;
 using Application.Model.Request.RequestPitch;
 using Application.Model.Request.RequestPrice;
@@ -169,8 +170,15 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.PitchPitchId, opt => opt.MapFrom(src => src.PitchPitchId));
 
+        CreateMap<RequestFile, PitchImage>()
+            .ForMember(f => f.LandId, act => act.MapFrom(a=>a.LandId))
+            .ForMember(f => f.Name, act => act.MapFrom(a=>a.ImageLogo));
 
-
+        CreateMap<PitchImage, ResponsePitch>()
+            .ForMember(p => p.Name, act => act.MapFrom(a => a.Name))
+            .ForPath(p => p.OwnerId, act => act.MapFrom(a => a.Land.OwnerId))
+            .ForMember(p => p.LandId, act => act.MapFrom(a => a.LandId))
+            .ForMember(p => p.PitchImageId, act => act.MapFrom(a => a.ImageId));
 
     }
 

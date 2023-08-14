@@ -2,6 +2,7 @@ namespace Application.Model.Respone.ResponsePitch;
 
 public class ResponsePitch
 {
+    public Guid PitchImageId { get; set; }
     public Guid PitchId { get; set; }
     public string Name { get; set; } = null!;
     public string Size { get; set; } = null!;
