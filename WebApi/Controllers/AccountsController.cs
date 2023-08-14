@@ -10,7 +10,7 @@ using Infrastructure.Entities;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {

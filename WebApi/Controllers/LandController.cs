@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public class LandController : ControllerBase
 {
@@ -31,7 +31,7 @@ public class LandController : ControllerBase
         }
     }
     
-    /*[HttpGet]
+    [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> GetAllLand()
     {
         try
@@ -43,7 +43,7 @@ public class LandController : ControllerBase
         {
             return NotFound(ex.Message);
         }
-    }*/
+    }
 
     [HttpGet]
     public async Task<ActionResult<ResponseLand>> GetLandById(Guid landId)
