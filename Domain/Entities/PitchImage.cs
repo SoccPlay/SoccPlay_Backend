@@ -8,7 +8,6 @@ namespace Domain.Entities
         public Guid ImageId { get; set; }
         public string Name { get; set; } = null!;
         public Guid LandId { get; set; }
-
         public virtual Land Land { get; set; } = null!;
     }
 }

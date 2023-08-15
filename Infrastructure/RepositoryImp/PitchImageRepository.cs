@@ -15,12 +15,20 @@ public class PitchImageRepository : GenericRepository<PitchImage>, IPitchImageRe
     public async Task<List<string>> GetAllImageByLandId(Guid LandId)
     {
         var list = _context.Set<PitchImage>().Where(image => image.LandId == LandId).Select(image => image.Name).ToList();
+        if (list == null)
+        {
+            return null;
+        }
         return list;
     }
 
     public async Task<string> GetImageByLandId(Guid LandId)
     {
         var list = _context.Set<PitchImage>().FirstOrDefault(image => image.LandId == LandId);
+        if (list == null)
+        {
+            return null;
+        }
         return list.Name;
     }
 }

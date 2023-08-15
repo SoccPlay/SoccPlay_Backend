@@ -17,4 +17,5 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         var list = await _context.Pitches.Where(pitch => pitch.LandId == LandId).ToListAsync();
         return list;
     }
+    
 }

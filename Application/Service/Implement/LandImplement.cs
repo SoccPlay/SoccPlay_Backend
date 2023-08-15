@@ -54,8 +54,10 @@ public class LandImplement : LandService
         foreach (var land in responseLands)
         {
             var image = await _imageRepository.GetImageByLandId(land.LandId);
-
-            land.image = image;
+            if (image != null)
+            {
+                land.image = image; 
+            }
         }
 
         return responseLands;
@@ -66,7 +68,12 @@ public class LandImplement : LandService
         var land = _unitOfWork.Land.GetById(landId);
         var responseLand = _mapper.Map<ResponseLand>(land);
         var image = await _imageRepository.GetAllImageByLandId(responseLand.LandId);
-
+        var prices = await _priceRepository.GetPriceByLandId(responseLand.LandId);
+        if (prices.Count != 0)
+        {
+            responseLand.MinPrice = prices.Min(p => p.Price1);
+            responseLand.MinPrice = prices.Max(p => p.Price1); 
+        }
         responseLand.PitchImages = image;
 
         return responseLand;

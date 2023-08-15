@@ -11,4 +11,7 @@ public interface BookingService
     Task<List<ResponseBooking>> GetAllBooking();
 
     Task<bool> CancleBooking(Guid BookingId);
+    public Task<List<Test>> TestBooking();
+
+    public Task<List<ResponseBooking>> GetByCustomerId(Guid customerId);
 }

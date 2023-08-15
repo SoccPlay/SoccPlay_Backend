@@ -23,6 +23,12 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
         return land;
     }
 
+    public async Task<List<Land>> GetAllLand()
+    {
+        var lands = _context.Set<Land>().Include(land => land.Prices).ToList();
+        return lands;
+    }
+
     public async Task<List<Land>> SearchLand(string location, string name)
     {
         var lands = _context.Set<Land>().Where(land => land.NameLand == name && land.Location == location).ToList();

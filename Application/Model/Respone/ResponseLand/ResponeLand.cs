@@ -16,8 +16,7 @@ public class ResponseLand
     public string Status { get; set; } = null!;
     public Guid OwnerId { get; set; }
 
-    public string image { get; set; } = null!;
+    public string image { get; set; }
 
-    public List<string> PitchImages { get; set; } = null!;
-
+    public List<string> PitchImages { get; set; }
 }

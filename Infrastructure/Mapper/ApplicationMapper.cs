@@ -181,6 +181,20 @@ public class ApplicationMapper : Profile
             .ForMember(p => p.LandId, act => act.MapFrom(a => a.LandId))
             .ForMember(p => p.PitchImageId, act => act.MapFrom(a => a.ImageId));
 
+        
+        
+        
+        
+        
+        CreateMap<Booking, Test>()
+            .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForPath(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.Schedules.Select(s=>s.ScheduleId).ToArray()));
+
+        
     }
 
 }
