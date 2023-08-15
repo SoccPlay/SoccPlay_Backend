@@ -47,7 +47,7 @@ public class LandImplement : LandService
             if (prices.Count != 0)
             {
                 land.MinPrice = prices.Min(p => p.Price1);
-                land.MinPrice = prices.Max(p => p.Price1); 
+                land.MaxPrice = prices.Max(p => p.Price1); 
             }
         }
 
@@ -72,7 +72,7 @@ public class LandImplement : LandService
         if (prices.Count != 0)
         {
             responseLand.MinPrice = prices.Min(p => p.Price1);
-            responseLand.MinPrice = prices.Max(p => p.Price1); 
+            responseLand.MaxPrice = prices.Max(p => p.Price1); 
         }
         responseLand.PitchImages = image;
 
@@ -96,7 +96,7 @@ public class LandImplement : LandService
             if (prices.Count != 0)
             {
                 land.MinPrice = prices.Min(p => p.Price1);
-                land.MinPrice = prices.Max(p => p.Price1); 
+                land.MaxPrice = prices.Max(p => p.Price1); 
             }
         }
 
@@ -127,7 +127,7 @@ public class LandImplement : LandService
             if (prices.Count != 0)
             {
                 land.MinPrice = prices.Min(p => p.Price1);
-                land.MinPrice = prices.Max(p => p.Price1); 
+                land.MaxPrice = prices.Max(p => p.Price1); 
             }
         }
 
@@ -155,7 +155,7 @@ public class LandImplement : LandService
             if (prices.Count != 0)
             {
                 land.MinPrice = prices.Min(p => p.Price1);
-                land.MinPrice = prices.Max(p => p.Price1); 
+                land.MaxPrice = prices.Max(p => p.Price1); 
             }
         }
 
