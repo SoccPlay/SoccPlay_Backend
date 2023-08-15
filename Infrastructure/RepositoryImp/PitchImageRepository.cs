@@ -24,7 +24,7 @@ public class PitchImageRepository : GenericRepository<PitchImage>, IPitchImageRe
 
     public async Task<string> GetImageByLandId(Guid LandId)
     {
-        var list = _context.Set<PitchImage>().OrderByDescending(item => item.LandId).FirstOrDefault();
+        var list = _context.Set<PitchImage>().Where(land => land.LandId == LandId).OrderByDescending(item => item.LandId).FirstOrDefault();
         if (list == null)
         {
             return null;
