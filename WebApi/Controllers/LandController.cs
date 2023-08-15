@@ -61,7 +61,7 @@ public class LandController : ControllerBase
     
     
     [HttpGet]
-    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName)
+    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName =default)
     {
         try
         {

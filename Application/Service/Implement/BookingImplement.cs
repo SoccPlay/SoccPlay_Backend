@@ -163,12 +163,5 @@ public class BookingImplement : BookingService
     }
 
 
-    public async Task<List<Test>> TestBooking()
-    {
-        var bookingEntities =
-            await _unitOfWork.Booking
-                .GetAllBookinTest(); // Assuming a method like GetAllAsync() exists in your repository
-
-        return _mapper.Map<List<Test>>(bookingEntities);
-    }
+   
 }

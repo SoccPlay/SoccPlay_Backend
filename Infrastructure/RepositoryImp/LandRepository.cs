@@ -31,7 +31,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<List<Land>> SearchLand(string location, string name)
     {
-        var lands = _context.Set<Land>().Where(land => land.NameLand == name && land.Location == location).ToList();
+        var lands = _context.Set<Land>().Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.NameLand.ToLower().Contains(name.ToLower()) ).ToList();
         return lands;
     }
 
