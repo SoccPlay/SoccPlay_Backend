@@ -14,39 +14,26 @@ namespace Infrastructure.Implement;
 public class BookingImplement : BookingService
 {
     private readonly IMapper _mapper;
-    private readonly IBookingRepository _bookingRepository;
-    private readonly IPitchRepository _pitchRepository;
-    private readonly IPriceRepository _priceRepository;
-    private readonly IScheduleRepository _scheduleRepository;
-    private readonly ScheduleService _scheduleService;
-    private readonly ILandRepository _landRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ScheduleService _scheduleService;
 
-    public BookingImplement(IUnitOfWork unitOfWork, IMapper mapper, IPriceRepository priceRepository,
-        IBookingRepository bookingRepository,
-        IPitchRepository pitchRepository, IScheduleRepository scheduleRepository, ScheduleService scheduleService,
-        ILandRepository landRepository)
+    public BookingImplement(IUnitOfWork unitOfWork, IMapper mapper, ScheduleService scheduleService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _priceRepository = priceRepository;
-        _pitchRepository = pitchRepository;
-        _scheduleRepository = scheduleRepository;
         _scheduleService = scheduleService;
-        _bookingRepository = bookingRepository;
-        _landRepository = landRepository;
     }
 
     public async Task<ResponseBooking> BookingPitch(RequestBooking requestBooking)
     {
         //Check Schedule
-        var pitchs = await _pitchRepository.GetAllPitchByLand(requestBooking.LandId);
+        var pitchs = await _unitOfWork.Pitch.GetAllPitchByLand(requestBooking.LandId);
         var size5 = requestBooking.Size5;
         var size7 = requestBooking.Size7;
         var pitchsEmpty = new List<Pitch>();
         foreach (var list in pitchs)
         {
-            var schedules = await _scheduleRepository.GetScheduleByPitch(list.PitchId);
+            var schedules = await _unitOfWork.Schedule.GetScheduleByPitch(list.PitchId);
             if (size5 == 0 && size7 == 0) break;
             if (schedules == null && list.Size == 5)
             {
@@ -112,11 +99,6 @@ public class BookingImplement : BookingService
         return responseBookings;
     }
 
-    public Task<List<Test>> TestBooking()
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<List<ResponseBooking>> GetByCustomerId(Guid customerId)
     {
         var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); // Assuming a method like GetAllAsync() exists in your repository
@@ -129,7 +111,7 @@ public class BookingImplement : BookingService
         var booking = _unitOfWork.Booking.GetById(BookingId);
         booking.Status = BookingStatus.Inactive.ToString();
 
-        var schedule = await _scheduleRepository.GetScheduleByBookingiD(BookingId);
+        var schedule = await _unitOfWork.Schedule.GetScheduleByBookingiD(BookingId);
         foreach (var s in schedule)
         {
             s.Status = BookingStatus.Inactive.ToString();
