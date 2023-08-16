@@ -18,6 +18,34 @@ public class BookingController : ControllerBase
         _bookingService = bookingService;
     }
     
+    [HttpPost]
+    public async Task<ActionResult<ResponseBooking>> CreateBooking(RequestBooking request)
+    {
+        try
+        {
+            var create = await _bookingService.BookingPitch(request);
+            return Ok(create);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<ResponseBooking>> CreateBooking_v2(RequestBookingV2 request)
+    {
+        try
+        {
+            var create = await _bookingService.BookingPitch_v2(request);
+            return Ok(create);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
     [HttpGet]
     public async Task<ActionResult<List<ResponseBooking>>> GetAllBookings()
     {
@@ -46,19 +74,6 @@ public class BookingController : ControllerBase
         }
     }
     
-    [HttpPost]
-    public async Task<ActionResult<ResponseBooking>> CreateBooking(RequestBooking request)
-    {
-        try
-        {
-            var create = await _bookingService.BookingPitch(request);
-            return Ok(create);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
     
     [HttpDelete]
     public async Task<bool> CancleBooking(Guid id)

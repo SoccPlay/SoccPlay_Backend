@@ -1,4 +1,5 @@
-﻿using Application.IRepository;
+﻿using System.Net.Mime;
+using Application.IRepository;
 using Domain.Entities;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
@@ -14,36 +15,30 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<Land> GetLandByIdLand(Guid landId)
     {
-        var land = await _context.Set<Land>()!.FirstOrDefaultAsync(o => o.LandId == landId);
-        if (land == null)
-        {
-            throw new Exception("LAND ERROR NULL");
-        }
-
+        var land = await _context.Set<Land>()!.Include(a=>a.Prices).Include(c=>c.Images).FirstOrDefaultAsync(o => o.LandId == landId);
         return land;
     }
 
     public async Task<List<Land>> GetAllLand()
     {
-        var lands = _context.Set<Land>().Include(land => land.Prices).ToList();
-        return lands;
+        return await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).ToListAsync();
     }
 
     public async Task<List<Land>> SearchLand(string location, string name)
     {
-        var lands = _context.Set<Land>().Where(land => land.NameLand == name && land.Location == location).ToList();
+        var lands = _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Where(land => land.NameLand == name && land.Location == location).ToList();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByLocation(string location)
     {
-        var lands = _context.Set<Land>().Where(land => land.Location == location).ToList();
+        var lands = _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Where(land => land.Location == location).ToList();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByName(string name)
     {
-        var lands = _context.Set<Land>().Where(land => land.NameLand.Contains(name)).ToList();
+        var lands = _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Where(land => land.NameLand.Contains(name)).ToList();
         return lands;
     }
 }

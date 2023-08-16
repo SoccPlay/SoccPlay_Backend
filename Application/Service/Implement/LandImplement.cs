@@ -14,157 +14,74 @@ public class LandImplement : LandService
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPitchImageRepository _imageRepository;
-    private readonly IPriceRepository _priceRepository;
-    private readonly ILandRepository _landRepository;
 
-    public LandImplement(IUnitOfWork unitOfWork, IMapper mapper, IPitchImageRepository imageRepository,
-        IPriceRepository priceRepository, ILandRepository landRepository)
+    public LandImplement(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _imageRepository = imageRepository;
-        _priceRepository = priceRepository;
-        _landRepository = landRepository;
     }
 
-    public Task<ResponseLand> CreateLand(RequestLand requestLand)
+    public async Task<ResponseLand_2> CreateLand(RequestLand requestLand)
     {
         var land = _mapper.Map<Land>(requestLand);
-        land.Owner = _unitOfWork.Owner.GetById(requestLand.OwnerId);
+        if ( _unitOfWork.Owner.GetById(land.OwnerId) == null)
+        {
+            throw new Exception("Not Found Owner");
+        }
         _unitOfWork.Land.Add(land);
         _unitOfWork.Save();
-        return Task.FromResult(_mapper.Map<ResponseLand>(land));
+        return _mapper.Map<ResponseLand_2>(land);
     }
-
+    
     public async Task<List<ResponseLand>> GetAllLands()
     {
-        var landEntities = _unitOfWork.Land.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
+        var landEntities = await _unitOfWork.Land.GetAllLand();
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
-        foreach (var land in responseLands)
-        {
-            var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            if (prices.Count != 0)
-            {
-                land.MinPrice = prices.Min(p => p.Price1);
-                land.MaxPrice = prices.Max(p => p.Price1); 
-            }
-        }
-
-        foreach (var land in responseLands)
-        {
-            var image = await _imageRepository.GetImageByLandId(land.LandId);
-            if (image != null)
-            {
-                land.image = image; 
-            }
-        }
-
         return responseLands;
     }
 
     public async Task<ResponseLand> LandDetail(Guid landId)
     {
-        var land = _unitOfWork.Land.GetById(landId);
-        var responseLand = _mapper.Map<ResponseLand>(land);
-        var image = await _imageRepository.GetAllImageByLandId(responseLand.LandId);
-        var prices = await _priceRepository.GetPriceByLandId(responseLand.LandId);
-        if (prices.Count != 0)
+        var land = _unitOfWork.Land.GetLandByIdLand(landId);
+        if (land == null)
         {
-            responseLand.MinPrice = prices.Min(p => p.Price1);
-            responseLand.MaxPrice = prices.Max(p => p.Price1); 
+            throw new CultureNotFoundException("NotFound");
         }
-        responseLand.PitchImages = image;
-
-        return responseLand;
+        var responseLands = _mapper.Map<ResponseLand>(land);
+        return responseLands;
     }
-
     public async Task<List<ResponseLand>> SearchLand(string location, string landName)
     {
-        var landEntities = await _landRepository.SearchLand(location, landName);
-
+        var landEntities = await _unitOfWork.Land.SearchLand(location, landName);
         if (landEntities == null)
         {
             throw new CultureNotFoundException("NotFound");
         }
-
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
-
-        foreach (var land in responseLands)
-        {
-            var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            if (prices.Count != 0)
-            {
-                land.MinPrice = prices.Min(p => p.Price1);
-                land.MaxPrice = prices.Max(p => p.Price1); 
-            }
-        }
-
-        foreach (var land in responseLands)
-        {
-            var image = await _imageRepository.GetImageByLandId(land.LandId);
-
-            land.image = image;
-        }
-
         return responseLands;
     }
 
     public async Task<List<ResponseLand>> SearchLandByLocation(string location)
     {
-        var landEntities = await _landRepository.SearchLandByLocation(location);
+        var landEntities = await _unitOfWork.Land.SearchLandByLocation(location);
 
         if (landEntities == null)
         {
             throw new CultureNotFoundException("NotFound");
         }
-
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
-
-        foreach (var land in responseLands)
-        {
-            var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            if (prices.Count != 0)
-            {
-                land.MinPrice = prices.Min(p => p.Price1);
-                land.MaxPrice = prices.Max(p => p.Price1); 
-            }
-        }
-
-        foreach (var land in responseLands)
-        {
-            var image = await _imageRepository.GetImageByLandId(land.LandId);
-
-            land.image = image;
-        }
-
         return responseLands;
     }
 
     public async Task<List<ResponseLand>> SearchLandByName(string landName)
     {
-        var landEntities =
-            await _landRepository
-                .SearchLandByName(landName); // Assuming a method like GetAllAsync() exists in your repository
+        var landEntities = await _unitOfWork.Land.SearchLandByName(landName); // Assuming a method like GetAllAsync() exists in your repository
 
+        if (landEntities == null)
+        {
+            throw new CultureNotFoundException("NotFound");
+        }
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
-
-        foreach (var land in responseLands)
-        {
-            var prices = await _priceRepository.GetPriceByLandId(land.LandId);
-            if (prices.Count != 0)
-            {
-                land.MinPrice = prices.Min(p => p.Price1);
-                land.MaxPrice = prices.Max(p => p.Price1); 
-            }
-        }
-
-        foreach (var land in responseLands)
-        {
-            var image = await _imageRepository.GetImageByLandId(land.LandId);
-            land.image = image;
-        }
-
         return responseLands;
     }
 }

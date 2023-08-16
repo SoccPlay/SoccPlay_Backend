@@ -34,7 +34,8 @@ namespace Infrastructure.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=NHAPHAN;Initial Catalog=FootBall_Pitch;User ID=sa;pwd=1;TrustServerCertificate=True;MultipleActiveResultSets=true");
+               optionsBuilder.UseSqlServer("Data Source=mssql-139728-0.cloudclusters.net,19689;Initial Catalog=FootBall;User ID=admin;pwd=sMZHCqF7;TrustServerCertificate=True;MultipleActiveResultSets=true");
+               //optionsBuilder.UseSqlServer("Data Source=NhaPhan;Initial Catalog=11;User ID=sa;pwd=1;TrustServerCertificate=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -112,6 +113,12 @@ namespace Infrastructure.Entities
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKBooking249093");
+
+                entity.HasOne(d => d.Land)
+                    .WithMany(p => p.Bookings)
+                    .HasForeignKey(d => d.LandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKBooking362392");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -205,6 +212,17 @@ namespace Infrastructure.Entities
                     .HasForeignKey(d => d.OwnerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKLand822092");
+                
+                entity.HasMany(d => d.Images)
+                    .WithOne(p => p.Land)
+                    .HasForeignKey(d => d.ImageId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+                
+                
+                entity.HasMany(l => l.Bookings)
+                    .WithOne(b => b.Land)
+                    .HasForeignKey(b => b.LandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Owner>(entity =>
@@ -240,6 +258,7 @@ namespace Infrastructure.Entities
                     .HasForeignKey(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKOwner823493");
+                
             });
 
             modelBuilder.Entity<Pitch>(entity =>
@@ -286,7 +305,7 @@ namespace Infrastructure.Entities
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Land)
-                    .WithMany()
+                    .WithMany(d=>d.Images)
                     .HasForeignKey(d => d.LandId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKPitchImage851248");

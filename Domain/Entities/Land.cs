@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace Domain.Entities
 {
@@ -10,6 +11,8 @@ namespace Domain.Entities
             Feedbacks = new HashSet<Feedback>();
             Pitches = new HashSet<Pitch>();
             Prices = new HashSet<Price>();
+            Bookings = new HashSet<Booking>();
+            Images = new HashSet<PitchImage>();
         }
 
         public Guid LandId { get; set; }
@@ -26,5 +29,8 @@ namespace Domain.Entities
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Pitch> Pitches { get; set; }
         public virtual ICollection<Price> Prices { get; set; }
+        public virtual ICollection<PitchImage> Images { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
+
     }
 }

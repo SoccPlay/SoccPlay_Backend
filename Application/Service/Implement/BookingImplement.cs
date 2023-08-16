@@ -7,6 +7,7 @@ using Application.Service;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enum;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Implement;
 
@@ -106,44 +107,20 @@ public class BookingImplement : BookingService
 
     public async Task<List<ResponseBooking>> GetAllBooking()
     {
-        var bookingEntities =
-            _unitOfWork.Booking.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
+        var bookingEntities = _unitOfWork.Booking.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
-        foreach (var booking in responseBookings)
-        {
-            var scheduling = await _scheduleRepository.GetScheduleByBookingiD(booking.BookingId);
-            if (scheduling.Count != 0)
-            {
-                string guid = scheduling.First().ScheduleId.ToString();
-                var pitch = scheduling.First().PitchPitchId;
-                var landid = _pitchRepository.GetById(pitch).LandId;
-                booking.Location = _unitOfWork.Land.GetById(landid).Location;
-            }
-
-            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduling);
-        }
-
         return responseBookings;
+    }
+
+    public Task<List<Test>> TestBooking()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<List<ResponseBooking>> GetByCustomerId(Guid customerId)
     {
         var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
-        foreach (var booking in responseBookings)
-        {
-            var scheduling = await _scheduleRepository.GetScheduleByBookingiD(booking.BookingId);
-            if (scheduling.Count != 0)
-            {
-                string guid = scheduling.First().ScheduleId.ToString();
-                var pitch = scheduling.First().PitchPitchId;
-                var landid = _pitchRepository.GetById(pitch).LandId;
-                booking.Location = _unitOfWork.Land.GetById(landid).Location;
-            }
-
-            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduling);
-        }
-
         return responseBookings;
     }
 
@@ -162,13 +139,52 @@ public class BookingImplement : BookingService
         return true;
     }
 
-
-    public async Task<List<Test>> TestBooking()
+    
+    public async Task<ResponseBooking> BookingPitch_v2(RequestBookingV2 requestBooking)
     {
-        var bookingEntities =
-            await _unitOfWork.Booking
-                .GetAllBookinTest(); // Assuming a method like GetAllAsync() exists in your repository
+        //Check Schedule
+        var pitchs = await _unitOfWork.Pitch.GetAllPitchByLand(requestBooking.LandId);
+        List<Pitch> pitchsList = new List<Pitch>();
+        DateTime startTime;
+        DateTime endTime;
+        int size = 0;
+        for (int i = 0; i < requestBooking.TotalPitch; i++)
+        {
+            startTime = requestBooking.StarTime[i].AddSeconds(1);
+            endTime = requestBooking.EndTime[i].AddSeconds(1);
+            size = requestBooking.Size[i];
 
-        return _mapper.Map<List<Test>>(bookingEntities);
+            var p = pitchs.Find(p => p.Size == size && p.Schedules.Any(schedule =>
+                (startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
+                (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
+                (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
+            ) == false && pitchsList.Any(check => check.PitchId == p.PitchId) == false);
+            if (p != null)
+            {
+                pitchsList.Add(p);
+            }
+        }
+
+        var booking = _mapper.Map<Booking>(requestBooking);
+        _unitOfWork.Booking.Add(booking);
+        _unitOfWork.Save();
+
+        var scheduleList = new List<Schedule>();
+        for (int i = 0; i < requestBooking.TotalPitch; i++)
+        {
+            var scheduling = await _scheduleService.CreateSchedule(requestBooking.StarTime[i], requestBooking.EndTime[i],
+                booking.BookingId,
+                pitchsList[i].PitchId, requestBooking.LandId, pitchsList[i].Size);
+            scheduleList.Add(scheduling);
+        }
+
+        //Total Price 
+        float total = (float)scheduleList.Sum(s => s.Price);
+        booking.TotalPrice = total;
+        _unitOfWork.Save();
+
+        var getBooking = _mapper.Map<ResponseBooking>(booking);
+        getBooking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduleList);
+        return getBooking;
     }
 }

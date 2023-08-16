@@ -17,7 +17,7 @@ public class PitchController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<ResponsePitch>> CreateLand(RequestPitch request)
+    public async Task<ActionResult<ResponsePitch>> CreatePitch(RequestPitch request)
     {
         try
         {

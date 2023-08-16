@@ -14,7 +14,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
 
     public async Task<List<Pitch>> GetAllPitchByLand(Guid LandId)
     {
-        var list = await _context.Pitches.Where(pitch => pitch.LandId == LandId).ToListAsync();
+        var list = await _context.Pitches.Where(pitch => pitch.LandId == LandId).Include(s => s.Schedules).ToListAsync();
         return list;
     }
     

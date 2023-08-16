@@ -14,4 +14,6 @@ public interface BookingService
     public Task<List<Test>> TestBooking();
 
     public Task<List<ResponseBooking>> GetByCustomerId(Guid customerId);
+
+    public Task<ResponseBooking> BookingPitch_v2(RequestBookingV2 requestBooking);
 }

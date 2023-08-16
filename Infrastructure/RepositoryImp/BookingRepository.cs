@@ -18,10 +18,9 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
         return bookings;
     }
 
-    public async Task<List<Booking>> GetAllBookinTest()
+    public async Task<List<Booking>> GetAllBooking()
     {
-        var booking = _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer)
-            .ToList();
+        var booking = _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer).Include(b => b.Land).ToList();
         return booking;
     }
 }

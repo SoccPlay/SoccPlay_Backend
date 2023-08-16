@@ -18,31 +18,18 @@ public class LandController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<ResponseLand>> CreateLand(RequestLand requestLand)
+    public async Task<ActionResult<ResponseLand_2>> CreateLand(RequestLand requestLand)
     {
-        try
-        {
             var create = await _landService.CreateLand(requestLand);
             return Ok(create);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
     }
     
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> GetAllLand()
     {
-        try
-        {
+        
             var lands = await _landService.GetAllLands();
             return Ok(lands);
-        }
-        catch (Exception ex)
-        {
-            return NotFound(ex.Message);
-        }
     }
 
     [HttpGet]

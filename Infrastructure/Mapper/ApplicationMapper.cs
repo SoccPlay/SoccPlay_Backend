@@ -102,7 +102,9 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => LandStatus.Active.ToString()))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
-        CreateMap<Land, ResponseLand>()
+
+
+        CreateMap<Land, ResponseLand_2>()
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
             .ForMember(dest => dest.NameLand, opt => opt.MapFrom(src => src.NameLand))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
@@ -111,7 +113,20 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
-
+            
+        CreateMap<Land, ResponseLand>()
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.NameLand, opt => opt.MapFrom(src => src.NameLand))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.TotalPitch, opt => opt.MapFrom(src => src.TotalPitch))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
+            .ForMember(dest => dest.MinPrice, opt => opt.MapFrom(src => src.Prices.Min(price => price.Price1)))
+            .ForMember(dest => dest.MaxPrice, opt => opt.MapFrom(src => src.Prices.Max(price => price.Price1)))
+            .ForPath(dest => dest.image,opt => opt.MapFrom(src => src.Images.Select(image => image.Name).LastOrDefault()))
+            .ForPath(dest => dest.PitchImages, opt => opt.MapFrom(src => src.Images));
         
         //Pitch
         CreateMap<RequestPitch, Pitch>()
@@ -128,7 +143,6 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
-        
         
         //Price
         CreateMap<RequestPrice, Price>()
@@ -152,11 +166,22 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId));
+            
+            
+            
+            
+        CreateMap<RequestBookingV2, Booking>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
-
+        
         CreateMap<Booking, ResponseBooking>()
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
