@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Model.Respone.ResponseAccount;
+using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
@@ -15,10 +17,12 @@ namespace WebApi.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly FootBall_PitchContext _context;
+        private readonly AccountService _accountService;
 
-        public AccountsController(FootBall_PitchContext context)
+        public AccountsController(FootBall_PitchContext context, AccountService accountService)
         {
             _context = context;
+            _accountService = accountService;
         }
 
         // GET: api/Accounts
@@ -50,6 +54,30 @@ namespace WebApi.Controllers
             }
 
             return account;
+        }
+        
+        
+        [HttpGet]
+        public async Task<ActionResult<List<ResponseAccountCustomer>>> GetCustomer(Guid id)
+        {
+            var bookings = await _accountService.GetCustomer(id);
+            return Ok(bookings);
+        }
+        
+        
+        [HttpGet]
+        public async Task<ActionResult<List<ResponseAccountOwner>>> GetOwner(Guid id)
+        {
+            var bookings = await _accountService.GetOwner(id);
+            return Ok(bookings);
+        }
+        
+        
+        [HttpGet]
+        public async Task<ActionResult<List<ResponseAccountAdmin>>> GetAdmin(Guid id)
+        {
+            var bookings = await _accountService.GetAdmin(id);
+            return Ok(bookings);
         }
 
         // PUT: api/Accounts/5

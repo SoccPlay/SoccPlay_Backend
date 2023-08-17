@@ -8,7 +8,8 @@ public class ResponseLand
     public string NameLand { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string Location { get; set; } = null!;
-    public float AveragePrice { get; set; }
+    
+    public decimal AverageRate { get; set; }
     public float MinPrice { get; set; }
     public float MaxPrice { get; set; }
     public int TotalPitch { get; set; }
