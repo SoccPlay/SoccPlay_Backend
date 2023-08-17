@@ -14,13 +14,13 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
 
     public async Task<List<Booking>> GetAllBookingByCustomerId(Guid customerId)
     {
-        var bookings = _context.Set<Booking>().Where(b => b.CustomerId == customerId).ToList();
+        var bookings = _context.Set<Booking>().Include( s => s.Schedules).Include(l => l.Land).Where(b => b.CustomerId == customerId).ToList();
         return bookings;
     }
 
     public async Task<List<Booking>> GetAllBooking()
     {
-        var booking = _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer).Include(b => b.Land).ToList();
+        var booking = await _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer).Include(b => b.Land).ToListAsync();
         return booking;
     }
 }

@@ -94,8 +94,14 @@ public class BookingImplement : BookingService
 
     public async Task<List<ResponseBooking>> GetAllBooking()
     {
-        var bookingEntities = _unitOfWork.Booking.GetAll(); // Assuming a method like GetAllAsync() exists in your repository
+        var bookingEntities = await _unitOfWork.Booking.GetAllBooking(); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
+        int i = 0;
+        foreach (var booking in responseBookings)
+        {
+            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(bookingEntities[i].Schedules);
+            i++;
+        }
         return responseBookings;
     }
 
@@ -103,6 +109,12 @@ public class BookingImplement : BookingService
     {
         var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
+        int i = 0;
+        foreach (var booking in responseBookings)
+        {
+            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(bookingEntities[i].Schedules);
+            i++;
+        }
         return responseBookings;
     }
 
@@ -141,10 +153,11 @@ public class BookingImplement : BookingService
                 (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
                 (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
             ) == false && pitchsList.Any(check => check.PitchId == p.PitchId) == false);
-            if (p != null)
+            if (p == null)
             {
-                pitchsList.Add(p);
+                throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
             }
+            pitchsList.Add(p);
         }
 
         var booking = _mapper.Map<Booking>(requestBooking);

@@ -169,23 +169,19 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId));
             
-            
-            
-            
         CreateMap<RequestBookingV2, Booking>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
-        
+
         CreateMap<Booking, ResponseBooking>()
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
-            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
-            .ForMember(dest => dest.Schedules, opt => opt.MapFrom(src => src.Schedules));
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
 
         //Schedule
         CreateMap<Schedule, ResponseSchedule>()
