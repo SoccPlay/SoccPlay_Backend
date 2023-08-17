@@ -40,6 +40,8 @@ public class LandImplement : LandService
         return responseLands;
     }
 
+
+
     public async Task<ResponseLand> LandDetail(Guid landId)
     {
         var land = await _unitOfWork.Land.GetLandByIdLand(landId);
@@ -50,6 +52,14 @@ public class LandImplement : LandService
         var responseLands = _mapper.Map<ResponseLand>(land);
         return responseLands;
     }
+
+    public async Task<List<ResponseLand>> Top6Land()
+    {
+        var land = await _unitOfWork.Land.GetTop6();
+        var responseLands = _mapper.Map<List<ResponseLand>>(land);
+        return responseLands;
+    }
+
     public async Task<List<ResponseLand>> SearchLand(string location, string landName)
     {
         var landEntities = await _unitOfWork.Land.SearchLand(location, landName);

@@ -8,6 +8,8 @@ public interface ILandRepository  : IGenericRepository<Land>
     Task<Land> GetLandByIdLand(Guid landId);
 
     Task<List<Land>> GetAllLand();
+
+    Task<List<Land>> GetTop6();
     
     Task<List<Land>> SearchLand(string location, string name);
     Task<List<Land>> SearchLandByLocation(string location);

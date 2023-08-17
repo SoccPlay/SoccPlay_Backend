@@ -9,7 +9,7 @@ public interface LandService
     Task<ResponseLand_2> CreateLand(RequestLand requestLand);
     Task<List<ResponseLand>> GetAllLands();
     Task<ResponseLand> LandDetail(Guid landId);
-
+    Task<List<ResponseLand>> Top6Land();
     Task<List<ResponseLand>> SearchLand(string location, string landName);
     Task<List<ResponseLand>> SearchLandByLocation(string landName);
     Task<List<ResponseLand>> SearchLandByName(string landName);

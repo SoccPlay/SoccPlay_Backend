@@ -33,6 +33,14 @@ public class LandController : ControllerBase
     }
 
     [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> GetTop6Land()
+    {
+        
+        var lands = await _landService.Top6Land();
+        return Ok(lands);
+    }
+    
+    [HttpGet]
     public async Task<ActionResult<ResponseLand>> GetLandById(Guid landId)
     {
         try

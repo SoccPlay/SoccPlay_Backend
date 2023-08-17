@@ -58,7 +58,7 @@ namespace WebApi.Controllers
         
         
         [HttpGet]
-        public async Task<ActionResult<List<ResponseAccountCustomer>>> GetCustomer(Guid id)
+        public async Task<ActionResult<List<ResponseAccountCustomer>>> GetCustomerByAccountId(Guid id)
         {
             var bookings = await _accountService.GetCustomer(id);
             return Ok(bookings);
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
         
         
         [HttpGet]
-        public async Task<ActionResult<List<ResponseAccountOwner>>> GetOwner(Guid id)
+        public async Task<ActionResult<List<ResponseAccountOwner>>> GetOwnerByAccountId(Guid id)
         {
             var bookings = await _accountService.GetOwner(id);
             return Ok(bookings);
@@ -74,7 +74,7 @@ namespace WebApi.Controllers
         
         
         [HttpGet]
-        public async Task<ActionResult<List<ResponseAccountAdmin>>> GetAdmin(Guid id)
+        public async Task<ActionResult<List<ResponseAccountAdmin>>> GetAdminByAccountId(Guid id)
         {
             var bookings = await _accountService.GetAdmin(id);
             return Ok(bookings);
