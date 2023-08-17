@@ -42,7 +42,7 @@ public class LandImplement : LandService
 
     public async Task<ResponseLand> LandDetail(Guid landId)
     {
-        var land = _unitOfWork.Land.GetLandByIdLand(landId);
+        var land = await _unitOfWork.Land.GetLandByIdLand(landId);
         if (land == null)
         {
             throw new CultureNotFoundException("NotFound");

@@ -15,31 +15,31 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<Land> GetLandByIdLand(Guid landId)
     {
-        var land = await _context.Set<Land>()!.Include(a=>a.Prices).Include(c=>c.Images).FirstOrDefaultAsync(o => o.LandId == landId);
+        var land = await _context.Set<Land>()!.Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).FirstOrDefaultAsync(o => o.LandId == landId);
         return land;
     }
 
     public async Task<List<Land>> GetAllLand()
     {
-        return await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).ToListAsync();
+        return await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Include(f => f.Feedbacks).ToListAsync();
     }
 
     public async Task<List<Land>> SearchLand(string location, string name)
     {
-        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.NameLand.Contains(name)).ToListAsync();
+        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.NameLand.Contains(name)).ToListAsync();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByLocation(string location)
     {
-        var lands = await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images)
+        var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
             .Where(land => land.Location.ToLower().Contains(location.ToLower())).ToListAsync();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByName(string name)
     {
-        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Where(land => land.NameLand.Contains(name)).ToListAsync();
+        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.NameLand.Contains(name)).ToListAsync();
         return lands;
     }
 }

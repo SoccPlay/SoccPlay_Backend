@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Application.Common.Security.Token;
 using Application.Model.Request.RequestAccount;
 using Application.Model.Request.RequestBooking;
+using Application.Model.Request.RequestFeedback;
 using Application.Model.Request.RequestFile;
 using Application.Model.Request.RequestLand;
 using Application.Model.Request.RequestPitch;
@@ -10,6 +11,7 @@ using Application.Model.Request.RequestPrice;
 using Application.Model.Respone;
 using Application.Model.Respone.ResponseAccount;
 using Application.Model.Respone.ResponseBooking;
+using Application.Model.Respone.ResponseFeedback;
 using Application.Model.Respone.ResponseFile;
 using Application.Model.Respone.ResponsePitch;
 using Application.Model.Respone.ResponsePrice;
@@ -121,6 +123,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.TotalPitch, opt => opt.MapFrom(src => src.TotalPitch))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.AverageRate, opt => opt.MapFrom(src => src.Feedbacks.Average( rate => rate.Rate)))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
             .ForMember(dest => dest.MinPrice, opt => opt.MapFrom(src => src.Prices.Min(price => price.Price1)))
@@ -202,10 +205,19 @@ public class ApplicationMapper : Profile
             .ForMember(p => p.LandId, act => act.MapFrom(a => a.LandId))
             .ForMember(p => p.PitchImageId, act => act.MapFrom(a => a.ImageId));
 
-        
-        
-        
-        
+        //FeedBack
+        CreateMap<RequestFeedback, Feedback>()
+            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rate))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+
+        CreateMap<Domain.Entities.Feedback, Application.Model.Respone.ResponseFeedback.ResponseFeedback>()
+            .ForMember(dest => dest.FeedbackId, opt => opt.MapFrom(src => src.FeedbackId))
+            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rate))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
         
         
     }
