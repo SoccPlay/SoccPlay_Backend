@@ -16,50 +16,54 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<Land> GetLandByIdLand(Guid landId)
     {
-        var land = await _context.Set<Land>()!.Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).FirstOrDefaultAsync(o => o.LandId == landId);
+        var land = await _context.Set<Land>()!.Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).FirstOrDefaultAsync(land => land.LandId == landId  && land.TotalPitch != 0 );
         return land;
     }
 
     public async Task<List<Land>> GetAllLand()
     {
-        return await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Include(f => f.Feedbacks).ToListAsync();
+        return await _context.Set<Land>().Include(a=>a.Prices).Include(c=>c.Images).Include(f => f.Feedbacks).Where(land => land.TotalPitch != 0).ToListAsync();
     }
 
     public  async Task<List<Land>> GetTop6()
     {
-        var topLand = await (
-            from feedback in _context.Feedbacks
-            group feedback by feedback.LandId into grouped
-            orderby grouped.Average(f => f.Rate) descending
-            select new { LandId = grouped.Key}
-        ).Take(6).ToListAsync();
+        var topLands = await (
+                from feedback in _context.Feedbacks
+                group feedback by feedback.LandId into grouped
+                orderby grouped.Average(f => f.Rate) descending
+                select grouped.Key
+            )
+            .Take(6)
+            .Join(
+                _context.Set<Land>()
+                    .Include(a => a.Prices)
+                    .Include(f => f.Feedbacks)
+                    .Include(c => c.Images),
+                topLandId => topLandId,
+                land => land.LandId,
+                (topLandId, land) => land
+            )
+            .ToListAsync();
 
-        
-        
-        List<Land> lands = new List<Land>();
-        foreach (var l in topLand)
-        {
-            lands.Add(await GetLandByIdLand(l.LandId));
-        }
-        return lands;
+        return topLands;
     }
 
     public async Task<List<Land>> SearchLand(string location, string name)
     {
-        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.NameLand.Contains(name)).ToListAsync();
+        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0 && land.NameLand.Contains(name)).ToListAsync();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByLocation(string location)
     {
         var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
-            .Where(land => land.Location.ToLower().Contains(location.ToLower())).ToListAsync();
+            .Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0 ).ToListAsync();
         return lands;
     }
 
     public async Task<List<Land>> SearchLandByName(string name)
     {
-        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.NameLand.Contains(name)).ToListAsync();
+        var lands = await _context.Set<Land>().Include(a=>a.Prices).Include(f => f.Feedbacks).Include(c=>c.Images).Where(land => land.NameLand.Contains(name) && land.TotalPitch != 0 ).ToListAsync();
         return lands;
     }
 }
