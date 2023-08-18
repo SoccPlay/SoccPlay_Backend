@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Application.IRepository;
+﻿using Application.IRepository;
 using Domain.Entities;
-using Domain.Enum;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.RepositoryImp;
 
@@ -21,9 +20,9 @@ public class AccountRepository : GenericRepository<Account>, IAccountRepository
 
     public async Task<Account> GetCustomerByAccountId(Guid id)
     {
-        var account = await _context.Set<Account>()!.Include(c => c.Customers).FirstOrDefaultAsync(a => a.AccountId == id);
+        var account = await _context.Set<Account>()!.Include(c => c.Customers)
+            .FirstOrDefaultAsync(a => a.AccountId == id);
         return account;
-
     }
 
     public async Task<Account> GetAdminByAccountId(Guid id)

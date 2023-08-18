@@ -1,18 +1,17 @@
 ﻿using Application.IRepository;
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestPrice;
-using Application.Model.Respone.ResponsePrice;
-using Application.Service;
+using Application.Model.Response.ResponsePrice;
 using AutoMapper;
 using Domain.Entities;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class PriceImplement : PriceService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IPriceRepository _priceRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public PriceImplement(IUnitOfWork unitOfWork, IMapper mapper, IPriceRepository priceRepository)
     {
@@ -20,6 +19,7 @@ public class PriceImplement : PriceService
         _mapper = mapper;
         _priceRepository = priceRepository;
     }
+
     public async Task<ResponsePrice> CreatePrice(RequestPrice requestPrice)
     {
         var price = _mapper.Map<Price>(requestPrice);

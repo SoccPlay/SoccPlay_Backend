@@ -1,5 +1,5 @@
 ﻿using Application.Model.Request.RequestFile;
-using Application.Model.Respone.ResponseFile;
+using Application.Model.Response.ResponseFile;
 using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,25 +17,25 @@ public class FileController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ResponseFile>> Add([FromForm]RequestFile requestFile) //[FromForm] is request type multipart
+    public async Task<ActionResult<ResponseFile>>
+        Add([FromForm] RequestFile requestFile) //[FromForm] is request type multipart
     {
-        var responseFile= await _fileService.UploadFile(requestFile);
-        return responseFile == null ? BadRequest() : Ok(new
-        {
-            Success = true,
-            Data = responseFile
-        });
+        var responseFile = await _fileService.UploadFile(requestFile);
+        return responseFile == null
+            ? BadRequest()
+            : Ok(new
+            {
+                Success = true,
+                Data = responseFile
+            });
     }
 
     [HttpGet]
     public async Task<IActionResult> GetNameFile(string name)
     {
         var result = await _fileService.Get(name);
-        string fileType = "";
-        if (fileType.Contains("png"))
-        {
-            fileType = "png";
-        }
+        var fileType = "";
+        if (fileType.Contains("png")) fileType = "png";
         return File(result, $"image/{fileType}");
     }
 }

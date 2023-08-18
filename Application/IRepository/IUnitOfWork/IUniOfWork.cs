@@ -1,6 +1,4 @@
-﻿using Application.IRepository;
-
-namespace  Application.IRepository.IUnitOfWork;
+﻿namespace Application.IRepository.IUnitOfWork;
 
 public interface IUnitOfWork
 {

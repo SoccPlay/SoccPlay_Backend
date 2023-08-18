@@ -3,8 +3,9 @@ using Domain.Entities;
 
 namespace Application.IRepository;
 
-public interface IBookingRepository   : IGenericRepository<Booking>
+public interface IBookingRepository : IGenericRepository<Booking>
 {
     Task<List<Booking>> GetAllBookingByCustomerId(Guid customerId);
     Task<List<Booking>> GetAllBooking();
+    Task<Booking> GetBookingById(Guid bookingId);
 }

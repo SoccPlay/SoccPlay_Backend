@@ -4,5 +4,6 @@ namespace Application.Service;
 
 public interface ScheduleService
 {
-    Task<Schedule> CreateSchedule(DateTime starTime, DateTime endTime, Guid BookingId, Guid PitchId, Guid LandId, int Size);
+    Task<Schedule> CreateSchedule(DateTime starTime, DateTime endTime, Guid BookingId, Guid PitchId, Guid LandId,
+        int Size);
 }

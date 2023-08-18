@@ -4,7 +4,7 @@ public class RequestBookingV2
 {
     public Guid LandId { get; set; }
     public string Note { get; set; } = null!;
-    
+
     public int TotalPitch { get; set; }
     public List<int> Size { get; set; }
     public List<DateTime> StarTime { get; set; }

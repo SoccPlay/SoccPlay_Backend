@@ -15,7 +15,8 @@ public class ScheduleRepository : GenericRepository<Schedule>, IScheduleReposito
 
     public async Task<List<Schedule>> GetScheduleByPitch(Guid PitchId)
     {
-        var list = await _context.Schedules.Where(schedule => schedule.PitchPitchId == PitchId && schedule.Status == ScheduleEnum.Active.ToString()).ToListAsync();
+        var list = await _context.Schedules.Where(schedule =>
+            schedule.PitchPitchId == PitchId && schedule.Status == ScheduleEnum.Active.ToString()).ToListAsync();
         return list;
     }
 

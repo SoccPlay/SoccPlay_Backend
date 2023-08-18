@@ -1,10 +1,9 @@
 ﻿using Application.Model.Request.RequestPrice;
-using Application.Model.Respone.ResponsePrice;
+using Application.Model.Response.ResponsePrice;
 using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
-
 
 [Route("api/[controller]/[action]")]
 [ApiController]
@@ -16,7 +15,7 @@ public class PriceController : ControllerBase
     {
         _priceService = priceService;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<ResponsePrice>> CreatePrice(RequestPrice requestPrice)
     {
@@ -30,6 +29,4 @@ public class PriceController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    
-    
 }

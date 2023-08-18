@@ -1,12 +1,11 @@
 ﻿using Domain.Entities;
 
-namespace Application.Common.Security.Token
+namespace Application.Common.Security.Token;
+
+public interface ITokensHandler
 {
-    public interface ITokensHandler
-    {
-        AccessToken CreateAccessToken(Account account);
-        RefreshToken TakeRefreshToken(string refresh, string userName);
-        void RevokeRefreshToken(string token, string userName);
-        Task<string> ClaimsFromToken(string token);
-    }
+    AccessToken CreateAccessToken(Account account);
+    RefreshToken TakeRefreshToken(string refresh, string userName);
+    void RevokeRefreshToken(string token, string userName);
+    Task<string> ClaimsFromToken(string token);
 }

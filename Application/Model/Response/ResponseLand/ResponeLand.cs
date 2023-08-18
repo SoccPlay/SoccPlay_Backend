@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Application.Model.ResponseLand;
+﻿namespace Application.Model.ResponseLand;
 
 public class ResponseLand
 {

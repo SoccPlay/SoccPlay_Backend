@@ -1,12 +1,7 @@
-﻿
+﻿namespace Domain.Enum;
 
-namespace Domain.Enum
+public enum ACCOUNTENUM
 {
-
-    public enum ACCOUNTENUM
-    {
-        ACTIVE,
-        INACTIVE
-
-    }
+    ACTIVE,
+    INACTIVE
 }

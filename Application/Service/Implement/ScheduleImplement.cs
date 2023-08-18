@@ -1,17 +1,16 @@
 ﻿using Application.IRepository;
 using Application.IRepository.IUnitOfWork;
-using Application.Service;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enum;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class ScheduleImplement : ScheduleService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IPriceRepository _priceRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public ScheduleImplement(IUnitOfWork unitOfWork, IMapper mapper, IPriceRepository priceRepository)
     {
@@ -19,20 +18,22 @@ public class ScheduleImplement : ScheduleService
         _mapper = mapper;
         _priceRepository = priceRepository;
     }
-    public async Task<Schedule> CreateSchedule(DateTime starTime, DateTime endTime, Guid BookingId, Guid PitchId, Guid LandId, int Size)
+
+    public async Task<Schedule> CreateSchedule(DateTime starTime, DateTime endTime, Guid BookingId, Guid PitchId,
+        Guid LandId, int Size)
     {
-        Schedule schedule = new Schedule();
-        
+        var schedule = new Schedule();
+
         //Caculate Price
-        TimeSpan duration = endTime - starTime;
-        
-        double totalHours = duration.TotalHours;
-        double totalMinutes = duration.TotalMinutes;
-        float totalHoursAndMinutes = (float)(totalHours + (totalMinutes / 60));
+        var duration = endTime - starTime;
+
+        var totalHours = duration.TotalHours;
+        var totalMinutes = duration.TotalMinutes;
+        var totalHoursAndMinutes = (float)(totalHours + totalMinutes / 60);
         var getPrice = await _priceRepository.GetBySizeAndLand(LandId, Size, starTime);
 
-        float price = getPrice.Price1 * totalHoursAndMinutes;
-        
+        var price = getPrice.Price1 * totalHoursAndMinutes;
+
         schedule.BookingBookingId = BookingId;
         schedule.PitchPitchId = PitchId;
         schedule.EndTime = endTime;

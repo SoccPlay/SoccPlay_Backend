@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Application.Common.Security.Token;
 
-namespace Application.Common.Security.Token
+public class RefreshToken
 {
-    public class RefreshToken
-    {
-        public string Token { get; set; }
-        public DateTime Expiration { get; set; }
-    }
+    public string Token { get; set; }
+    public DateTime Expiration { get; set; }
 }

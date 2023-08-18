@@ -1,14 +1,13 @@
 ﻿using Application.IRepository.IUnitOfWork;
-using Application.Model.Respone.ResponseAccount;
-using Application.Service;
+using Application.Model.Response.ResponseAccount;
 using AutoMapper;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class AccountImplement : AccountService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public AccountImplement(IUnitOfWork unitOfWork, IMapper mapper)
     {

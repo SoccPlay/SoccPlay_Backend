@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Application.Model.Respone.ResponseFeedback;
+﻿namespace Application.Model.Response.ResponseFeedback;
 
 public class ResponseFeedback
 {

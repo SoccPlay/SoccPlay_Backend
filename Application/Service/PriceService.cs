@@ -1,5 +1,5 @@
 ﻿using Application.Model.Request.RequestPrice;
-using Application.Model.Respone.ResponsePrice;
+using Application.Model.Response.ResponsePrice;
 
 namespace Application.Service;
 

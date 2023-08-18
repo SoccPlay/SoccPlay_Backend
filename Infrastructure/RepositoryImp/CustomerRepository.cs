@@ -14,7 +14,8 @@ public class CustomerRepository : GenericRepository<Customer>, ICustomerReposito
 
     public async Task<Customer> GetCustomerByAccountId(Guid id)
     {
-        var customer = await _context.Set<Customer>().Include(account => account.Account).FirstOrDefaultAsync(customer => customer.AccountId == id);
+        var customer = await _context.Set<Customer>().Include(account => account.Account)
+            .FirstOrDefaultAsync(customer => customer.AccountId == id);
         return customer;
     }
 }

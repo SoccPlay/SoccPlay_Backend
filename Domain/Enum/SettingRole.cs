@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Domain.Enum;
 
-namespace Domain.Enum
+public enum ROLEENUM
 {
-    public enum ROLEENUM
-    {
-        OWNER,
-        ADMIN,
-        CUSTOMER
-
-    }
+    OWNER,
+    ADMIN,
+    CUSTOMER
 }

@@ -1,6 +1,6 @@
-namespace Application.Model.Respone.ResponsePitch;
+namespace Application.Model.Response.ResponseFile;
 
-public class ResponsePitch
+public class ResponseFile
 {
     public Guid PitchImageId { get; set; }
     public Guid PitchId { get; set; }

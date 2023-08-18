@@ -1,8 +1,7 @@
 ﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Application.IRepository.IGeneric;
-using Domain.Entities;
 using Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.RepositoryImp.Generic;
 

@@ -1,4 +1,4 @@
-﻿namespace Application.Model.Respone.ResponsePrice;
+﻿namespace Application.Model.Response.ResponsePrice;
 
 public class ResponsePrice
 {

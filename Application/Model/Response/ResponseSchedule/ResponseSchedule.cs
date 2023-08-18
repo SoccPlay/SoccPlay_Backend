@@ -1,4 +1,4 @@
-﻿namespace Application.Model.Respone.ResponseSchedule;
+﻿namespace Application.Model.Response.ResponseSchedule;
 
 public class ResponseSchedule
 {

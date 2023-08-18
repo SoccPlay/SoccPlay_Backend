@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design;
-
-namespace Domain.Enum;
+﻿namespace Domain.Enum;
 
 public enum ScheduleEnum
 {

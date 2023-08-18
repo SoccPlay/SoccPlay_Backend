@@ -1,4 +1,4 @@
-﻿using Application.Model.Respone.ResponseAccount;
+﻿using Application.Model.Response.ResponseAccount;
 
 namespace Application.Service;
 

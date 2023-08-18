@@ -1,5 +1,5 @@
 ﻿using Application.Model.Request.RequestPitch;
-using Application.Model.Respone.ResponsePitch;
+using Application.Model.Response.ResponsePitch;
 using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +15,19 @@ public class PitchController : ControllerBase
     {
         _pitchService = pitchService;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<ResponsePitch>> CreatePitch(RequestPitch request)
     {
-        try
-        {
-            var create = await _pitchService.CreatePitch(request);
-            return Ok(create);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var create = await _pitchService.CreatePitch(request);
+        return Ok(create);
+    }
+
+
+    [HttpGet]
+    public async Task<ActionResult<ResponsePitchV2>> GetPitchSchedule(Guid landId, string date, int size)
+    {
+        var create = await _pitchService.GetScheduleListByDate(landId, date, size);
+        return Ok(create);
     }
 }

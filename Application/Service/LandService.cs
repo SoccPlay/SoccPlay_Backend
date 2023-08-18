@@ -1,6 +1,5 @@
 ﻿using Application.Model.Request.RequestLand;
 using Application.Model.ResponseLand;
-using Domain.Entities;
 
 namespace Application.Service;
 

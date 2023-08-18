@@ -1,5 +1,6 @@
 ﻿using Application.IRepository;
 using Domain.Entities;
+using Domain.Enum;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +15,23 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
 
     public async Task<List<Booking>> GetAllBookingByCustomerId(Guid customerId)
     {
-        var bookings = _context.Set<Booking>().Include( s => s.Schedules).Include(l => l.Land).Where(b => b.CustomerId == customerId).ToList();
+        var bookings = _context.Set<Booking>().Include(s => s.Schedules).Include(l => l.Land)
+            .Where(b => b.CustomerId == customerId).ToList();
         return bookings;
     }
 
     public async Task<List<Booking>> GetAllBooking()
     {
-        var booking = await _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer).Include(b => b.Land).ToListAsync();
+        var booking = await _context.Set<Booking>().Include(b => b.Schedules).Include(c => c.Customer)
+            .Include(b => b.Land).ToListAsync();
+        return booking;
+    }
+
+    public async Task<Booking> GetBookingById(Guid bookingId)
+    {
+        var booking = await _context.Set<Booking>().Include(b => b.Schedules)
+            .FirstOrDefaultAsync(b => b.BookingId == bookingId && b.Status == BookingStatus.Active.ToString());
+        if (booking == null) throw new Exception("Booking Not Exist");
         return booking;
     }
 }

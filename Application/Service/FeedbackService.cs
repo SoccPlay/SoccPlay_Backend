@@ -1,5 +1,5 @@
 ﻿using Application.Model.Request.RequestFeedback;
-using Application.Model.Respone.ResponseFeedback;
+using Application.Model.Response.ResponseFeedback;
 
 namespace Application.Service;
 

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using WebApi.Configuration;
 using WebApi.Middleware;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,10 +22,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebRecruitment.WebApi");
-});
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebRecruitment.WebApi"); });
 app.UseRouting();
 
 app.UseHttpsRedirection();

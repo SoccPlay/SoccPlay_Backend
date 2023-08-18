@@ -14,8 +14,9 @@ public class PriceRepository : GenericRepository<Price>, IPriceRepository
 
     public async Task<Price> GetBySizeAndLand(Guid LandId, int Size, DateTime startTime)
     {
-        int time = startTime.Hour;
-        var price = _context.Set<Price>().FirstOrDefault(p => p.Size == Size && p.LandLandId == LandId && time >= p.StarTime && time <= p.EndTime);
+        var time = startTime.Hour;
+        var price = _context.Set<Price>().FirstOrDefault(p =>
+            p.Size == Size && p.LandLandId == LandId && time >= p.StarTime && time <= p.EndTime);
         return price;
     }
 

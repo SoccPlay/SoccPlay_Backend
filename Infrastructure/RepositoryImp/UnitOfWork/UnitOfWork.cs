@@ -1,6 +1,5 @@
 ﻿using Application.IRepository;
 using Application.IRepository.IUnitOfWork;
-using Domain.Entities;
 using Infrastructure.Entities;
 
 namespace Infrastructure.RepositoryImp.UnitOfWork;

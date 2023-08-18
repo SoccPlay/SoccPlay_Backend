@@ -1,27 +1,29 @@
-﻿using Application.IRepository;
+﻿using Application.Heplers;
 using Application.IRepository.IUnitOfWork;
+using Application.Model.Request.Mail;
 using Application.Model.Request.RequestBooking;
-using Application.Model.Respone.ResponseBooking;
-using Application.Model.Respone.ResponseSchedule;
-using Application.Service;
+using Application.Model.Response.ResponseBooking;
+using Application.Model.Response.ResponseSchedule;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enum;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class BookingImplement : BookingService
 {
+    private readonly IMailService _mailService;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ScheduleService _scheduleService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public BookingImplement(IUnitOfWork unitOfWork, IMapper mapper, ScheduleService scheduleService)
+    public BookingImplement(IUnitOfWork unitOfWork, IMapper mapper, ScheduleService scheduleService,
+        IMailService mailService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _scheduleService = scheduleService;
+        _mailService = mailService;
     }
 
     public async Task<ResponseBooking> BookingPitch(RequestBooking requestBooking)
@@ -40,7 +42,8 @@ public class BookingImplement : BookingService
                 pitchsEmpty.Add(list);
                 continue;
             }
-            else if (schedules == null && list.Size == 7)
+
+            if (schedules == null && list.Size == 7)
             {
                 pitchsEmpty.Add(list);
                 continue;
@@ -53,11 +56,9 @@ public class BookingImplement : BookingService
                 (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
                 (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
             );
-            if (isConflict == true)
-            {
-                throw new Exception("Please Choose Time again");
-            }
-            else if (isConflict == false && list.Size == 5 && size5 != 0)
+            if (isConflict) throw new Exception("Please Choose Time again");
+
+            if (isConflict == false && list.Size == 5 && size5 != 0)
             {
                 pitchsEmpty.Add(list);
                 size5--;
@@ -83,38 +84,45 @@ public class BookingImplement : BookingService
         }
 
         //Total Price 
-        float total = (float)scheduleList.Sum(s => s.Price);
+        var total = scheduleList.Sum(s => s.Price);
         booking.TotalPrice = total;
         _unitOfWork.Save();
 
         var getBooking = _mapper.Map<ResponseBooking>(booking);
         getBooking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduleList);
+
         return getBooking;
     }
 
     public async Task<List<ResponseBooking>> GetAllBooking()
     {
-        var bookingEntities = await _unitOfWork.Booking.GetAllBooking(); // Assuming a method like GetAllAsync() exists in your repository
+        var bookingEntities =
+            await _unitOfWork.Booking.GetAllBooking(); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
-        int i = 0;
+        var i = 0;
         foreach (var booking in responseBookings)
         {
             booking.Schedules = _mapper.Map<List<ResponseSchedule>>(bookingEntities[i].Schedules);
             i++;
         }
+
         return responseBookings;
     }
 
     public async Task<List<ResponseBooking>> GetByCustomerId(Guid customerId)
     {
-        var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); // Assuming a method like GetAllAsync() exists in your repository
+        var bookingEntities =
+            await _unitOfWork.Booking
+                .GetAllBookingByCustomerId(
+                    customerId); // Assuming a method like GetAllAsync() exists in your repository
         var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
-        int i = 0;
+        var i = 0;
         foreach (var booking in responseBookings)
         {
             booking.Schedules = _mapper.Map<List<ResponseSchedule>>(bookingEntities[i].Schedules);
             i++;
         }
+
         return responseBookings;
     }
 
@@ -124,25 +132,41 @@ public class BookingImplement : BookingService
         booking.Status = BookingStatus.Inactive.ToString();
 
         var schedule = await _unitOfWork.Schedule.GetScheduleByBookingiD(BookingId);
-        foreach (var s in schedule)
+        foreach (var s in schedule) s.Status = BookingStatus.Inactive.ToString();
+        _unitOfWork.Save();
+
+        return true;
+    }
+
+    public async Task<bool> CancelBooking_v2(Guid BookingId)
+    {
+        var booking = await _unitOfWork.Booking.GetBookingById(BookingId);
+        booking.Status = BookingStatus.Inactive.ToString();
+        foreach (var s in booking.Schedules)
         {
             s.Status = BookingStatus.Inactive.ToString();
+            var sendMail = new Mail
+            {
+                To = _unitOfWork.Customer.GetById(booking.CustomerId).Email,
+                Subject = "Your football pitch booking schedule is Cancel.",
+                Body = "Your football pitch booking time starts from " + s.StarTime + " to" + s.EndTime + "is Cancel"
+            };
+            await _mailService.SendEmail(sendMail);
         }
 
         _unitOfWork.Save();
         return true;
     }
 
-    
     public async Task<ResponseBooking> BookingPitch_v2(RequestBookingV2 requestBooking)
     {
         //Check Schedule
         var pitchs = await _unitOfWork.Pitch.GetAllPitchByLand(requestBooking.LandId);
-        List<Pitch> pitchsList = new List<Pitch>();
+        var pitchsList = new List<Pitch>();
         DateTime startTime;
         DateTime endTime;
-        int size = 0;
-        for (int i = 0; i < requestBooking.TotalPitch; i++)
+        var size = 0;
+        for (var i = 0; i < requestBooking.TotalPitch; i++)
         {
             startTime = requestBooking.StarTime[i].AddSeconds(1);
             endTime = requestBooking.EndTime[i].AddSeconds(1);
@@ -153,10 +177,8 @@ public class BookingImplement : BookingService
                 (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
                 (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
             ) == false && pitchsList.Any(check => check.PitchId == p.PitchId) == false);
-            if (p == null)
-            {
-                throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
-            }
+            if (p == null) throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
+
             pitchsList.Add(p);
         }
 
@@ -165,21 +187,56 @@ public class BookingImplement : BookingService
         _unitOfWork.Save();
 
         var scheduleList = new List<Schedule>();
-        for (int i = 0; i < requestBooking.TotalPitch; i++)
+        for (var i = 0; i < requestBooking.TotalPitch; i++)
         {
-            var scheduling = await _scheduleService.CreateSchedule(requestBooking.StarTime[i], requestBooking.EndTime[i],
+            var scheduling = await _scheduleService.CreateSchedule(requestBooking.StarTime[i],
+                requestBooking.EndTime[i],
                 booking.BookingId,
                 pitchsList[i].PitchId, requestBooking.LandId, pitchsList[i].Size);
             scheduleList.Add(scheduling);
         }
 
         //Total Price 
-        float total = (float)scheduleList.Sum(s => s.Price);
+        var total = scheduleList.Sum(s => s.Price);
         booking.TotalPrice = total;
         _unitOfWork.Save();
 
         var getBooking = _mapper.Map<ResponseBooking>(booking);
         getBooking.Schedules = _mapper.Map<List<ResponseSchedule>>(scheduleList);
+        return getBooking;
+    }
+
+
+    public async Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking)
+    {
+        //Check Schedule
+        var pitchs = await _unitOfWork.Pitch.GetPitchToBooking
+            (requestBooking.LandId, requestBooking.StarTime, requestBooking.EndTime, requestBooking.Size);
+
+        var booking = _mapper.Map<Booking>(requestBooking);
+        _unitOfWork.Booking.Add(booking);
+        _unitOfWork.Save();
+
+        var scheduling = await _scheduleService.CreateSchedule(requestBooking.StarTime, requestBooking.EndTime,
+            booking.BookingId, pitchs.PitchId, requestBooking.LandId, pitchs.Size);
+
+        //Total Price 
+        booking.TotalPrice = scheduling.Price;
+        _unitOfWork.Save();
+
+        var getBooking = _mapper.Map<ResponseBooking_v2>(booking);
+        getBooking.StartTime = requestBooking.StarTime;
+        getBooking.EndTime = requestBooking.EndTime;
+
+        //Send Mail
+        var sendMail = new Mail
+        {
+            To = _unitOfWork.Customer.GetById(requestBooking.CustomerId).Email,
+            Subject = "Your football pitch booking schedule.",
+            Body = "Your football pitch booking time starts from " + scheduling.StarTime + " to" + scheduling.EndTime
+        };
+        await _mailService.SendEmail(sendMail);
+
         return getBooking;
     }
 }

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Model.Request.RequestAccount
+namespace Application.Model.Request.RequestAccount;
+
+public class RequestLogin
 {
-    public class RequestLogin
-    {
-        [Required]
-        public string UserName { get; set; }
-        [Required]
+    [Required] public string UserName { get; set; }
 
-        public string Password { get; set; }
-    }
+    [Required] public string Password { get; set; }
 }

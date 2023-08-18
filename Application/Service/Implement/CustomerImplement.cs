@@ -1,19 +1,18 @@
 ﻿using Application.Common.Security.HashPassword;
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestAccount;
-using Application.Model.Respone.ResponseAccount;
-using Application.Service;
+using Application.Model.Response.ResponseAccount;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enum;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class CustomerImplement : CustomerService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CustomerImplement(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHasher passwordHasher)
     {

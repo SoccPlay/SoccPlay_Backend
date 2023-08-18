@@ -1,7 +1,6 @@
 ﻿using Application.Model.Request.RequestLand;
 using Application.Model.ResponseLand;
 using Application.Service;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -16,30 +15,28 @@ public class LandController : ControllerBase
     {
         _landService = landService;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<ResponseLand_2>> CreateLand(RequestLand requestLand)
     {
-            var create = await _landService.CreateLand(requestLand);
-            return Ok(create);
+        var create = await _landService.CreateLand(requestLand);
+        return Ok(create);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> GetAllLand()
     {
-        
-            var lands = await _landService.GetAllLands();
-            return Ok(lands);
+        var lands = await _landService.GetAllLands();
+        return Ok(lands);
     }
 
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> GetTop6Land()
     {
-        
         var lands = await _landService.Top6Land();
         return Ok(lands);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<ResponseLand>> GetLandById(Guid landId)
     {
@@ -53,10 +50,10 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
-    
-    
+
+
     [HttpGet]
-    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName =default)
+    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName = default)
     {
         try
         {
@@ -68,8 +65,8 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
-    
-    
+
+
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> SearchLandByLocation(string location)
     {
@@ -83,9 +80,8 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
-    
-    
-    
+
+
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> SearchLandByName(string landName)
     {
@@ -99,6 +95,4 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
-
-    
 }

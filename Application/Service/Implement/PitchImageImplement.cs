@@ -1,8 +1,5 @@
-﻿using Application.Service;
-
-namespace Infrastructure.Implement;
+﻿namespace Application.Service.Implement;
 
 public class PitchImageImplement : PitchImageService
 {
-
 }

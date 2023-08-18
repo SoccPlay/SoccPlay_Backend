@@ -14,8 +14,29 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
 
     public async Task<List<Pitch>> GetAllPitchByLand(Guid LandId)
     {
-        var list = await _context.Pitches.Where(pitch => pitch.LandId == LandId).Include(s => s.Schedules).ToListAsync();
+        var list = await _context.Pitches.Where(pitch => pitch.LandId == LandId).Include(s => s.Schedules)
+            .ToListAsync();
         return list;
     }
-    
+
+    public async Task<List<Pitch>> GetAllPitchByLandAndDate(Guid landId, DateTime date, int size)
+    {
+        var query = await _context.Pitches
+            .Where(pitch => pitch.LandId == landId && pitch.Size == size)
+            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date))
+            .ToListAsync();
+        return query;
+    }
+
+    public async Task<Pitch> GetPitchToBooking(Guid landId, DateTime startTime, DateTime endTime, int size)
+    {
+        var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
+            p => p.LandId == landId && p.Size == size && p.Schedules.Any(schedule =>
+                (startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
+                (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
+                (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
+            ) == false);
+        if (query == null) throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
+        return query;
+    }
 }

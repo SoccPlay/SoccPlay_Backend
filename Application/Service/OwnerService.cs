@@ -1,6 +1,5 @@
 ﻿using Application.Model.Request.RequestAccount;
-using Application.Model.Respone.ResponseAccount;
-using Microsoft.AspNetCore.Mvc;
+using Application.Model.Response.ResponseAccount;
 
 namespace Application.Service;
 

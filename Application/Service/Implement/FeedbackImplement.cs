@@ -1,15 +1,13 @@
 ﻿using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestFeedback;
-using Application.Model.Respone.ResponseFeedback;
-using Application.Service;
+using Application.Model.Response.ResponseFeedback;
 using AutoMapper;
 using Domain.Entities;
 
-namespace Infrastructure.Implement;
+namespace Application.Service.Implement;
 
 public class FeedbackImplement : FeedbackService
 {
-
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 

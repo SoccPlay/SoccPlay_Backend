@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 
-namespace WebApi.Middleware
+namespace WebApi.Middleware;
+
+public class CustomException : Exception
 {
-    public class CustomException : Exception
+    public CustomException(string message, List<string>? errors = default,
+        HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+        : base(message)
     {
-        public CustomException(string message, List<string>? errors = default, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
-            : base(message)
-        {
-            ErrorMessages = errors;
-            StatusCode = statusCode;
-        }
-
-        public List<string>? ErrorMessages { get; }
-
-        public HttpStatusCode StatusCode { get; }
-
+        ErrorMessages = errors;
+        StatusCode = statusCode;
     }
+
+    public List<string>? ErrorMessages { get; }
+
+    public HttpStatusCode StatusCode { get; }
 }

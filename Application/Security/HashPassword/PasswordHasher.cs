@@ -6,10 +6,11 @@ namespace Application.Security.HashPassword;
 public class PasswordHasher : IPasswordHasher
 {
     private const int key = 12;
+
     public string HashPassword(string password)
     {
-        string salt = BCryptNet.GenerateSalt(key);
-        string hash= BCryptNet.HashPassword(password, salt);
+        var salt = BCryptNet.GenerateSalt(key);
+        var hash = BCryptNet.HashPassword(password, salt);
         return hash;
     }
 
