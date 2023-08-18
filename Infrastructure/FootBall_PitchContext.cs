@@ -34,7 +34,7 @@ namespace Infrastructure.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-               optionsBuilder.UseSqlServer("Data Source=mssql-139728-0.cloudclusters.net,19689;Initial Catalog=FootBall;User ID=admin;pwd=sMZHCqF7;TrustServerCertificate=True;MultipleActiveResultSets=true");
+               optionsBuilder.UseSqlServer("Data Source=mssql-140618-0.cloudclusters.net,18836;Initial Catalog=FootBall;User ID=admin;pwd=sMZHCqF7;TrustServerCertificate=True;MultipleActiveResultSets=true");
                //optionsBuilder.UseSqlServer("Data Source=NhaPhan;Initial Catalog=11;User ID=sa;pwd=1;TrustServerCertificate=True;MultipleActiveResultSets=true");
             }
         }
@@ -188,6 +188,10 @@ namespace Infrastructure.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Policy)
+                    .HasMaxLength(int.MaxValue - 1)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.Distance)
                     .HasMaxLength(int.MaxValue - 1)
                     .IsUnicode(false);
                 

@@ -20,6 +20,7 @@ namespace Domain.Entities
         public string Title { get; set; } = null!;
         public string Policy { get; set; }
         public string Location { get; set; } = null!;
+        public string Distance { get; set; }
         public int TotalPitch { get; set; }
         public string Description { get; set; } = null!;
         public Guid OwnerId { get; set; }

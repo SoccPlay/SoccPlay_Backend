@@ -34,6 +34,8 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
             select new { LandId = grouped.Key}
         ).Take(6).ToListAsync();
 
+        
+        
         List<Land> lands = new List<Land>();
         foreach (var l in topLand)
         {
