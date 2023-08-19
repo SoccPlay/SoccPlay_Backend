@@ -84,4 +84,14 @@ public class LandImplement : LandService
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
         return responseLands;
     }
+
+    public async Task<List<ResponseLand>> FilterLand(RequestFilter requestFilter)
+    {
+        var landEntities = await _unitOfWork.Land
+                .FilterLand(requestFilter.location, requestFilter.rate, requestFilter.min, requestFilter.max,
+                    requestFilter.size);
+        if (landEntities == null) throw new CultureNotFoundException("NotFound");
+        var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
+        return responseLands;
+    }
 }

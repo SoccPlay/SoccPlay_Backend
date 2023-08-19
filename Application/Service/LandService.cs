@@ -13,4 +13,5 @@ public interface LandService
     Task<List<ResponseLand>> SearchLand(string location, string landName);
     Task<List<ResponseLand>> SearchLandByLocation(string landName);
     Task<List<ResponseLand>> SearchLandByName(string landName);
+    Task<List<ResponseLand>> FilterLand(RequestFilter requestFilter);
 }

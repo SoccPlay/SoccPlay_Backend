@@ -94,4 +94,11 @@ public class LandController : ControllerBase
             return NotFound(ex.Message);
         }
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> Filter([FromQuery] RequestFilter requestFilter)
+    {
+        var lands = await _landService.FilterLand(requestFilter);
+            return Ok(lands);
+    }
 }

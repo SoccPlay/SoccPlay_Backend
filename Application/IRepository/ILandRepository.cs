@@ -16,4 +16,6 @@ public interface ILandRepository : IGenericRepository<Land>
     Task<List<Land>> SearchLand(string location, string name);
     Task<List<Land>> SearchLandByLocation(string location);
     Task<List<Land>> SearchLandByName(string name);
+    
+    Task<List<Land>> FilterLand(string location, int rate, float min, float max, int size);
 }
