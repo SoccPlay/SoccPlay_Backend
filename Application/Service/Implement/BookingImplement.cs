@@ -1,4 +1,5 @@
-﻿using Application.Heplers;
+﻿using System.Globalization;
+using Application.Heplers;
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.Mail;
 using Application.Model.Request.RequestBooking;
@@ -209,6 +210,12 @@ public class BookingImplement : BookingService
 
     public async Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking)
     {
+        var checkDate = requestBooking.EndTime.Hour - requestBooking.StarTime.Hour;
+        if (checkDate > 3 || checkDate < 0)
+        {
+            throw new CultureNotFoundException("Thời gian đặt sân không quá 3 giờ !");
+        }
+        
         //Check Schedule
         var pitchs = await _unitOfWork.Pitch.GetPitchToBooking
             (requestBooking.LandId, requestBooking.StarTime, requestBooking.EndTime, requestBooking.Size);

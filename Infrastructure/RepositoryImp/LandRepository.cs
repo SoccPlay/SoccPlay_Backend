@@ -22,7 +22,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     public async Task<List<Land>> GetAllLand()
     {
         return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks)
-            .Where(land => land.TotalPitch != 0).ToListAsync();
+            .ToListAsync();
     }
 
     public async Task<List<Land>> GetLandByOwnerId(Guid ownerId)
