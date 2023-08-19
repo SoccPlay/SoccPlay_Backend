@@ -1,4 +1,5 @@
-﻿using Application.Model.Response.ResponseAccount;
+﻿using Application.Model.Request.RequestAccount;
+using Application.Model.Response.ResponseAccount;
 using Application.Service;
 using Domain.Entities;
 using Infrastructure.Entities;
@@ -41,8 +42,8 @@ public class AccountsController : ControllerBase
 
         return account;
     }
-
-
+    
+    
     [HttpGet]
     public async Task<ActionResult<List<ResponseAccountCustomer>>> GetCustomerByAccountId(Guid id)
     {
@@ -63,6 +64,13 @@ public class AccountsController : ControllerBase
     public async Task<ActionResult<List<ResponseAccountAdmin>>> GetAdminByAccountId(Guid id)
     {
         var bookings = await _accountService.GetAdmin(id);
+        return Ok(bookings);
+    }
+    
+    [HttpPut]
+    public async Task<ActionResult<ResponseAccountCustomer>> UpdateProfileOfCustomer(RequestUpdateProfile requestUpdateProfile)
+    {
+        var bookings = await _accountService.UpdateProfileCustomer(requestUpdateProfile);
         return Ok(bookings);
     }
 
