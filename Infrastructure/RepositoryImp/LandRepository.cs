@@ -57,10 +57,16 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<List<Land>> SearchLand(string location, string name)
     {
-        var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
-            .Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0 &&
-                           land.NameLand.Contains(name)).ToListAsync();
-        return lands;
+        //how to raise performance
+        var lands = _context.Set<Land>()
+            .Include(a => a.Prices)
+            .Include(f => f.Feedbacks)
+            .Include(c => c.Images)
+            .Where(land => 
+                string.IsNullOrEmpty(location) || land.Location.ToLower().Contains(location.ToLower()) &&
+                land.TotalPitch != 0 &&
+                string.IsNullOrEmpty(name) || land.NameLand.Contains(name));
+        return await lands.ToListAsync();
     }
 
     public async Task<List<Land>> SearchLandByLocation(string location)
