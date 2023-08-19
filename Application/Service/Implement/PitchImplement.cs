@@ -45,4 +45,15 @@ public class PitchImplement : PitchService
 
         return response;
     }
+
+    public async Task<ResponsePitchV2> GetScheduleList(Guid landId, string date, int size, string name)
+    {
+        var provider = CultureInfo.InvariantCulture;
+        var dateTime = DateTime.ParseExact(date, "dd-MM-yyyy", provider);
+        if (dateTime < DateTime.Now.Date) throw new Exception("You Can Not Choose this day !");
+        var pitche = await _unitOfWork.Pitch.GetPitchByLandAndDate(landId, dateTime, size, name);
+        var response = _mapper.Map<ResponsePitchV2>(pitche);
+        response.Schedules = _mapper.Map<List<ResponseSchedule_v2>>(pitche.Schedules);
+        return response;
+    }
 }

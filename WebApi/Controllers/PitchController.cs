@@ -30,4 +30,12 @@ public class PitchController : ControllerBase
         var create = await _pitchService.GetScheduleListByDate(landId, date, size);
         return Ok(create);
     }
+    
+    
+    [HttpGet]
+    public async Task<ActionResult<ResponsePitchV2>> GetPitchSchedule_v2(Guid landId, string date, int size, string pitchName)
+    {
+        var create = await _pitchService.GetScheduleList(landId, date, size, pitchName);
+        return Ok(create);
+    }
 }

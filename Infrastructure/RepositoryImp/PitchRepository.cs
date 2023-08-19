@@ -28,6 +28,19 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         return query;
     }
 
+    public async Task<Pitch> GetPitchByLandAndDate(Guid landId, DateTime date, int size, string name)
+    {
+        var query = await _context.Pitches
+            .Where(pitch => pitch.LandId == landId && pitch.Size == size && pitch.Name == name)
+            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date))
+            .FirstOrDefaultAsync();
+        if (query == null)
+        {
+            throw new Exception("Not Found");
+        }
+        return query;
+    }
+
     public async Task<Pitch> GetPitchToBooking(Guid landId, DateTime startTime, DateTime endTime, int size)
     {
         var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
