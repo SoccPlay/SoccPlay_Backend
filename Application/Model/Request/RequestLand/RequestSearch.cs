@@ -1,7 +1,9 @@
-﻿namespace Application.Model.Request.RequestLand;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.Model.Request.RequestLand;
 
 public class RequestSearch
 {
-    public string location { get; set; }
-    public string landName { get; set; }
+    public string? location { get; set; }
+    public string? landName { get; set; }
 }

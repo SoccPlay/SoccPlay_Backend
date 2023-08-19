@@ -40,24 +40,23 @@ public class LandController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ResponseLand>> GetLandById(Guid landId)
     {
-        try
-        {
             var land = await _landService.LandDetail(landId);
             return Ok(land);
-        }
-        catch (Exception ex)
-        {
-            return NotFound(ex.Message);
-        }
     }
-
-
+    
     [HttpGet]
-    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location, string landName = default)
+    public async Task<ActionResult<ResponseLand>> GetLandByOwner(Guid OwnerId)
+    {
+        var land = await _landService.LandByOwnerId(OwnerId);
+        return Ok(land);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> SearchLand([FromQuery] RequestSearch search)
     {
         try
         {
-            var lands = await _landService.SearchLand(location, landName);
+            var lands = await _landService.SearchLand(search.location, search.landName);
             return Ok(lands);
         }
         catch (Exception ex)

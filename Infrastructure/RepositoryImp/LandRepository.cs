@@ -25,6 +25,12 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
             .Where(land => land.TotalPitch != 0).ToListAsync();
     }
 
+    public async Task<List<Land>> GetLandByOwnerId(Guid ownerId)
+    {
+        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks)
+            .Where(land => land.OwnerId == ownerId).ToListAsync();
+    }
+
     public async Task<List<Land>> GetTop6()
     {
         var topLands = await (

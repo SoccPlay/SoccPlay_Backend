@@ -35,12 +35,18 @@ public class LandImplement : LandService
         return responseLands;
     }
 
-
     public async Task<ResponseLand> LandDetail(Guid landId)
     {
         var land = await _unitOfWork.Land.GetLandByIdLand(landId);
         if (land == null) throw new CultureNotFoundException("NotFound");
         var responseLands = _mapper.Map<ResponseLand>(land);
+        return responseLands;
+    }
+
+    public async Task<List<ResponseLand>> LandByOwnerId(Guid ownerId)
+    {
+        var landEntities = await _unitOfWork.Land.GetLandByOwnerId(ownerId);
+        var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
         return responseLands;
     }
 
