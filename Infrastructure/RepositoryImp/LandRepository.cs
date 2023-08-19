@@ -16,6 +16,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     {
         var land = await _context.Set<Land>()!.Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
             .FirstOrDefaultAsync(land => land.LandId == landId && land.TotalPitch != 0);
+            //.FirstOrDefaultAsync(land => land.LandId == landId && land.TotalPitch != 0);
         return land;
     }
 
@@ -66,6 +67,10 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
                 string.IsNullOrEmpty(location) || land.Location.ToLower().Contains(location.ToLower()) &&
                 land.TotalPitch != 0 &&
                 string.IsNullOrEmpty(name) || land.NameLand.Contains(name));
+            // .Where(land =>
+            // string.IsNullOrEmpty(location) || land.Location.ToLower().Contains(location.ToLower()) &&
+            // land.TotalPitch != 0 &&
+            // string.IsNullOrEmpty(name) || land.NameLand.Contains(name));
         return await lands.ToListAsync();
     }
 
@@ -73,6 +78,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     {
         var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
             .Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0).ToListAsync();
+        //.Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0).ToListAsync();
         return lands;
     }
 
@@ -80,6 +86,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     {
         var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
             .Where(land => land.NameLand.Contains(name) && land.TotalPitch != 0).ToListAsync();
+        //.Where(land => land.NameLand.Contains(name) && land.TotalPitch != 0).ToListAsync();
         return lands;
     }
 
