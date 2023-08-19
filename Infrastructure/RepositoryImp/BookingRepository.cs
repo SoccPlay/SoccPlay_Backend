@@ -1,4 +1,5 @@
-﻿using Application.IRepository;
+﻿using System.Globalization;
+using Application.IRepository;
 using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.Entities;
@@ -17,6 +18,10 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
     {
         var bookings = _context.Set<Booking>().Include(s => s.Schedules).ThenInclude(s => s.PitchPitch).Include(l => l.Land)
             .Where(b => b.CustomerId == customerId).ToList();
+        if (bookings == null)
+        {
+            throw new CultureNotFoundException("Not Found");
+        }
         return bookings;
     }
 

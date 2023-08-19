@@ -114,14 +114,19 @@ public class BookingImplement : BookingService
     {
         var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); 
         var responseBookings = _mapper.Map<List<ResponseManageBooking>>(bookingEntities);
-        int i = 0;
-        foreach (var b in responseBookings)
+
+        foreach (var responseBooking in responseBookings)
         {
-            b.size = bookingEntities[i].Schedules.FirstOrDefault().PitchPitch.Size;
-            i++;
+            var firstSchedule = bookingEntities.FirstOrDefault()?.Schedules?.FirstOrDefault();
+            if (firstSchedule != null && firstSchedule.PitchPitch != null)
+            {
+                responseBooking.size = firstSchedule.PitchPitch.Size;
+            }
         }
+
         return responseBookings;
     }
+
 
     public async Task<bool> CancleBooking(Guid BookingId)
     {
