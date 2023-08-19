@@ -13,7 +13,7 @@ public interface BookingService
 
     Task<bool> CancelBooking_v2(Guid BookingId);
 
-    public Task<List<ResponseBooking>> GetByCustomerId(Guid customerId);
+    public Task<List<ResponseManageBooking>> GetByCustomerId(Guid customerId);
 
     public Task<ResponseBooking> BookingPitch_v2(RequestBookingV2 requestBooking);
     public Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking);

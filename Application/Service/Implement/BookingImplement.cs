@@ -110,20 +110,16 @@ public class BookingImplement : BookingService
         return responseBookings;
     }
 
-    public async Task<List<ResponseBooking>> GetByCustomerId(Guid customerId)
+    public async Task<List<ResponseManageBooking>> GetByCustomerId(Guid customerId)
     {
-        var bookingEntities =
-            await _unitOfWork.Booking
-                .GetAllBookingByCustomerId(
-                    customerId); // Assuming a method like GetAllAsync() exists in your repository
-        var responseBookings = _mapper.Map<List<ResponseBooking>>(bookingEntities);
-        var i = 0;
-        foreach (var booking in responseBookings)
+        var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); 
+        var responseBookings = _mapper.Map<List<ResponseManageBooking>>(bookingEntities);
+        int i = 0;
+        foreach (var b in responseBookings)
         {
-            booking.Schedules = _mapper.Map<List<ResponseSchedule>>(bookingEntities[i].Schedules);
+            b.size = bookingEntities[i].Schedules.FirstOrDefault().PitchPitch.Size;
             i++;
         }
-
         return responseBookings;
     }
 

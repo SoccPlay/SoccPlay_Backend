@@ -45,7 +45,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<ResponseBooking>>> GetAllBookingByCustomerId(Guid id)
+    public async Task<ActionResult<List<ResponseManageBooking>>> GetAllBookingByCustomerId(Guid id)
     {
         var bookings = await _bookingService.GetByCustomerId(id);
         return Ok(bookings);
