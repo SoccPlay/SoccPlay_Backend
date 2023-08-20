@@ -24,7 +24,8 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     {
         var query = await _context.Pitches
             .Where(pitch => pitch.LandId == landId && pitch.Size == size)
-            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date && schedule.Status != ScheduleEnum.Inactive.ToString()))
+            .Include(pitch => pitch.Schedules.Where(schedule =>
+                schedule.StarTime.Date == date.Date && schedule.Status != ScheduleEnum.Inactive.ToString()))
             .ToListAsync();
         return query;
     }
@@ -33,12 +34,14 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     {
         var query = await _context.Pitches
             .Where(pitch => pitch.LandId == landId && pitch.Size == size && pitch.Name == name)
-            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date))
+            .Include(pitch => pitch.Schedules.Where(schedule =>
+                schedule.StarTime.Date == date.Date && schedule.Status != ScheduleEnum.Inactive.ToString()))
             .FirstOrDefaultAsync();
         if (query == null)
         {
             throw new Exception("Not Found");
         }
+
         return query;
     }
 
@@ -46,9 +49,11 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     {
         var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
             p => p.LandId == landId && p.Size == size && p.Schedules.Any(schedule =>
-                (startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
-                (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
-                (startTime <= schedule.StarTime && endTime >= schedule.EndTime)
+                string.IsNullOrEmpty(schedule.Status) ||
+                schedule.Status == ScheduleEnum.Active.ToString() &&
+                ((startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
+                 (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
+                 (startTime <= schedule.StarTime && endTime >= schedule.EndTime))
             ) == false);
         if (query == null) throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
         return query;

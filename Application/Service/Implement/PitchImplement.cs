@@ -22,7 +22,11 @@ public class PitchImplement : PitchService
     public async Task<ResponsePitch> CreatePitch(RequestPitch requestPitch)
     {
         var pitch = _mapper.Map<Pitch>(requestPitch);
-        var land = _unitOfWork.Land.GetById(requestPitch.LandId);
+        var land = await _unitOfWork.Land.GetLandByIdLand(requestPitch.LandId);
+        if ( land.Prices == null || land.Prices.Any(p => p.Size == requestPitch.Size) == false)
+        {
+            throw new Exception("You need to Add price before create Pitch");
+        }
         land.TotalPitch = land.TotalPitch + 1;
         _unitOfWork.Pitch.Add(pitch);
         _unitOfWork.Save();

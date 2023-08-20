@@ -15,7 +15,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     public async Task<Land> GetLandByIdLand(Guid landId)
     {
         var land = await _context.Set<Land>()!.Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
-            .FirstOrDefaultAsync(land => land.LandId == landId && land.TotalPitch != 0);
+            .FirstOrDefaultAsync(land => land.LandId == landId );
             //.FirstOrDefaultAsync(land => land.LandId == landId && land.TotalPitch != 0);
         return land;
     }

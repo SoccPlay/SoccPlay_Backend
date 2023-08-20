@@ -67,7 +67,7 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
             entity.Property(e => e.Address)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Email)
@@ -75,7 +75,7 @@ public partial class FootBall_PitchContext : DbContext
                 .IsUnicode(false);
 
             entity.Property(e => e.FullName)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Phone)
@@ -102,7 +102,7 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.DateBooking).HasColumnType("datetime");
 
             entity.Property(e => e.Note)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Customer)
@@ -127,7 +127,7 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
             entity.Property(e => e.Address)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Email)
@@ -135,7 +135,7 @@ public partial class FootBall_PitchContext : DbContext
                 .IsUnicode(false);
 
             entity.Property(e => e.FullName)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Phone)
@@ -159,7 +159,9 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.FeedbackId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("FeedbackId");
-            entity.Property(e => e.Description).IsUnicode(false);
+            entity.Property(e => e.Description)
+                .HasColumnType("nvarchar(max)")
+                .IsUnicode(false);
 
             entity.HasOne(d => d.Customer)
                 .WithMany(p => p.Feedbacks)
@@ -181,7 +183,7 @@ public partial class FootBall_PitchContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("LandId");
             entity.Property(e => e.Description)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Policy)
@@ -193,11 +195,11 @@ public partial class FootBall_PitchContext : DbContext
                 .IsUnicode(false);
 
             entity.Property(e => e.Location)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.NameLand)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Status)
@@ -205,7 +207,7 @@ public partial class FootBall_PitchContext : DbContext
                 .IsUnicode(false);
 
             entity.Property(e => e.Title)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Owner)
@@ -235,7 +237,7 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
             entity.Property(e => e.Address)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Email)
@@ -243,7 +245,7 @@ public partial class FootBall_PitchContext : DbContext
                 .IsUnicode(false);
 
             entity.Property(e => e.FullName)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Phone)
@@ -268,7 +270,7 @@ public partial class FootBall_PitchContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("PitchId");
             entity.Property(e => e.Name)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Size)
