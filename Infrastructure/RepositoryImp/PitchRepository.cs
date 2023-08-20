@@ -1,5 +1,6 @@
 ﻿using Application.IRepository;
 using Domain.Entities;
+using Domain.Enum;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     {
         var query = await _context.Pitches
             .Where(pitch => pitch.LandId == landId && pitch.Size == size)
-            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date))
+            .Include(pitch => pitch.Schedules.Where(schedule => schedule.StarTime.Date == date.Date && schedule.Status != ScheduleEnum.Inactive.ToString()))
             .ToListAsync();
         return query;
     }
