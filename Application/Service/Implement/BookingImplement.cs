@@ -120,6 +120,8 @@ public class BookingImplement : BookingService
             var firstSchedule = bookingEntities.FirstOrDefault()?.Schedules?.FirstOrDefault();
             if (firstSchedule != null && firstSchedule.PitchPitch != null)
             {
+                responseBooking.EndTime = firstSchedule.EndTime;
+                responseBooking.StartTime = firstSchedule.StarTime;
                 responseBooking.size = firstSchedule.PitchPitch.Size;
             }
         }

@@ -8,6 +8,9 @@ public class ResponseManageBooking
     public float TotalPrice { get; set; }
     public string? Location { get; set; }
     public DateTime DateBooking { get; set; }
+    
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
     public string Note { get; set; }
     public int size { get; set; }
     public string Status { get; set; }
