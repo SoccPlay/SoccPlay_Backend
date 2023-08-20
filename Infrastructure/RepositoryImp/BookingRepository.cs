@@ -17,7 +17,7 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
     public async Task<List<Booking>> GetAllBookingByCustomerId(Guid customerId)
     {
         var bookings = _context.Set<Booking>().Include(s => s.Schedules).ThenInclude(s => s.PitchPitch).Include(l => l.Land)
-            .Where(b => b.CustomerId == customerId).ToList();
+            .Where(b => b.CustomerId == customerId && b.Status != BookingStatus.Inactive.ToString()).ToList();
         if (bookings == null)
         {
             throw new CultureNotFoundException("Not Found");
