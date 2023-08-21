@@ -63,14 +63,10 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
             .Include(a => a.Prices)
             .Include(f => f.Feedbacks)
             .Include(c => c.Images)
-            /*.Where(land =>
-                land.Location.ToLower().Contains(location.ToLower()) &&
-                land.TotalPitch != 0 &&
-                land.NameLand.ToLower().Contains(name.ToLower()));*/
             .Where(land =>
-            (string.IsNullOrEmpty(location) || land.Location.ToLower().Contains(location.ToLower())) &&
-            land.TotalPitch != 0 &&
-            (string.IsNullOrEmpty(name) || land.NameLand.ToLower().Contains(name.ToLower())));
+                (string.IsNullOrEmpty(location) || land.Location.ToLower().Contains(location.ToLower())) &&
+                land.TotalPitch != 0 &&
+                (string.IsNullOrEmpty(name) || land.NameLand.ToLower().Contains(name.ToLower())));
         return await lands.ToListAsync();
     }
 
