@@ -52,11 +52,11 @@ public class LandController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<ResponseLand>>> SearchLand([FromQuery] RequestSearch search)
+    public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location ,string landName)
     {
         try
         {
-            var lands = await _landService.SearchLand(search.location, search.landName);
+            var lands = await _landService.SearchLand(location, landName);
             return Ok(lands);
         }
         catch (Exception ex)
