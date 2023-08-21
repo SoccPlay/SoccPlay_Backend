@@ -22,7 +22,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<List<Land>> GetAllLand()
     {
-        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks)
+        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks).Where(land => land.TotalPitch != 0)
             .ToListAsync();
     }
 
@@ -74,7 +74,6 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
     {
         var lands = await _context.Set<Land>().Include(a => a.Prices).Include(f => f.Feedbacks).Include(c => c.Images)
             .Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0).ToListAsync();
-        //.Where(land => land.Location.ToLower().Contains(location.ToLower()) && land.TotalPitch != 0).ToListAsync();
         return lands;
     }
 
