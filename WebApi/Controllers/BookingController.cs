@@ -1,5 +1,6 @@
 ﻿using Application.Model.Request.RequestBooking;
 using Application.Model.Response.ResponseBooking;
+using Application.Model.ResponseLand;
 using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace WebApi.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly BookingService _bookingService;
+    private readonly LandService _landService;
 
-    public BookingController(BookingService bookingService)
+    public BookingController(BookingService bookingService, LandService landService)
     {
         _bookingService = bookingService;
+        _landService = landService;
     }
 
     
@@ -37,6 +40,14 @@ public class BookingController : ControllerBase
         var bookings = await _bookingService.GetByCustomerId(id);
         return Ok(bookings);
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseAllLandBooking>>> GetAllBookingByOwnerId(Guid id)
+    {
+        var bookings = await _bookingService.GetByOwner(id);
+        return Ok(bookings);
+    }
+
 
 
     [HttpDelete]
