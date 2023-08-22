@@ -120,7 +120,7 @@ public class BookingImplement : BookingService
             booking.BookingId, pitchs.PitchId, requestBooking.LandId, pitchs.Size, requestBooking.price);
 
         //Total Price 
-        booking.TotalPrice = scheduling.Price;
+        booking.TotalPrice = requestBooking.price;
         _unitOfWork.Save();
 
         var getBooking = _mapper.Map<ResponseBooking_v2>(booking);

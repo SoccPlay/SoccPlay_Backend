@@ -23,10 +23,11 @@ public class PitchImplement : PitchService
     {
         var pitch = _mapper.Map<Pitch>(requestPitch);
         var land = await _unitOfWork.Land.GetLandByIdLand(requestPitch.LandId);
-        if ( land.Prices == null || land.Prices.Any(p => p.Size == requestPitch.Size) == false)
+        if (land.Prices == null || land.Prices.Any(p => p.Size == requestPitch.Size) == false)
         {
             throw new Exception("You need to Add price before create Pitch");
         }
+
         land.TotalPitch = land.TotalPitch + 1;
         _unitOfWork.Pitch.Add(pitch);
         _unitOfWork.Save();
@@ -58,6 +59,13 @@ public class PitchImplement : PitchService
         var pitche = await _unitOfWork.Pitch.GetPitchByLandAndDate(landId, dateTime, size, name);
         var response = _mapper.Map<ResponsePitchV2>(pitche);
         response.Schedules = _mapper.Map<List<ResponseSchedule_v2>>(pitche.Schedules);
+        return response;
+    }
+
+    public async Task<List<ICollection<ResponsePitch>>> GetAllPitchOfOwner(Guid ownerId)
+    {
+        var pitchs = await _unitOfWork.Pitch.Get(ownerId);
+        var response = _mapper.Map<List<ICollection<ResponsePitch>>>(pitchs);
         return response;
     }
 }

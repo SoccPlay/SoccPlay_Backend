@@ -34,6 +34,12 @@ public class PriceImplement : PriceService
         return _mapper.Map<List<ResponsePrice>>(list);
     }
 
+    public async Task<bool> RemovePrice(Guid id)
+    {
+        _unitOfWork.Price.Remove(_unitOfWork.Price.GetById(id));
+        return true;
+    }
+
     public async Task<float> Calculator(RequestCaculator requestCaculator)
     {
         var land =  await _unitOfWork.Land.GetLandByIdLand(requestCaculator.LandId);

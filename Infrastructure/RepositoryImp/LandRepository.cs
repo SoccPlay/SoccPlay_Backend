@@ -1,5 +1,6 @@
 ﻿using Application.IRepository;
 using Domain.Entities;
+using Domain.Enum;
 using Infrastructure.Entities;
 using Infrastructure.RepositoryImp.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,12 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
             .Where(land => land.OwnerId == ownerId).ToListAsync();
     }
 
+    public async Task<List<Guid>> GetPitchByOwnerId(Guid ownerId)
+    {
+        var land = await _context.Set<Land>()!.Include(p => p.Pitches)
+            .Where(land => land.OwnerId == ownerId).Select( l => l.LandId).ToListAsync();
+        return land;
+    }
     public async Task<List<Land>> GetTop6()
     {
         var topLands = await (
