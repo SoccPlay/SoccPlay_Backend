@@ -93,6 +93,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
                   && (rate == 0 || (!l.Feedbacks.Any() ? false : l.Feedbacks.Average(feedback => feedback.Rate) == rate))
                   && (min == 0 || l.Prices.Min(price => price.Price1) <= min)
                   && (max == 0 || l.Prices.Max(price => price.Price1) >= max)
+                  && l.TotalPitch != 0
             select l;
 
         var result = await query
