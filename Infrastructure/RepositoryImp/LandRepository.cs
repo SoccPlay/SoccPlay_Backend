@@ -28,7 +28,7 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
     public async Task<List<Land>> GetLandByOwnerId(Guid ownerId)
     {
-        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks)
+        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks).Include(b => b.Bookings)
             .Where(land => land.OwnerId == ownerId).ToListAsync();
     }
 

@@ -5,6 +5,7 @@ using Application.Model.Request.Mail;
 using Application.Model.Request.RequestBooking;
 using Application.Model.Response.ResponseBooking;
 using Application.Model.Response.ResponseSchedule;
+using Application.Model.ResponseLand;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enum;
@@ -60,7 +61,21 @@ public class BookingImplement : BookingService
 
         return responseBookings;
     }
-    
+
+    public async Task<List<ResponseAllLandBooking>> GetByOwner(Guid ownerId)
+    {
+        var lands = await _unitOfWork.Land.GetLandByOwnerId(ownerId);
+        var response = _mapper.Map<List<ResponseAllLandBooking>>(lands);
+        int i = 0;
+        foreach (var land in response)
+        {
+            land.List = _mapper.Map<List<ResponseBooking_v2>>(lands[i].Bookings);
+            i++;
+        }
+
+        return response;
+    }
+
     public async Task<bool> CancelBooking_v2(Guid BookingId)
     {
         var booking = await _unitOfWork.Booking.GetBookingById(BookingId);

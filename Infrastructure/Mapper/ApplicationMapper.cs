@@ -141,15 +141,25 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.TotalPitch, opt => opt.MapFrom(src => src.TotalPitch))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Distance))
-            .ForMember(dest => dest.AverageRate,opt => opt.MapFrom(src => src.Feedbacks.Any() ? src.Feedbacks.Average(rate => rate.Rate) : 0.0))
+            .ForMember(dest => dest.AverageRate,
+                opt => opt.MapFrom(src => src.Feedbacks.Any() ? src.Feedbacks.Average(rate => rate.Rate) : 0.0))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
-            .ForMember(dest => dest.MinPrice,opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Min(price => price.Price1) : 0))
-            .ForMember(dest => dest.MaxPrice,opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Max(price => price.Price1) : 0))
-            .ForPath(dest => dest.PitchImages,opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Select(i => i.Name).ToList() : null))
+            .ForMember(dest => dest.MinPrice,
+                opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Min(price => price.Price1) : 0))
+            .ForMember(dest => dest.MaxPrice,
+                opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Max(price => price.Price1) : 0))
+            .ForPath(dest => dest.PitchImages,
+                opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Select(i => i.Name).ToList() : null))
             .ForPath(dest => dest.image, opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Last().Name : null));
 
-        
+
+        CreateMap<Land, ResponseAllLandBooking>()
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NameLand))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location));
+
+
         //Pitch
         CreateMap<RequestPitch, Pitch>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
