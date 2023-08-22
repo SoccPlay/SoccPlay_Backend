@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestLand;
+using Application.Model.Response.ResponsePrice;
 using Application.Model.ResponseLand;
 using Application.Service;
 using AutoMapper;
@@ -35,11 +36,12 @@ public class LandImplement : LandService
         return responseLands;
     }
 
-    public async Task<ResponseLand> LandDetail(Guid landId)
+    public async Task<ResponseLand_v3> LandDetail(Guid landId)
     {
         var land = await _unitOfWork.Land.GetLandByIdLand(landId);
         if (land == null) throw new CultureNotFoundException("NotFound");
-        var responseLands = _mapper.Map<ResponseLand>(land);
+        var responseLands = _mapper.Map<ResponseLand_v3>(land);
+        responseLands.Price = _mapper.Map<List<ResponsePrice>>(land.Prices);
         return responseLands;
     }
 
