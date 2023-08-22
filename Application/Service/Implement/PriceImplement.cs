@@ -33,4 +33,19 @@ public class PriceImplement : PriceService
         var list = _priceRepository.GetPriceByLandId(LandId);
         return _mapper.Map<List<ResponsePrice>>(list);
     }
+
+    public async Task<float> Calculator(RequestCaculator requestCaculator)
+    {
+        var land =  await _unitOfWork.Land.GetLandByIdLand(requestCaculator.LandId);
+        var price = land.Prices.FirstOrDefault(p =>
+            p.Size == requestCaculator.Size && requestCaculator.StarTime.Hour >= p.StarTime &&
+            requestCaculator.StarTime.Hour <= p.EndTime)!.Price1;
+
+        var hours = requestCaculator.EndTime - requestCaculator.StarTime;
+        int minutes = hours.Minutes;
+        float totalHours = (float)hours.Hours;
+        float totalMin = (float)minutes / 60;
+        float total = (float)(totalHours + totalMin) * price;
+        return total;
+    }
 }

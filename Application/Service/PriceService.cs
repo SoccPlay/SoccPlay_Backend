@@ -8,4 +8,6 @@ public interface PriceService
     Task<ResponsePrice> CreatePrice(RequestPrice requestPrice);
 
     Task<List<ResponsePrice>> GetPriceByLand(Guid LandId);
+
+    Task<float> Calculator(RequestCaculator requestCaculator);
 }

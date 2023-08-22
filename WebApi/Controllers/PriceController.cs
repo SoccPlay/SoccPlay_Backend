@@ -29,4 +29,11 @@ public class PriceController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
+    [HttpPost]
+    public async Task<ActionResult<float>> Calculator(RequestCaculator request)
+    {
+            var create = await _priceService.Calculator(request);
+            return Ok(create);
+    }
 }

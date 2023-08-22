@@ -8,6 +8,5 @@ public class RequestBooking_v3
     public DateTime StarTime { get; set; }
     public DateTime EndTime { get; set; }
     public Guid CustomerId { get; set; }
-
     public float price { get; set; }
 }
