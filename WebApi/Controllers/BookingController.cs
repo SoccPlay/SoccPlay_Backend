@@ -16,20 +16,7 @@ public class BookingController : ControllerBase
         _bookingService = bookingService;
     }
 
-    [HttpPost]
-    public async Task<ActionResult<ResponseBooking>> CreateBooking(RequestBooking request)
-    {
-        var create = await _bookingService.BookingPitch(request);
-        return Ok(create);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<ResponseBooking>> CreateBooking_v2(RequestBookingV2 request)
-    {
-        var create = await _bookingService.BookingPitch_v2(request);
-        return Ok(create);
-    }
-
+    
     [HttpPost]
     public async Task<ActionResult<ResponseBooking>> CreateBooking_v3(RequestBooking_v3 request)
     {

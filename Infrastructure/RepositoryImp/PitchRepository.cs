@@ -47,13 +47,14 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
 
     public async Task<Pitch> GetPitchToBooking(Guid landId, DateTime startTime, DateTime endTime, int size)
     {
+        
         var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
             p => p.LandId == landId && p.Size == size && p.Schedules.Any(schedule =>
                 string.IsNullOrEmpty(schedule.Status) ||
                 schedule.Status == ScheduleEnum.Active.ToString() &&
-                ((startTime >= schedule.StarTime && startTime <= schedule.EndTime) ||
-                 (endTime >= schedule.StarTime && endTime <= schedule.EndTime) ||
-                 (startTime <= schedule.StarTime && endTime >= schedule.EndTime))
+                ((startTime.AddMinutes(1) >= schedule.StarTime && startTime.AddMinutes(1) <= schedule.EndTime) ||
+                 (endTime.AddMinutes(1) >= schedule.StarTime && endTime.AddMinutes(1) <= schedule.EndTime) ||
+                 (startTime.AddMinutes(1) <= schedule.StarTime && endTime.AddMinutes(1) >= schedule.EndTime))
             ) == false);
         if (query == null) throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
         return query;

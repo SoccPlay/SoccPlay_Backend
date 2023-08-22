@@ -20,20 +20,9 @@ public class ScheduleImplement : ScheduleService
     }
 
     public async Task<Schedule> CreateSchedule(DateTime starTime, DateTime endTime, Guid BookingId, Guid PitchId,
-        Guid LandId, int Size)
+        Guid LandId, int Size, float price)
     {
         var schedule = new Schedule();
-
-        //Caculate Price
-        var duration = endTime - starTime;
-
-        var totalHours = duration.TotalHours;
-        var totalMinutes = duration.TotalMinutes;
-        var totalHoursAndMinutes = (float)(totalHours + totalMinutes / 60);
-        var getPrice = await _priceRepository.GetBySizeAndLand(LandId, Size, starTime);
-
-        var price = getPrice.Price1 * totalHoursAndMinutes;
-
         schedule.BookingBookingId = BookingId;
         schedule.PitchPitchId = PitchId;
         schedule.EndTime = endTime;
