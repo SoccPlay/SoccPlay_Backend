@@ -180,6 +180,8 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.PitchId, opt => opt.MapFrom(src => src.PitchId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.PriceMin, opt => opt.MapFrom(src => src.Land.Prices.Min(s => s.Price1)))
+            .ForMember(dest => dest.PriceMax, opt => opt.MapFrom(src => src.Land.Prices.Max(s => s.Price1)))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId));
 
 
@@ -202,20 +204,20 @@ public class ApplicationMapper : Profile
 
         //Booking
         CreateMap<RequestBooking, Booking>()
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Waiting.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId));
 
         CreateMap<RequestBookingV2, Booking>()
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Waiting.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
 
         CreateMap<RequestBooking_v3, Booking>()
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Active.ToString()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => BookingStatus.Waiting.ToString()))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
@@ -231,6 +233,7 @@ public class ApplicationMapper : Profile
 
         CreateMap<Booking, ResponseBooking_v2>()
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))

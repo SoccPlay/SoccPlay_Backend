@@ -19,6 +19,11 @@ public class FeedbackImplement : FeedbackService
 
     public async Task<ResponseFeedback> CreateFeedBack(RequestFeedback requestFeedback)
     {
+        var booking = await _unitOfWork.Booking.GetBookingByCustomerId(requestFeedback.CustomerId);
+        if (booking == false)
+        {
+            throw new Exception("Bạn không thể đánh giá sân bóng này !");
+        }
         var feedBack = _mapper.Map<Feedback>(requestFeedback);
         _unitOfWork.FeedBack.Add(feedBack);
         _unitOfWork.Save();

@@ -28,7 +28,7 @@ public class ScheduleImplement : ScheduleService
         schedule.EndTime = endTime;
         schedule.StarTime = starTime;
         schedule.Price = price;
-        schedule.Status = ScheduleEnum.Active.ToString();
+        schedule.Status = ScheduleEnum.Waiting.ToString();
         _unitOfWork.Schedule.Add(schedule);
         _unitOfWork.Save();
         return schedule;

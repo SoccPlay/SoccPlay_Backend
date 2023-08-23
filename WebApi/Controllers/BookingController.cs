@@ -48,11 +48,23 @@ public class BookingController : ControllerBase
         return Ok(bookings);
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseBooking_v2>>> GetAllBookingByLandId(Guid id)
+    {
+        var bookings = await _bookingService.GetBookingByLandId(id);
+        return Ok(bookings);
+    }
 
 
     [HttpDelete]
     public async Task<bool> CancelBooking(Guid id)
     {
         return await _bookingService.CancelBooking_v2(id);
+    }
+    
+    [HttpDelete]
+    public async Task<bool> ChangeStatusBooking(Guid id, string status)
+    {
+        return await _bookingService.ChangeStatus(id, status);
     }
 }

@@ -8,6 +8,7 @@ public class ResponsePitchV2
     public string Name { get; set; } = null!;
     public string Size { get; set; } = null!;
     public Guid LandId { get; set; }
-
+    public float PriceMin { get; set; }
+    public float PriceMax { get; set; }
     public List<ResponseSchedule_v2>? Schedules { get; set; }
 }
