@@ -23,7 +23,7 @@ public class PitchController : ControllerBase
         return Ok(create);
     }
     
-    [HttpPost]
+    [HttpGet]
     public async Task<ActionResult<List<ResponsePitch>>> GetPitchsByOwnerId(Guid Id)
     {
         var create = await _pitchService.GetAllPitchOfOwner(Id);
