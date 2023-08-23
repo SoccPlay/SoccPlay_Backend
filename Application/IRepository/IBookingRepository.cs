@@ -12,4 +12,5 @@ public interface IBookingRepository : IGenericRepository<Booking>
     Task<bool> GetBookingByCustomerId(Guid id);
     
     Task<List<Booking>> GetBookingByLandId(Guid id);
+    
 }

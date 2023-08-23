@@ -1,8 +1,11 @@
 ﻿namespace Application.Model.Response.ResponseBooking;
 
-public class ResponseBooking_v2
+public class ResponseAllLandBooking_v2
 {
+    public Guid LandId { get; set; }
+    public string Name { get; set; } = null!;
     public Guid BookingId { get; set; }
+    
     public string? pitchName { get; set; }
     public float TotalPrice { get; set; }
     public string? Location { get; set; }

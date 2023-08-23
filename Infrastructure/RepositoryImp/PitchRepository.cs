@@ -19,6 +19,11 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
             .ToListAsync();
         return list;
     }
+    public async Task<string> GetNameByBookingId(Guid bookingId)
+    {
+        var list = await _context.Pitches.FirstOrDefaultAsync(pitch => pitch.Schedules.FirstOrDefault(s => s.BookingBookingId == bookingId)!.PitchPitchId == pitch.PitchId);
+        return list?.Name;
+    }
     
     public async Task<List<ICollection<Pitch>>> Get(Guid ownerId)
     {

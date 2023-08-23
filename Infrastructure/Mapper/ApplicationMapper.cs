@@ -159,6 +159,18 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NameLand))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location));
 
+        CreateMap<Booking, ResponseAllLandBooking_v2>()
+            .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.pitchName, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Name))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Land.NameLand))
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+
+
 
         //Pitch
         CreateMap<RequestPitch, Pitch>()
@@ -234,6 +246,7 @@ public class ApplicationMapper : Profile
         CreateMap<Booking, ResponseBooking_v2>()
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.pitchName, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Name))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
