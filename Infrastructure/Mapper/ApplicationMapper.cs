@@ -234,6 +234,7 @@ public class ApplicationMapper : Profile
         CreateMap<Booking, ResponseBooking_v2>()
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.pitchName, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Name))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))

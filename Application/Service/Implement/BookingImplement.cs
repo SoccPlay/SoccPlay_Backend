@@ -69,7 +69,7 @@ public class BookingImplement : BookingService
         int i = 0;
         foreach (var land in response)
         {
-            land.List = _mapper.Map<List<ResponseBooking_v2>>(lands[i].Bookings);
+            land.List = await GetBookingByLandId(lands[i].LandId);
             i++;
         }
 
@@ -148,6 +148,7 @@ public class BookingImplement : BookingService
         {
             getBooking[i].StartTime = b.Schedules.FirstOrDefault().StarTime;
             getBooking[i].EndTime = b.Schedules.FirstOrDefault().EndTime;
+            getBooking[i].pitchName = _unitOfWork.Pitch.GetById(b.Schedules.FirstOrDefault().PitchPitchId).Name;
             i++;
         }
 

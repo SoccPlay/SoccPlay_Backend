@@ -3,6 +3,7 @@
 public class ResponseBooking_v2
 {
     public Guid BookingId { get; set; }
+    public string? pitchName { get; set; }
     public float TotalPrice { get; set; }
     public string? Location { get; set; }
     public DateTime DateBooking { get; set; }

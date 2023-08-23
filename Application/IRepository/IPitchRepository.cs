@@ -6,6 +6,7 @@ namespace Application.IRepository;
 public interface IPitchRepository : IGenericRepository<Pitch>
 {
     Task<List<Pitch>> GetAllPitchByLand(Guid LandId);
+    Task<string> GetNameByBookingId(Guid bookingId);
 
     Task<List<ICollection<Pitch>>> Get(Guid ownerId);
 
