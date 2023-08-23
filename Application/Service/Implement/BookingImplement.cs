@@ -159,11 +159,11 @@ public class BookingImplement : BookingService
     public async Task<bool> ChangeStatus(Guid id, string status)
     {
         string a = "";
-        if (status.Equals(BookingStatus.Cancel.ToString()))
+        if (status.ToUpper().Equals(BookingStatus.Cancel.ToString().ToUpper()))
         {
             a = BookingStatus.Cancel.ToString();
         }
-        if (status.Equals(BookingStatus.Done.ToString()))
+        if (status.ToUpper().Equals(BookingStatus.Done.ToString().ToUpper()))
         {
             a = BookingStatus.Done.ToString();
         }
@@ -173,7 +173,7 @@ public class BookingImplement : BookingService
         {
             s.Status = a;
         }
-
+        _unitOfWork.Save();
         return true;
     }
 
