@@ -176,4 +176,26 @@ public class BookingImplement : BookingService
 
         return true;
     }
+
+    public async Task<List<ResponseAllLandBooking_v2>> GetByOwner_v2(Guid ownerId)
+    {
+        var lands = await _unitOfWork.Land.GetLandByOwnerId(ownerId);
+        List<ResponseAllLandBooking_v2> list = new List<ResponseAllLandBooking_v2>();
+        foreach (var l in lands)
+        {
+            var bookings = await _unitOfWork.Booking.GetBookingByLandId(l.LandId);
+            var getBooking = _mapper.Map<List<ResponseAllLandBooking_v2>>(bookings);
+            int i = 0;
+            foreach (var b in bookings)
+            {
+                getBooking[i].StartTime = b.Schedules.FirstOrDefault().StarTime;
+                getBooking[i].EndTime = b.Schedules.FirstOrDefault().EndTime;
+                getBooking[i].pitchName = _unitOfWork.Pitch.GetById(b.Schedules.FirstOrDefault().PitchPitchId).Name;
+                i++;
+            }
+            list = list.Concat(getBooking).ToList();
+        }
+
+        return list;
+    }
 }
