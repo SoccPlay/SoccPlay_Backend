@@ -19,6 +19,13 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
             .ToListAsync();
         return list;
     }
+    
+    public async Task<List<ICollection<Pitch>>> Get(Guid ownerId)
+    {
+        var list = await _context.Lands.Where(land => land.OwnerId == ownerId).Include(p => p.Pitches).Select( p => p.Pitches)
+            .ToListAsync();
+        return list;
+    }
 
     public async Task<List<Pitch>> GetAllPitchByLandAndDate(Guid landId, DateTime date, int size)
     {

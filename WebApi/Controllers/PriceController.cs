@@ -36,4 +36,11 @@ public class PriceController : ControllerBase
             var create = await _priceService.Calculator(request);
             return Ok(create);
     }
+    
+    [HttpDelete]
+    public async Task<ActionResult<bool>> DeletePrice(Guid id)
+    {
+        var create = await _priceService.RemovePrice(id);
+        return Ok(create);
+    }
 }
