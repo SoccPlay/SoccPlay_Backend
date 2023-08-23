@@ -8,6 +8,8 @@ public class ResponseBooking_v2
     public DateTime DateBooking { get; set; }
     public string Note { get; set; } = null!;
     public Guid CustomerId { get; set; }
+    
+    public string? Status { get; set; }
 
     public DateTime StartTime { get; set; }
 

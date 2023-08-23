@@ -79,10 +79,10 @@ public class BookingImplement : BookingService
     public async Task<bool> CancelBooking_v2(Guid BookingId)
     {
         var booking = await _unitOfWork.Booking.GetBookingById(BookingId);
-        booking.Status = BookingStatus.Inactive.ToString();
+        booking.Status = BookingStatus.Cancel.ToString();
         foreach (var s in booking.Schedules)
         {
-            s.Status = BookingStatus.Inactive.ToString();
+            s.Status = BookingStatus.Cancel.ToString();
             var sendMail = new Mail
             {
                 To = _unitOfWork.Customer.GetById(booking.CustomerId).Email,
@@ -137,5 +137,42 @@ public class BookingImplement : BookingService
         await _mailService.SendEmail(sendMail);
 
         return getBooking;
+    }
+
+    public async Task<List<ResponseBooking_v2>> GetBookingByLandId(Guid id)
+    {
+        var bookings = await _unitOfWork.Booking.GetBookingByLandId(id);
+        var getBooking = _mapper.Map<List<ResponseBooking_v2>>(bookings);
+        int i = 0;
+        foreach (var b in bookings)
+        {
+            getBooking[i].StartTime = b.Schedules.FirstOrDefault().StarTime;
+            getBooking[i].EndTime = b.Schedules.FirstOrDefault().EndTime;
+            i++;
+        }
+
+        return getBooking;
+    }
+
+
+    public async Task<bool> ChangeStatus(Guid id, string status)
+    {
+        string a = "";
+        if (status.Equals(BookingStatus.Cancel.ToString()))
+        {
+            a = BookingStatus.Cancel.ToString();
+        }
+        if (status.Equals(BookingStatus.Done.ToString()))
+        {
+            a = BookingStatus.Done.ToString();
+        }
+        var booking = await _unitOfWork.Booking.GetBookingById(id);
+        booking.Status = a;
+        foreach (var s in booking.Schedules)
+        {
+            s.Status = a;
+        }
+
+        return true;
     }
 }

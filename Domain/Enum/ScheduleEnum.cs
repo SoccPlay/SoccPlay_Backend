@@ -2,6 +2,7 @@
 
 public enum ScheduleEnum
 {
-    Active,
-    Inactive
+    Waiting,
+    Cancel,
+    Done
 }

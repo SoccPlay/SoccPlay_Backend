@@ -2,6 +2,7 @@
 
 public enum BookingStatus
 {
-    Inactive,
-    Active
+    Cancel,
+    Waiting,
+    Done
 }
