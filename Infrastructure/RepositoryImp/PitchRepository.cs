@@ -37,7 +37,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         var query = await _context.Pitches
             .Where(pitch => pitch.LandId == landId && pitch.Size == size).Include(l => l.Land.Prices )
             .Include(pitch => pitch.Schedules.Where(schedule =>
-                schedule.StarTime.Date == date.Date && schedule.Status == ScheduleEnum.Waiting.ToString()))
+                schedule.StarTime.Date == date.Date ))
             .ToListAsync();
         return query;
     }
@@ -63,7 +63,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
             p => p.LandId == landId && p.Size == size && p.Schedules.Any(schedule =>
                 string.IsNullOrEmpty(schedule.Status) ||
-                schedule.Status != ScheduleEnum.Waiting.ToString() &&
+                schedule.Status == ScheduleEnum.Waiting.ToString() &&
                 ((startTime.AddMinutes(1) >= schedule.StarTime && startTime.AddMinutes(1) <= schedule.EndTime) ||
                  (endTime.AddMinutes(1) >= schedule.StarTime && endTime.AddMinutes(1) <= schedule.EndTime) ||
                  (startTime.AddMinutes(1) <= schedule.StarTime && endTime.AddMinutes(1) >= schedule.EndTime))
