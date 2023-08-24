@@ -152,7 +152,7 @@ public class ApplicationMapper : Profile
             .ForPath(dest => dest.PitchImages,
                 opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Select(i => i.Name).ToList() : null))
             .ForPath(dest => dest.image, opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Last().Name : null));
-
+        
 
         CreateMap<Land, ResponseAllLandBooking>()
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
@@ -169,6 +169,25 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+
+        CreateMap<Booking, ResponeBooking_v3>()
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId))
+            .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Customer.FullName))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.Land.LandId))
+            .ForMember(dest => dest.LandName, opt => opt.MapFrom(src => src.Land.NameLand))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
+            .ForMember(dest => dest.PitchId,
+                opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.PitchId))
+            .ForMember(dest => dest.PitchName,
+                opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Name))
+            .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
+            .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().ScheduleId))
+            .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().StarTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().EndTime));
 
 
 

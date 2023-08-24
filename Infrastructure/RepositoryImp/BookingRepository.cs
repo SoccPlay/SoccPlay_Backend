@@ -35,7 +35,8 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
 
     public async Task<Booking> GetBookingById(Guid bookingId)
     {
-        var booking = await _context.Set<Booking>().Include(b => b.Schedules)
+        var booking = await _context.Set<Booking>()
+            .Include(b => b.Land).Include(b => b.Customer).Include(b => b.Schedules)
             .FirstOrDefaultAsync(b => b.BookingId == bookingId);
         if (booking == null) throw new Exception("Booking Not Exist");
         return booking;
