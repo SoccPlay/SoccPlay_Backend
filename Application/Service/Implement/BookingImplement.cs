@@ -198,4 +198,14 @@ public class BookingImplement : BookingService
 
         return list;
     }
+
+    public async Task<ResponeBooking_v3> GetByBookingId(Guid id)
+    {
+        var booking = await _unitOfWork.Booking.GetBookingById(id);
+        var pitch = _unitOfWork.Pitch.GetById(booking.Schedules.FirstOrDefault()!.PitchPitchId);
+        var response = _mapper.Map<ResponeBooking_v3>(booking);
+        response.PitchId = pitch.PitchId;
+        response.PitchName = pitch.Name;
+        return _mapper.Map<ResponeBooking_v3>(booking);
+    }
 }

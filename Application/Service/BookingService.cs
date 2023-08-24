@@ -15,4 +15,5 @@ public interface BookingService
     public Task<List<ResponseBooking_v2>> GetBookingByLandId(Guid id);
     public Task<bool> ChangeStatus(Guid id, string status);
     public Task<List<ResponseAllLandBooking_v2>> GetByOwner_v2(Guid ownerId);
+    public Task<ResponeBooking_v3> GetByBookingId(Guid id);
 }

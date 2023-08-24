@@ -54,6 +54,12 @@ public class BookingController : ControllerBase
         var bookings = await _bookingService.GetByOwner_v2(id);
         return Ok(bookings);
     }
+    [HttpGet]
+    public async Task<ActionResult<ResponeBooking_v3>> GetBookingById(Guid id)
+    {
+        var bookings = await _bookingService.GetByBookingId(id);
+        return Ok(bookings);
+    }
 
     [HttpGet]
     public async Task<ActionResult<List<ResponseBooking_v2>>> GetAllBookingByLandId(Guid id)
