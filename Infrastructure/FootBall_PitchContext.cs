@@ -32,7 +32,7 @@ public partial class FootBall_PitchContext : DbContext
         {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
             optionsBuilder.UseSqlServer(
-                "Data Source=mssql-141673-0.cloudclusters.net,14950;Initial Catalog=FootBall;User ID=admin;pwd=Btklthabd22@;TrustServerCertificate=True;MultipleActiveResultSets=true");
+                "Data Source=mssql-141828-0.cloudclusters.net,10062;Initial Catalog=FootBall;User ID=admin;pwd=sMZHCqF7@;TrustServerCertificate=True;MultipleActiveResultSets=true");
             //optionsBuilder.UseSqlServer("Data Source=NhaPhan;Initial Catalog=11;User ID=sa;pwd=1;TrustServerCertificate=True;MultipleActiveResultSets=true");
         }
     }
