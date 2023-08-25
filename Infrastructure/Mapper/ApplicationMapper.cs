@@ -280,8 +280,9 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Land.NameLand));
-
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Land.NameLand))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.Land.LandId));
+            
         //Schedule
         CreateMap<Schedule, ResponseSchedule>()
             .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.ScheduleId))

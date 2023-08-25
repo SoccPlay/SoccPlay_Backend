@@ -6,6 +6,7 @@ public class ResponseManageBooking
     
     public string Name { get; set; } 
     public float TotalPrice { get; set; }
+    public Guid LandId { get; set; }
     public string? Location { get; set; }
     public DateTime DateBooking { get; set; }
     
