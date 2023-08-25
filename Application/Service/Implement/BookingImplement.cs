@@ -206,6 +206,7 @@ public class BookingImplement : BookingService
         var response = _mapper.Map<ResponeBooking_v3>(booking);
         response.PitchId = pitch.PitchId;
         response.PitchName = pitch.Name;
+        response.Size = pitch.Size;
         return _mapper.Map<ResponeBooking_v3>(booking);
     }
 }

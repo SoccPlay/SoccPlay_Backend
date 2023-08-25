@@ -258,6 +258,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.BookingId))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
+            .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.Land.LandId))
             .ForMember(dest => dest.DateBooking, opt => opt.MapFrom(src => src.DateBooking))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));

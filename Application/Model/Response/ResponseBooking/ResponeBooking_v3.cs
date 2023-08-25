@@ -11,6 +11,7 @@ public class ResponeBooking_v3
     
     public Guid PitchId { get; set; }
     public string? PitchName { get; set; }
+    public int Size { get; set; }
     
     public Guid BookingId { get; set; }
     public float TotalPrice { get; set; }
