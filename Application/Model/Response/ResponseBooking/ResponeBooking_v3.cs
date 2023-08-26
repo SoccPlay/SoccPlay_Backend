@@ -12,7 +12,7 @@ public class ResponeBooking_v3
     public Guid PitchId { get; set; }
     public string? PitchName { get; set; }
     public int Size { get; set; }
-    
+    public string? images { get; set; }
     public Guid BookingId { get; set; }
     public float TotalPrice { get; set; }
     public DateTime DateBooking { get; set; }
@@ -22,4 +22,5 @@ public class ResponeBooking_v3
     public Guid ScheduleId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
+    public string NameOwner { get; set; }
 }

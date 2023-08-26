@@ -187,6 +187,9 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().ScheduleId))
             .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().StarTime))
+            .ForPath(dest => dest.images, opt => opt.MapFrom(src => src.Land.Images.Any() ? src.Land.Images.Last().Name : null))
+
+            .ForPath(dest => dest.NameOwner, opt => opt.MapFrom(src => src.Land.Owner.FullName))
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().EndTime));
 
 
