@@ -205,6 +205,8 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(int.MaxValue - 1)
                 .IsUnicode(false);
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime");
 
             entity.Property(e => e.Title)
                 .HasColumnType("nvarchar(max)")

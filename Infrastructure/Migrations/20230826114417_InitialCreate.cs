@@ -101,6 +101,7 @@ namespace Infrastructure.Migrations
                     Distance = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false),
                     TotalPitch = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false)
                 },

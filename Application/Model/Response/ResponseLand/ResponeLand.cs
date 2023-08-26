@@ -14,6 +14,7 @@ public class ResponseLand
     public string Description { get; set; } = null!;
     public string Status { get; set; } = null!;
     public Guid OwnerId { get; set; }
+    public DateTime Date { get; set; } 
 
     public string image { get; set; } = null;
 

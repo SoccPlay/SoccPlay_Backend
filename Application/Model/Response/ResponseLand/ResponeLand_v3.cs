@@ -17,6 +17,7 @@ public class ResponseLand_v3
     public string Description { get; set; } = null!;
     public string Status { get; set; } = null!;
     public Guid OwnerId { get; set; }
+    public DateTime Date { get; set; }
     public string image { get; set; } = null;
     public List<string> PitchImages { get; set; } = null;
     public List<ResponsePrice> Price { get; set; } = null;

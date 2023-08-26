@@ -218,6 +218,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LandId");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .IsUnicode(false)

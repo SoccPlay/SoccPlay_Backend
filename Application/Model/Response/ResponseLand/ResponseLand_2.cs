@@ -9,5 +9,6 @@ public class ResponseLand_2
     public int TotalPitch { get; set; }
     public string Description { get; set; } = null!;
     public string Status { get; set; } = null!;
+    public DateTime Date { get; set; }
     public Guid OwnerId { get; set; }
 }

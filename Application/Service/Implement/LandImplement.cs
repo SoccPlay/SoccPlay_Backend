@@ -23,6 +23,7 @@ public class LandImplement : LandService
     public async Task<ResponseLand_2> CreateLand(RequestLand requestLand)
     {
         var land = _mapper.Map<Land>(requestLand);
+        land.Date = DateTime.Now;
         if (_unitOfWork.Owner.GetById(land.OwnerId) == null) throw new Exception("Not Found Owner");
         _unitOfWork.Land.Add(land);
         _unitOfWork.Save();

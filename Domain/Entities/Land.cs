@@ -19,6 +19,8 @@ public class Land
     public string Distance { get; set; }
     public int TotalPitch { get; set; }
     public string Description { get; set; } = null!;
+    public DateTime Date { get; set; }
+
     public Guid OwnerId { get; set; }
     public string Status { get; set; } = null!;
 
