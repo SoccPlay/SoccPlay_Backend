@@ -23,6 +23,7 @@ public class PriceImplement : PriceService
     public async Task<ResponsePrice> CreatePrice(RequestPrice requestPrice)
     {
         var price = _mapper.Map<Price>(requestPrice);
+        price.Date= DateTime.Now;
         _unitOfWork.Price.Add(price);
         _unitOfWork.Save();
         return _mapper.Map<ResponsePrice>(price);

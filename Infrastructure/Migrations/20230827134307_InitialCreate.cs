@@ -149,6 +149,7 @@ namespace Infrastructure.Migrations
                     FeedbackId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     LandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -192,6 +193,7 @@ namespace Infrastructure.Migrations
                     PriceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StarTime = table.Column<int>(type: "int", nullable: false),
                     EndTime = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false),
                     LandLandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -248,6 +250,7 @@ namespace Infrastructure.Migrations
                     EndTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Status = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     PitchPitchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookingBookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

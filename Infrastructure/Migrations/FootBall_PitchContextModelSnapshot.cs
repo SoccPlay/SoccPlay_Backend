@@ -191,6 +191,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .IsUnicode(false)
@@ -393,6 +396,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PriceId");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<int>("EndTime")
                         .HasColumnType("int");
 
@@ -426,6 +432,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("BookingBookingId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime");

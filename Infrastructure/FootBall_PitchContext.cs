@@ -162,7 +162,8 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
-
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime");
             entity.HasOne(d => d.Customer)
                 .WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.CustomerId)
@@ -325,7 +326,8 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.EndTime).HasColumnType("int");
 
             entity.Property(e => e.Price1).HasColumnName("Price");
-
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime");
             entity.Property(e => e.Size).HasColumnName("Size");
 
             entity.Property(e => e.StarTime).HasColumnType("int");
@@ -344,7 +346,8 @@ public partial class FootBall_PitchContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ScheduleId");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
-
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime");
             entity.Property(e => e.StarTime).HasColumnType("datetime");
 
             entity.Property(e => e.Status)

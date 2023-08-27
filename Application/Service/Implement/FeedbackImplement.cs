@@ -25,6 +25,7 @@ public class FeedbackImplement : FeedbackService
             throw new Exception("Bạn không thể đánh giá sân bóng này !");
         }
         var feedBack = _mapper.Map<Feedback>(requestFeedback);
+        feedBack.Date= DateTime.Now;
         _unitOfWork.FeedBack.Add(feedBack);
         _unitOfWork.Save();
         return _mapper.Map<ResponseFeedback>(feedBack);

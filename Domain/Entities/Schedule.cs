@@ -7,6 +7,8 @@ public class Schedule
     public DateTime EndTime { get; set; }
     public float Price { get; set; }
     public string Status { get; set; } = null!;
+    public DateTime Date { get; set; } 
+
     public Guid PitchPitchId { get; set; }
     public Guid BookingBookingId { get; set; }
 

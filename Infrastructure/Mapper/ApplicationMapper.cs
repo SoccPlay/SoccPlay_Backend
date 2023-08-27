@@ -145,6 +145,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.TotalPitch, opt => opt.MapFrom(src => src.TotalPitch))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Distance))
+                     
             .ForMember(dest => dest.AverageRate,
                 opt => opt.MapFrom(src => src.Feedbacks.Any() ? src.Feedbacks.Average(rate => rate.Rate) : 0.0))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
@@ -233,6 +234,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
             .ForMember(dest => dest.Price1, opt => opt.MapFrom(src => src.Price1))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+
             .ForMember(dest => dest.LandLandId, opt => opt.MapFrom(src => src.LandLandId));
 
         CreateMap<Price, ResponsePrice>()
@@ -241,6 +243,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
             .ForMember(dest => dest.Price1, opt => opt.MapFrom(src => src.Price1))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.LandLandId, opt => opt.MapFrom(src => src.LandLandId));
 
 
@@ -301,9 +304,11 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+               .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.PitchPitchId, opt => opt.MapFrom(src => src.PitchPitchId));
 
         CreateMap<Schedule, ResponseSchedule_v2>()
+               .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.StarTime,
                 opt => opt.MapFrom(src => src != null ? src.StarTime.TimeOfDay : TimeSpan.Zero))
             .ForMember(dest => dest.EndTime,

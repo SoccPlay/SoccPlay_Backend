@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FootBall_PitchContext))]
-    [Migration("20230827130719_InitialCreate")]
+    [Migration("20230827134307_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,6 +192,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -395,6 +398,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PriceId");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<int>("EndTime")
                         .HasColumnType("int");
 
@@ -428,6 +434,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("BookingBookingId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime");
