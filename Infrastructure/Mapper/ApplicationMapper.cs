@@ -153,7 +153,7 @@ public class ApplicationMapper : Profile
                 opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Min(price => price.Price1) : 0))
             .ForMember(dest => dest.MaxPrice,
                 opt => opt.MapFrom(src => src.Prices.Any() ? src.Prices.Max(price => price.Price1) : 0))
-            .ForMember(dest => dest.MaxPrice,opt=> opt.MapFrom(src => src.Date))
+            .ForMember(dest => dest.Date,opt=> opt.MapFrom(src => src.Date))
             .ForPath(dest => dest.PitchImages,
                 opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Select(i => i.Name).ToList() : null))
             .ForPath(dest => dest.image, opt => opt.MapFrom(src => src.Images.Any() ? src.Images.Last().Name : null));
