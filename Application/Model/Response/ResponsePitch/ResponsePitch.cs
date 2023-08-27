@@ -8,5 +8,8 @@ public class ResponsePitch
     public string Size { get; set; } = null!;
     public string Status { get; set; } = null!;
     public Guid LandId { get; set; }
+    public string nameLand { get; set; }
+    public DateTime Date { get; set; }
+
     public Guid OwnerId { get; set; }
 }

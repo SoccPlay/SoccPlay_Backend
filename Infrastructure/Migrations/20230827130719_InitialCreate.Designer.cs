@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FootBall_PitchContext))]
-    [Migration("20230826114417_InitialCreate")]
+    [Migration("20230827130719_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -326,6 +326,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PitchId");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
 
                     b.Property<Guid>("LandId")
                         .HasColumnType("uniqueidentifier");

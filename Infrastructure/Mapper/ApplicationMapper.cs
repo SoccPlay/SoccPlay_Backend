@@ -211,14 +211,17 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.PitchId, opt => opt.MapFrom(src => src.PitchId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
+            .ForMember(d=>d.nameLand,opt=>opt.MapFrom(src=>src.Land.NameLand))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
 
         CreateMap<Pitch, ResponsePitchV2>()
             .ForMember(dest => dest.PitchId, opt => opt.MapFrom(src => src.PitchId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.PriceMin, opt => opt.MapFrom(src => src.Land.Prices.Min(s => s.Price1)))
             .ForMember(dest => dest.PriceMax, opt => opt.MapFrom(src => src.Land.Prices.Max(s => s.Price1)))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId));

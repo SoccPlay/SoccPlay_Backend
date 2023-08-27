@@ -278,7 +278,8 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.Size)
                 .HasColumnType("int")
                 .IsUnicode(false);
-
+            entity.Property(e => e.Date)
+               .HasColumnType("datetime");
             entity.Property(e => e.Status)
                 .HasMaxLength(int.MaxValue - 1)
                 .IsUnicode(false);

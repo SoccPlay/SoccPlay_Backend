@@ -10,7 +10,7 @@ public interface ILandRepository : IGenericRepository<Land>
     Task<List<Land>> GetAllLand();
 
     Task<List<Land>> GetLandByOwnerId(Guid ownerId);
-    
+    Task<List<Land>> GetLandByOwnerIdAndLand(Guid ownerId,string nameLand);
 
     Task<List<Guid>> GetPitchByOwnerId(Guid ownerId);
     

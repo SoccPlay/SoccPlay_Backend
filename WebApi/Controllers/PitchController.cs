@@ -45,4 +45,11 @@ public class PitchController : ControllerBase
         var create = await _pitchService.GetScheduleList(landId, date, size, pitchName);
         return Ok(create);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<ResponsePitchV2>> GetPitchByOwnerAndNameLand(Guid ownerId, Guid landId)
+    {
+        var create = await _pitchService.GetAllPitchByNameLandAndOwnerId(ownerId, landId);
+        return Ok(create);
+    }
 }

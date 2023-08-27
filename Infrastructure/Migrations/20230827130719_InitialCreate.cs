@@ -214,6 +214,7 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
                     Size = table.Column<int>(type: "int", unicode: false, nullable: false),
                     Status = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     LandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)

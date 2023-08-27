@@ -11,6 +11,8 @@ public class Pitch
     public string Name { get; set; } = null!;
     public int Size { get; set; }
     public string Status { get; set; } = null!;
+    public DateTime Date { get; set; }
+
     public Guid LandId { get; set; }
     public Guid OwnerId { get; set; }
     public virtual Land Land { get; set; } = null!;

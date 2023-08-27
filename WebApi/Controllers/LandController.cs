@@ -50,7 +50,14 @@ public class LandController : ControllerBase
         var land = await _landService.LandByOwnerId(OwnerId);
         return Ok(land);
     }
-    
+
+    [HttpGet]
+    public async Task<ActionResult<ResponseLand>> GetLandByOwnerAndNameLand(Guid OwnerId,string nameLand)
+    {
+        var land = await _landService.LandByOwnerIdAndNameLand(OwnerId, nameLand);
+        return Ok(land);
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> SearchLand(string location ,string landName)
     {

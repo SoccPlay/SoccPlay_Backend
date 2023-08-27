@@ -111,4 +111,10 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
 
         return result;
     }
+
+    public async Task<List<Land>> GetLandByOwnerIdAndLand(Guid ownerId, string nameLand)
+    {
+        return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks).Include(b => b.Bookings)
+           .Where(land => land.OwnerId == ownerId && land.NameLand== nameLand).ToListAsync();
+    }
 }

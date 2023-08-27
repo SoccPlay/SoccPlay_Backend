@@ -325,6 +325,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PitchId");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<Guid>("LandId")
                         .HasColumnType("uniqueidentifier");
 

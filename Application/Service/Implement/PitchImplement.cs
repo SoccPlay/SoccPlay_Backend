@@ -22,6 +22,7 @@ public class PitchImplement : PitchService
     public async Task<ResponsePitch> CreatePitch(RequestPitch requestPitch)
     {
         var pitch = _mapper.Map<Pitch>(requestPitch);
+        pitch.Date= DateTime.Now;
         var land = await _unitOfWork.Land.GetLandByIdLand(requestPitch.LandId);
         if (land.Prices == null || land.Prices.Any(p => p.Size == requestPitch.Size) == false)
         {
@@ -68,4 +69,10 @@ public class PitchImplement : PitchService
         var response = _mapper.Map<List<ICollection<ResponsePitch>>>(pitchs);
         return response;
     }
+     public async Task<List<ResponsePitch>> GetAllPitchByNameLandAndOwnerId(Guid ownerId, Guid landId)
+    {
+        var pitch = await _unitOfWork.Pitch.GetPitchByNameLandAndOwnerId(landId, ownerId);
+        return _mapper.Map<List<ResponsePitch>>(pitch);
+    }
+
 }

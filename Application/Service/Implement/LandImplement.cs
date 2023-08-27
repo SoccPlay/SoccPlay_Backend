@@ -53,6 +53,7 @@ public class LandImplement : LandService
         return responseLands;
     }
 
+
     public async Task<List<ResponseLand>> Top6Land()
     {
         var land = await _unitOfWork.Land.GetTop6();
@@ -94,6 +95,13 @@ public class LandImplement : LandService
                 .FilterLand(requestFilter.location, requestFilter.rate, requestFilter.min, requestFilter.max,
                     requestFilter.size);
         if (landEntities == null) throw new CultureNotFoundException("NotFound");
+        var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
+        return responseLands;
+    }
+
+    public async Task<List<ResponseLand>> LandByOwnerIdAndNameLand(Guid ownerId, string nameLand)
+    {
+        var landEntities = await _unitOfWork.Land.GetLandByOwnerIdAndLand(ownerId, nameLand);
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
         return responseLands;
     }

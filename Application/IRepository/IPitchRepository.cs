@@ -1,5 +1,6 @@
 ﻿using Application.IRepository.IGeneric;
 using Domain.Entities;
+using System.Collections.Generic;
 
 namespace Application.IRepository;
 
@@ -15,5 +16,7 @@ public interface IPitchRepository : IGenericRepository<Pitch>
     Task<Pitch> GetPitchByLandAndDate(Guid landId, DateTime date, int size, string name);
 
     Task<Pitch> GetPitchToBooking(Guid landId, DateTime startTime, DateTime endTime, int size);
-    
+
+    Task<List<Pitch>> GetPitchByNameLandAndOwnerId(Guid landId, Guid ownerId);
+
 }

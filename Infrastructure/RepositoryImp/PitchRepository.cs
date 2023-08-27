@@ -71,4 +71,10 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         if (query == null) throw new Exception("Time Start:  " + startTime + "; Time End: " + endTime + "already Exit");
         return query;
     }
+   public async Task<List<Pitch>> GetPitchByNameLandAndOwnerId(Guid landId, Guid ownerId)
+    {
+        var list = await _context.Set<Pitch>().Include(c=>c.Owner).Include(c=>c.Land).Where(c=>c.Land.LandId== landId && c.Owner.OwnerId==ownerId).ToListAsync();
+        return list;
+    }
+
 }
