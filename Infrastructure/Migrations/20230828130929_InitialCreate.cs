@@ -94,9 +94,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     LandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NameLand = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
+                    NameLand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
-                    Policy = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false),
+                    Policy = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", unicode: false, nullable: false),
                     Distance = table.Column<string>(type: "varchar(max)", unicode: false, maxLength: 2147483646, nullable: false),
                     TotalPitch = table.Column<int>(type: "int", nullable: false),

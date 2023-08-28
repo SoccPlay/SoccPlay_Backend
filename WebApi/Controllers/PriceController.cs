@@ -43,4 +43,11 @@ public class PriceController : ControllerBase
         var create = await _priceService.RemovePrice(id);
         return Ok(create);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<List<ResponsePrice>>> GetPricesByLandId(Guid landId)
+    {
+        var prices = await _priceService.GetPriceByLand(landId);
+        return Ok(prices);
+    }
 }

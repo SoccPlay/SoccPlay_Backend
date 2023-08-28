@@ -183,12 +183,13 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.LandId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("LandId");
+            
             entity.Property(e => e.Description)
                 .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Policy)
-                .HasMaxLength(int.MaxValue - 1)
+                .HasColumnType("nvarchar(max)")
                 .IsUnicode(false);
 
             entity.Property(e => e.Distance)
@@ -201,11 +202,12 @@ public partial class FootBall_PitchContext : DbContext
 
             entity.Property(e => e.NameLand)
                 .HasColumnType("nvarchar(max)")
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             entity.Property(e => e.Status)
                 .HasMaxLength(int.MaxValue - 1)
                 .IsUnicode(false);
+            
             entity.Property(e => e.Date)
                 .HasColumnType("datetime");
 

@@ -242,7 +242,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("NameLand")
                         .IsRequired()
-                        .IsUnicode(false)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("OwnerId")
@@ -250,9 +250,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Policy")
                         .IsRequired()
-                        .HasMaxLength(2147483646)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()

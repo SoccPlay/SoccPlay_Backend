@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FootBall_PitchContext))]
-    [Migration("20230827134307_InitialCreate")]
+    [Migration("20230828130929_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,7 +244,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("NameLand")
                         .IsRequired()
-                        .IsUnicode(false)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("OwnerId")
@@ -252,9 +252,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Policy")
                         .IsRequired()
-                        .HasMaxLength(2147483646)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
