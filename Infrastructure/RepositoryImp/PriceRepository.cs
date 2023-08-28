@@ -12,7 +12,7 @@ public class PriceRepository : GenericRepository<Price>, IPriceRepository
     {
     }
 
-    public async Task<Price> GetBySizeAndLand(Guid LandId, int Size, DateTime startTime)
+    public async Task<Price?> GetBySizeAndLand(Guid LandId, int Size, DateTime startTime)
     {
         var time = startTime.Hour;
         var price = _context.Set<Price>().FirstOrDefault(p =>
@@ -23,6 +23,12 @@ public class PriceRepository : GenericRepository<Price>, IPriceRepository
     public async Task<List<Price>> GetPriceByLandId(Guid LandId)
     {
         var price = await _context.Set<Price>().Where(p => p.LandLandId == LandId).ToListAsync();
+        return price;
+    }
+
+    public async Task<Price?> InActive(Guid landId, int startTime, int endTime)
+    {
+        var price = await _context.Prices.FirstOrDefaultAsync(p => p.LandLandId == landId && p.EndTime == endTime && p.StarTime == startTime);
         return price;
     }
 }

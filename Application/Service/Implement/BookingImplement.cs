@@ -209,4 +209,20 @@ public class BookingImplement : BookingService
         response.Size = pitch.Size;
         return _mapper.Map<ResponeBooking_v3>(booking);
     }
+
+    public async Task<List<BookingSummary>> GetSummryInYear(int year, Guid ownerId)
+    {
+        var summary = await _unitOfWork.Booking.GetBookingSummariesForYear(year, ownerId);
+        return summary;
+    }
+
+    public async Task<float> GetSummary(Guid ownerId)
+    {
+        return await _unitOfWork.Booking.GetSummary(ownerId);
+    }
+
+    public async Task<int> GetNumBooking(Guid ownerId)
+    {
+        return await _unitOfWork.Booking.GetNumBooking(ownerId);
+    }
 }

@@ -10,6 +10,6 @@ public interface PitchService
     Task<ResponsePitchV2> GetScheduleList(Guid landId, string date, int size, string name);
     Task<List<ICollection<ResponsePitch>>> GetAllPitchOfOwner(Guid ownerId);
     Task<List<ResponsePitch>> GetAllPitchByNameLandAndOwnerId(Guid ownerId,Guid landId);
-
+    Task<int[]> GetNumPitch(Guid ownerId);
 
 }

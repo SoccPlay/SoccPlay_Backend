@@ -80,4 +80,25 @@ public class BookingController : ControllerBase
     {
         return await _bookingService.ChangeStatus(id, status);
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<BookingSummary>>> GetSummryInYear(int year, Guid ownerId)
+    {
+        var summaries = await _bookingService.GetSummryInYear(year, ownerId);
+        return Ok(summaries);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<float>> GetSummary(Guid ownerId)
+    {
+        var summary = await _bookingService.GetSummary(ownerId);
+        return Ok(summary);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<int>> GetNumBooking(Guid ownerId)
+    {
+        var count = await _bookingService.GetNumBooking(ownerId);
+        return Ok(count);
+    }
 }

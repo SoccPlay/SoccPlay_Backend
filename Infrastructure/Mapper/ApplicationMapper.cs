@@ -211,6 +211,8 @@ public class ApplicationMapper : Profile
         CreateMap<Pitch, ResponsePitch>()
             .ForMember(dest => dest.PitchId, opt => opt.MapFrom(src => src.PitchId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.PriceMin, opt => opt.MapFrom(src => src.Land.Prices.Min(s => s.Price1)))
+            .ForMember(dest => dest.PriceMax, opt => opt.MapFrom(src => src.Land.Prices.Max(s => s.Price1)))
             .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
             .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))

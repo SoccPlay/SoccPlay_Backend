@@ -37,7 +37,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
         var query = await _context.Pitches
             .Where(pitch => pitch.LandId == landId && pitch.Size == size).Include(l => l.Land.Prices )
             .Include(pitch => pitch.Schedules.Where(schedule =>
-                schedule.StarTime.Date == date.Date ))
+                schedule.StarTime.Date == date.Date && schedule.Status == ScheduleEnum.Waiting.ToString() ))
             .ToListAsync();
         return query;
     }
@@ -73,8 +73,19 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     }
    public async Task<List<Pitch>> GetPitchByNameLandAndOwnerId(Guid landId, Guid ownerId)
     {
-        var list = await _context.Set<Pitch>().Include(c=>c.Owner).Include(c=>c.Land).Where(c=>c.Land.LandId== landId && c.Owner.OwnerId==ownerId).ToListAsync();
+        var list = await _context.Pitches.Include(c=>c.Owner).Include(c=>c.Land).Include( p => p.Land.Prices).Where(c=>c.Land.LandId == landId && c.Owner.OwnerId==ownerId).ToListAsync();
         return list;
     }
 
+   public async Task<int[]> GetNumPitch(Guid ownerId)
+   {
+       int size5 = await _context.Pitches
+           .Where(p => p.Land.OwnerId == ownerId && p.Size == 5)
+           .CountAsync();
+       int size7 = await _context.Pitches
+           .Where(p => p.Land.OwnerId == ownerId && p.Size == 7)
+           .CountAsync();
+       int[] count = new [] { size5, size7 }; 
+       return count;
+   }
 }

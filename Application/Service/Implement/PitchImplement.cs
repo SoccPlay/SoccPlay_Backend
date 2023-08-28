@@ -75,4 +75,8 @@ public class PitchImplement : PitchService
         return _mapper.Map<List<ResponsePitch>>(pitch);
     }
 
+     public async Task<int[]> GetNumPitch(Guid ownerId)
+     {
+         return await _unitOfWork.Pitch.GetNumPitch(ownerId);
+     }
 }

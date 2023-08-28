@@ -10,6 +10,7 @@ public class ResponsePitch
     public Guid LandId { get; set; }
     public string nameLand { get; set; }
     public DateTime Date { get; set; }
-
+    public float PriceMin { get; set; }
+    public float PriceMax { get; set; }
     public Guid OwnerId { get; set; }
 }

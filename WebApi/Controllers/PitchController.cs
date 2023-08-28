@@ -52,4 +52,11 @@ public class PitchController : ControllerBase
         var create = await _pitchService.GetAllPitchByNameLandAndOwnerId(ownerId, landId);
         return Ok(create);
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<int[]>> GetNumPitch(Guid ownerId)
+    {
+        var create = await _pitchService.GetNumPitch(ownerId);
+        return Ok(create);
+    }
 }

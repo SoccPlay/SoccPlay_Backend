@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Runtime.InteropServices.ComTypes;
 using Application.IRepository;
+using Application.Model.Response.ResponseBooking;
 using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.Entities;
@@ -57,4 +58,31 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
         var bookings = await _context.Bookings.Include(s => s.Schedules).Where(b => b.LandId == id).ToListAsync();
         return bookings;
     }
+    
+    public async Task<List<BookingSummary>> GetBookingSummariesForYear(int year, Guid ownerId)
+    {
+        var summaries = await _context.Bookings
+            .Where(b => b.DateBooking.Year == year && b.Land.OwnerId == ownerId && b.Status == BookingStatus.Done.ToString())
+            .GroupBy(b => b.DateBooking.Month)
+            .OrderBy(group => group.Key)
+            .Select(group => new BookingSummary
+            {
+                BookingMonth = group.Key,
+                TotalPriceSum = group.Sum(b => b.TotalPrice)
+            })
+            .ToListAsync();
+        return summaries;
+    }
+    public async Task<float> GetSummary(Guid ownerId)
+    {
+        var summary = await _context.Bookings.Where(b => b.Land.Owner.OwnerId == ownerId && b.Status == BookingStatus.Done.ToString()).Select(b => b.TotalPrice).ToListAsync();
+        return summary.Sum();
+    }
+    
+    public async Task<int> GetNumBooking(Guid ownerId)
+    {
+        var count = await _context.Bookings.Where(b => b.Land.Owner.OwnerId == ownerId).ToListAsync();
+        return count.Count;
+    }
+    
 }
