@@ -24,7 +24,7 @@ public class PriceImplement : PriceService
     {
         var price = _mapper.Map<Price>(requestPrice);
         price.Date= DateTime.Now;
-        var oldPrice = await _unitOfWork.Price.InActive(requestPrice.LandLandId, requestPrice.StarTime, requestPrice.EndTime);
+        var oldPrice = await _unitOfWork.Price.InActive(requestPrice.LandLandId, requestPrice.StarTime, requestPrice.EndTime, requestPrice.Size);
         if (oldPrice != null)
         {
             _unitOfWork.Price.Remove(oldPrice);

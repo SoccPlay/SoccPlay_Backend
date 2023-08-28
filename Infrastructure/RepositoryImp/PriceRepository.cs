@@ -26,9 +26,9 @@ public class PriceRepository : GenericRepository<Price>, IPriceRepository
         return price;
     }
 
-    public async Task<Price?> InActive(Guid landId, int startTime, int endTime)
+    public async Task<Price?> InActive(Guid landId, int startTime, int endTime, int size)
     {
-        var price = await _context.Prices.FirstOrDefaultAsync(p => p.LandLandId == landId && p.EndTime == endTime && p.StarTime == startTime);
+        var price = await _context.Prices.FirstOrDefaultAsync(p =>p.Size == size && p.LandLandId == landId && p.EndTime == endTime && p.StarTime == startTime);
         return price;
     }
 }
