@@ -6,6 +6,7 @@ using Application.Model.ResponseLand;
 using Application.Service;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enum;
 
 namespace Application.Implement;
 
@@ -112,6 +113,12 @@ public class LandImplement : LandService
     {
         var land = await _unitOfWork.Land.GetTop3Land(ownerId);
         var responseLands = _mapper.Map<List<ResponseLand>>(land);
+        int i = 0;
+        foreach (var l in land)
+        {
+            responseLands[i].SummaryIncome = l.Bookings.Where(b => b.Status == BookingStatus.Done.ToString()).ToList().Sum(b => b.TotalPrice);
+            i++;
+        }
         return responseLands;
     }
 
