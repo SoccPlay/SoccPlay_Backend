@@ -182,6 +182,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.Land.LandId))
             .ForMember(dest => dest.LandName, opt => opt.MapFrom(src => src.Land.NameLand))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
+            .ForPath(dest => dest.Size, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Size))
             .ForMember(dest => dest.PitchId,
                 opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.PitchId))
             .ForMember(dest => dest.PitchName,
@@ -196,6 +197,10 @@ public class ApplicationMapper : Profile
             .ForPath(dest => dest.images, opt => opt.MapFrom(src => src.Land.Images.Any() ? src.Land.Images.Last().Name : null))
 
             .ForPath(dest => dest.NameOwner, opt => opt.MapFrom(src => src.Land.Owner.FullName))
+            .ForPath(dest => dest.phoneCustomer, opt => opt.MapFrom(src => src.Customer.Phone))
+            .ForPath(dest => dest.phoneOwner, opt => opt.MapFrom(src => src.Land.Owner.Phone))
+            .ForPath(dest => dest.mailCustomer, opt => opt.MapFrom(src => src.Customer.Email))
+            .ForPath(dest => dest.mailOwner, opt => opt.MapFrom(src => src.Land.Owner.Email))
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().EndTime));
 
 
@@ -338,7 +343,9 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.FeedbackId, opt => opt.MapFrom(src => src.FeedbackId))
             .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rate))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForPath(dest => dest.nameLand, opt => opt.MapFrom(src => src.Land.NameLand))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
-            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.nameCustomer, opt => opt.MapFrom(src => src.Customer.FullName));
     }
 }

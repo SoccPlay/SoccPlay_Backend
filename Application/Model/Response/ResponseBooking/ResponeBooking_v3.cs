@@ -18,7 +18,10 @@ public class ResponeBooking_v3
     public DateTime DateBooking { get; set; }
     public string Note { get; set; } = null!;
     public string? Status { get; set; }
-    
+    public string phoneCustomer { get; set; }
+    public string phoneOwner { get; set; }
+    public string mailCustomer { get; set; }
+    public string mailOwner { get; set; }
     public Guid ScheduleId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
