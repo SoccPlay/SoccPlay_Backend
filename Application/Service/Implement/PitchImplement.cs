@@ -5,6 +5,7 @@ using Application.Model.Response.ResponsePitch;
 using Application.Model.Response.ResponseSchedule;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enum;
 
 namespace Application.Service.Implement;
 
@@ -12,11 +13,13 @@ public class PitchImplement : PitchService
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly BookingService _bookingService;
 
-    public PitchImplement(IUnitOfWork unitOfWork, IMapper mapper)
+    public PitchImplement(IUnitOfWork unitOfWork, IMapper mapper, BookingService bookingService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _bookingService = bookingService;
     }
 
     public async Task<ResponsePitch> CreatePitch(RequestPitch requestPitch)
@@ -80,8 +83,18 @@ public class PitchImplement : PitchService
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
 
-     public Task<bool> InActive(Guid pitchId)
+     public async Task<bool> InActive(Guid pitchId)
      {
+         var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
+         pitch.Status = PitchStatus.Inactive.ToString();
+         _unitOfWork.Save();
+         if (pitch.Schedules.Count != 0)
+         {
+             foreach (var s in pitch.Schedules)
+             {
+                 // _bookingService.CancelBooking_v2()
+             }
+         }
          throw new NotImplementedException();
      }
 }

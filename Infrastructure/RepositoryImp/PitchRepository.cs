@@ -88,4 +88,14 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
        int[] count = new [] { size5, size7 }; 
        return count;
    }
+
+   public async Task<Pitch> GetPitchById(Guid id)
+   {
+       var pitch = await _context.Pitches.Include(s => s.Schedules).FirstOrDefaultAsync(p => p.PitchId == id);
+       if (pitch == null)
+       {
+           throw new Exception("Null");
+       }
+       return pitch;
+   }
 }

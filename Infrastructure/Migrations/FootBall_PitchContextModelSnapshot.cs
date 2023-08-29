@@ -269,9 +269,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("LandId");
 
-                    b.HasIndex("NameLand")
-                        .IsUnique();
-
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Land", (string)null);
