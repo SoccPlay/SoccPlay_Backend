@@ -102,6 +102,14 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => LandStatus.Active.ToString()))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId));
 
+        CreateMap<RequestUpdateLand, Land>()
+            .ForMember(dest => dest.NameLand, opt => opt.MapFrom(src => src.NameLand))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.Policy, opt => opt.MapFrom(src => src.Policy))
+            .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => "KM"))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+
 
         CreateMap<Land, ResponseLand_2>()
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))

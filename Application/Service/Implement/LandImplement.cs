@@ -30,6 +30,15 @@ public class LandImplement : LandService
         return _mapper.Map<ResponseLand_2>(land);
     }
 
+    public async Task<ResponseLand_2> UpdateLand(RequestUpdateLand requestUpdateLand)
+    {
+        var land = await _unitOfWork.Land.GetLandByIdLand(requestUpdateLand.LandId);
+        var update = _mapper.Map(requestUpdateLand, land);
+        _unitOfWork.Land.Update(update);
+        _unitOfWork.Save();
+        return _mapper.Map<ResponseLand_2>(land);
+    }
+
     public async Task<List<ResponseLand>> GetAllLands()
     {
         var landEntities = await _unitOfWork.Land.GetAllLand();
@@ -92,8 +101,8 @@ public class LandImplement : LandService
     public async Task<List<ResponseLand>> FilterLand(RequestFilter requestFilter)
     {
         var landEntities = await _unitOfWork.Land
-                .FilterLand(requestFilter.location, requestFilter.rate, requestFilter.min, requestFilter.max,
-                    requestFilter.size);
+            .FilterLand(requestFilter.location, requestFilter.rate, requestFilter.min, requestFilter.max,
+                requestFilter.size);
         if (landEntities == null) throw new CultureNotFoundException("NotFound");
         var responseLands = _mapper.Map<List<ResponseLand>>(landEntities);
         return responseLands;

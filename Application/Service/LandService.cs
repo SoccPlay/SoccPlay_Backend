@@ -6,6 +6,7 @@ namespace Application.Service;
 public interface LandService
 {
     Task<ResponseLand_2> CreateLand(RequestLand requestLand);
+    Task<ResponseLand_2> UpdateLand(RequestUpdateLand requestUpdateLand);
     Task<List<ResponseLand>> GetAllLands();
     Task<ResponseLand_v3> LandDetail(Guid landId);
     Task<List<ResponseLand>> LandByOwnerId(Guid ownerId);

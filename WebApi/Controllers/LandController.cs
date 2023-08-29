@@ -22,6 +22,13 @@ public class LandController : ControllerBase
         var create = await _landService.CreateLand(requestLand);
         return Ok(create);
     }
+    
+    [HttpPut]
+    public async Task<ActionResult<ResponseLand_2>> UpdateLand(RequestUpdateLand requestLand)
+    {
+        var update = await _landService.UpdateLand(requestLand);
+        return Ok(update);
+    }
 
     [HttpGet]
     public async Task<ActionResult<List<ResponseLand>>> GetAllLand()
