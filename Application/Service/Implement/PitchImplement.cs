@@ -79,7 +79,7 @@ public class PitchImplement : PitchService
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
-     public async Task<bool> InActive(Guid pitchId)
+     public async Task<ResponsePitch> InActive(Guid pitchId)
      {
          var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
          pitch.Status = PitchStatus.Inactive.ToString();
@@ -92,13 +92,13 @@ public class PitchImplement : PitchService
              }
          }
 
-         return true;
+         return _mapper.Map<ResponsePitch>(pitch);
      }
-     public async Task<bool> Active(Guid pitchId)
+     public async Task<ResponsePitch> Active(Guid pitchId)
      {
          var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
          pitch.Status = PitchStatus.Active.ToString();
          _unitOfWork.Save();
-         return true;
+         return _mapper.Map<ResponsePitch>(pitch);
      }
 }
