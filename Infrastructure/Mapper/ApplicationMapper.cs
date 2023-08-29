@@ -196,6 +196,10 @@ public class ApplicationMapper : Profile
             .ForPath(dest => dest.images, opt => opt.MapFrom(src => src.Land.Images.Any() ? src.Land.Images.Last().Name : null))
 
             .ForPath(dest => dest.NameOwner, opt => opt.MapFrom(src => src.Land.Owner.FullName))
+            .ForPath(dest => dest.phoneCustomer, opt => opt.MapFrom(src => src.Customer.Phone))
+            .ForPath(dest => dest.phoneOwner, opt => opt.MapFrom(src => src.Land.Owner.Phone))
+            .ForPath(dest => dest.mailCustomer, opt => opt.MapFrom(src => src.Customer.Email))
+            .ForPath(dest => dest.mailOwner, opt => opt.MapFrom(src => src.Land.Owner.Email))
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault().EndTime));
 
 
