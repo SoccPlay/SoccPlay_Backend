@@ -183,6 +183,8 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.LandId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("LandId");
+
+            entity.HasIndex(e => e.NameLand).IsUnique();
             
             entity.Property(e => e.Description)
                 .HasColumnType("nvarchar(max)")
@@ -202,7 +204,7 @@ public partial class FootBall_PitchContext : DbContext
 
             entity.Property(e => e.NameLand)
                 .HasColumnType("nvarchar(max)")
-                .IsUnicode(true);
+                .IsUnicode();
 
             entity.Property(e => e.Status)
                 .HasMaxLength(int.MaxValue - 1)

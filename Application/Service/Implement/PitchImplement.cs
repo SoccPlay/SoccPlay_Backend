@@ -79,4 +79,9 @@ public class PitchImplement : PitchService
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
+
+     public Task<bool> InActive(Guid pitchId)
+     {
+         throw new NotImplementedException();
+     }
 }

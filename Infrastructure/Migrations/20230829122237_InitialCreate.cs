@@ -300,6 +300,12 @@ namespace Infrastructure.Migrations
                 column: "LandId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Land_NameLand",
+                table: "Land",
+                column: "NameLand",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Land_OwnerId",
                 table: "Land",
                 column: "OwnerId");
