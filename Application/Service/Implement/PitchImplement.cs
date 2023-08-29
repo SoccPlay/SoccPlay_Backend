@@ -54,7 +54,6 @@ public class PitchImplement : PitchService
 
         return response;
     }
-
     public async Task<ResponsePitchV2> GetScheduleList(Guid landId, string date, int size, string name)
     {
         var provider = CultureInfo.InvariantCulture;
@@ -65,7 +64,6 @@ public class PitchImplement : PitchService
         response.Schedules = _mapper.Map<List<ResponseSchedule_v2>>(pitche.Schedules);
         return response;
     }
-
     public async Task<List<ICollection<ResponsePitch>>> GetAllPitchOfOwner(Guid ownerId)
     {
         var pitchs = await _unitOfWork.Pitch.Get(ownerId);
@@ -77,12 +75,10 @@ public class PitchImplement : PitchService
         var pitch = await _unitOfWork.Pitch.GetPitchByNameLandAndOwnerId(landId, ownerId);
         return _mapper.Map<List<ResponsePitch>>(pitch);
     }
-
      public async Task<int[]> GetNumPitch(Guid ownerId)
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
-
      public async Task<bool> InActive(Guid pitchId)
      {
          var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
@@ -92,9 +88,17 @@ public class PitchImplement : PitchService
          {
              foreach (var s in pitch.Schedules)
              {
-                 // _bookingService.CancelBooking_v2()
+                 await _bookingService.CancelBooking_v3(s.BookingBookingId);
              }
          }
-         throw new NotImplementedException();
+
+         return true;
+     }
+     public async Task<bool> Active(Guid pitchId)
+     {
+         var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
+         pitch.Status = PitchStatus.Active.ToString();
+         _unitOfWork.Save();
+         return true;
      }
 }
