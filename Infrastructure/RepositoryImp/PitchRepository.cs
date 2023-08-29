@@ -91,7 +91,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
 
    public async Task<Pitch> GetPitchById(Guid id)
    {
-       var pitch = await _context.Pitches.Include(s => s.Schedules).FirstOrDefaultAsync(p => p.PitchId == id);
+       var pitch = await _context.Pitches.Include(s => s.Schedules).Include(l => l.Land).Include(l => l.Land.Prices).FirstOrDefaultAsync(p => p.PitchId == id);
        if (pitch == null)
        {
            throw new Exception("Null");
