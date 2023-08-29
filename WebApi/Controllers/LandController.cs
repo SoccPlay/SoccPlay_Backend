@@ -108,4 +108,11 @@ public class LandController : ControllerBase
         var lands = await _landService.FilterLand(requestFilter);
             return Ok(lands);
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<ResponseLand>>> GetTop3IncomeLandOfOwner(Guid id)
+    {
+        var lands = await _landService.Top3LandSummary(id);
+        return Ok(lands);
+    }
 }

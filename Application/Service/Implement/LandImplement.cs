@@ -99,6 +99,13 @@ public class LandImplement : LandService
         return responseLands;
     }
 
+    public async Task<List<ResponseLand>> Top3LandSummary(Guid ownerId)
+    {
+        var land = await _unitOfWork.Land.GetTop3Land(ownerId);
+        var responseLands = _mapper.Map<List<ResponseLand>>(land);
+        return responseLands;
+    }
+
     public async Task<List<ResponseLand>> LandByOwnerIdAndNameLand(Guid ownerId, string nameLand)
     {
         var landEntities = await _unitOfWork.Land.GetLandByOwnerIdAndLand(ownerId, nameLand);

@@ -117,4 +117,29 @@ public class LandRepository : GenericRepository<Land>, ILandRepository
         return await _context.Set<Land>().Include(a => a.Prices).Include(c => c.Images).Include(f => f.Feedbacks).Include(b => b.Bookings)
            .Where(land => land.OwnerId == ownerId && land.NameLand== nameLand).ToListAsync();
     }
+    
+    public async Task<List<Land>> GetTop3Land(Guid ownerId)
+    {
+        var topLands = await (
+                from b in _context.Bookings
+                where b.Land.OwnerId == ownerId
+                group b by b.LandId
+                into grouped
+                orderby grouped.Sum(b => b.TotalPrice) descending 
+                select grouped.Key
+            )
+            .Take(3)
+            .Join(
+                _context.Lands
+                    .Include(a => a.Prices)
+                    .Include(f => f.Feedbacks)
+                    .Include(c => c.Images)
+                    .Include(b => b.Bookings),
+                topLandId => topLandId,
+                land => land.LandId,
+                (topLandId, land) => land
+            )
+            .ToListAsync();
+        return topLands;
+    }
 }

@@ -15,4 +15,5 @@ public interface LandService
     Task<List<ResponseLand>> SearchLandByLocation(string landName);
     Task<List<ResponseLand>> SearchLandByName(string landName);
     Task<List<ResponseLand>> FilterLand(RequestFilter requestFilter);
+    Task<List<ResponseLand>> Top3LandSummary(Guid ownerId);
 }
