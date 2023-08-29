@@ -72,8 +72,16 @@ public class PitchImplement : PitchService
     }
      public async Task<List<ResponsePitch>> GetAllPitchByNameLandAndOwnerId(Guid ownerId, Guid landId)
     {
-        var pitch = await _unitOfWork.Pitch.GetPitchByNameLandAndOwnerId(landId, ownerId);
-        return _mapper.Map<List<ResponsePitch>>(pitch);
+        var pitchs = await _unitOfWork.Pitch.GetPitchByNameLandAndOwnerId(landId, ownerId);
+        var respone = _mapper.Map<List<ResponsePitch>>(pitchs);
+        int i = 0;
+        foreach (var p in pitchs)
+        {
+            respone[i].PriceMax = p.Land.Prices.FirstOrDefault(price => price.Size == p.Size && price.StarTime == 14).Price1;
+            respone[i].PriceMin = p.Land.Prices.FirstOrDefault(price => price.Size == p.Size && price.StarTime == 7).Price1;
+            i++;
+        }
+        return respone;
     }
      public async Task<int[]> GetNumPitch(Guid ownerId)
      {
