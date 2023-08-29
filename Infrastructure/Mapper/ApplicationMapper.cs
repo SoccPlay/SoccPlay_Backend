@@ -182,6 +182,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.Land.LandId))
             .ForMember(dest => dest.LandName, opt => opt.MapFrom(src => src.Land.NameLand))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Land.Location))
+            .ForPath(dest => dest.Size, opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.Size))
             .ForMember(dest => dest.PitchId,
                 opt => opt.MapFrom(src => src.Schedules.FirstOrDefault()!.PitchPitch.PitchId))
             .ForMember(dest => dest.PitchName,
