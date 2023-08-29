@@ -1,4 +1,5 @@
-﻿using Application.IRepository;
+﻿using System.Globalization;
+using Application.IRepository;
 using Application.IRepository.IUnitOfWork;
 using Application.Model.Request.RequestPrice;
 using Application.Model.Response.ResponsePrice;
@@ -48,6 +49,18 @@ public class PriceImplement : PriceService
 
     public async Task<float> Calculator(RequestCaculator requestCaculator)
     {
+        var checkDate = requestCaculator.EndTime.Hour - requestCaculator.StarTime.Hour;
+        var checkDate2 = requestCaculator.StarTime.Hour < DateTime.Now.Hour;
+        if (checkDate > 3 || checkDate < 0)
+        {
+            throw new CultureNotFoundException("Thời gian đặt sân không quá 3 giờ !");
+        }
+
+        if (checkDate2 == true)
+        {
+            throw new CultureNotFoundException("Thời gian đặt sân lỗi!");
+        }
+        
         var land =  await _unitOfWork.Land.GetLandByIdLand(requestCaculator.LandId);
         var price = land.Prices.FirstOrDefault(p =>
             p.Size == requestCaculator.Size && requestCaculator.StarTime.Hour >= p.StarTime &&

@@ -121,17 +121,6 @@ public class BookingImplement : BookingService
 
     public async Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking)
     {
-        var checkDate = requestBooking.EndTime.Hour - requestBooking.StarTime.Hour;
-        var checkDate2 = requestBooking.StarTime < DateTime.Now;
-        if (checkDate > 3 || checkDate < 0)
-        {
-            throw new CultureNotFoundException("Thời gian đặt sân không quá 3 giờ !");
-        }
-
-        if (checkDate2 == true)
-        {
-            throw new CultureNotFoundException("Thời gian đặt sân lỗi!");
-        }
 
         //Check Schedule
         var pitchs = await _unitOfWork.Pitch.GetPitchToBooking
