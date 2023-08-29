@@ -14,5 +14,9 @@ public interface IBookingRepository : IGenericRepository<Booking>
     Task<List<BookingSummary>> GetBookingSummariesForYear(int year, Guid ownerId);
     Task<float> GetSummary(Guid ownerId);
     Task<int> GetNumBooking(Guid ownerId);
+    Task<List<BookingSummary>> GetBookingSummariesForYearByLand(int year, Guid landId);
+    Task<float> GetSummaryByLand(Guid landId);
+    Task<int> GetNumBookingByLand(Guid landId);
+
 
 }

@@ -101,4 +101,24 @@ public class BookingController : ControllerBase
         var count = await _bookingService.GetNumBooking(ownerId);
         return Ok(count);
     }
+    [HttpGet]
+    public async Task<ActionResult<List<BookingSummary>>> GetSummryInYearByLand(int year, Guid landId)
+    {
+        var summaries = await _bookingService.GetSummryInYearByLand(year, landId);
+        return Ok(summaries);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<float>> GetSummaryByLand(Guid landId)
+    {
+        var summary = await _bookingService.GetSummaryByLand(landId);
+        return Ok(summary);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<int>> GetNumBookingByLand(Guid landId)
+    {
+        var count = await _bookingService.GetNumBookingByLand(landId);
+        return Ok(count);
+    }
 }

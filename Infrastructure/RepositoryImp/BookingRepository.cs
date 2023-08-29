@@ -84,5 +84,31 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
         var count = await _context.Bookings.Where(b => b.Land.Owner.OwnerId == ownerId).ToListAsync();
         return count.Count;
     }
-    
+
+    public async Task<List<BookingSummary>> GetBookingSummariesForYearByLand(int year, Guid landId)
+    { 
+        var summaries = await _context.Bookings
+            .Where(b => b.DateBooking.Year == year && b.LandId == landId && b.Status == BookingStatus.Done.ToString())
+            .GroupBy(b => b.DateBooking.Month)
+            .OrderBy(group => group.Key)
+            .Select(group => new BookingSummary
+            {
+                BookingMonth = group.Key,
+                TotalPriceSum = group.Sum(b => b.TotalPrice)
+            })
+            .ToListAsync();
+        return summaries;
+    }
+
+    public async Task<float> GetSummaryByLand(Guid landId)
+    {
+        var summary = await _context.Bookings.Where(b => b.LandId == landId && b.Status == BookingStatus.Done.ToString()).Select(b => b.TotalPrice).ToListAsync();
+        return summary.Sum();
+    }
+
+    public async Task<int> GetNumBookingByLand(Guid landId)
+    {
+        var count = await _context.Bookings.Where(b => b.LandId == landId).ToListAsync();
+        return count.Count;
+    }
 }
