@@ -14,7 +14,7 @@ public class FeedBackRepository : GenericRepository<Feedback>, IFeedBackReposito
 
     public async Task<List<Feedback>> GetByFeedBackLandId(Guid landId)
     {
-        var feedBacks = await _context.Feedbacks.Where(feedback => feedback.LandId == landId).ToListAsync();
+        var feedBacks = await _context.Feedbacks.Include(c=>c.Customer).Where(feedback => feedback.LandId == landId).ToListAsync();
         return feedBacks;
     }
 }
