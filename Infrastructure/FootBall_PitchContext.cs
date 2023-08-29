@@ -183,8 +183,6 @@ public partial class FootBall_PitchContext : DbContext
             entity.Property(e => e.LandId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("LandId");
-
-            entity.HasIndex(e => e.NameLand).IsUnique();
             
             entity.Property(e => e.Description)
                 .HasColumnType("nvarchar(max)")

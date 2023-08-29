@@ -35,7 +35,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     public async Task<List<Pitch>> GetAllPitchByLandAndDate(Guid landId, DateTime date, int size)
     {
         var query = await _context.Pitches
-            .Where(pitch => pitch.LandId == landId && pitch.Size == size).Include(l => l.Land.Prices )
+            .Where(pitch => pitch.LandId == landId && pitch.Status == PitchStatus.Active.ToString() && pitch.Size == size).Include(l => l.Land.Prices )
             .Include(pitch => pitch.Schedules.Where(schedule =>
                 schedule.StarTime.Date == date.Date && schedule.Status == ScheduleEnum.Waiting.ToString() ))
             .ToListAsync();
@@ -45,7 +45,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     public async Task<Pitch> GetPitchByLandAndDate(Guid landId, DateTime date, int size, string name)
     {
         var query = await _context.Pitches
-            .Where(pitch => pitch.LandId == landId && pitch.Size == size && pitch.Name == name)
+            .Where(pitch => pitch.LandId == landId &&  pitch.Size == size && pitch.Name == name && pitch.Status == PitchStatus.Active.ToString())
             .Include(pitch => pitch.Schedules.Where(schedule =>
                 schedule.StarTime.Date == date.Date && schedule.Status == ScheduleEnum.Waiting.ToString()))
             .FirstOrDefaultAsync();
@@ -61,7 +61,7 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
     {
         
         var query = await _context.Set<Pitch>().Include(pitch => pitch.Land).FirstOrDefaultAsync(
-            p => p.LandId == landId && p.Size == size && p.Schedules.Any(schedule =>
+            p => p.LandId == landId && p.Size == size && p.Status == PitchStatus.Active.ToString() && p.Schedules.Any(schedule =>
                 string.IsNullOrEmpty(schedule.Status) ||
                 schedule.Status == ScheduleEnum.Waiting.ToString() &&
                 ((startTime.AddMinutes(1) >= schedule.StarTime && startTime.AddMinutes(1) <= schedule.EndTime) ||
@@ -87,5 +87,15 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
            .CountAsync();
        int[] count = new [] { size5, size7 }; 
        return count;
+   }
+
+   public async Task<Pitch> GetPitchById(Guid id)
+   {
+       var pitch = await _context.Pitches.Include(s => s.Schedules).FirstOrDefaultAsync(p => p.PitchId == id);
+       if (pitch == null)
+       {
+           throw new Exception("Null");
+       }
+       return pitch;
    }
 }

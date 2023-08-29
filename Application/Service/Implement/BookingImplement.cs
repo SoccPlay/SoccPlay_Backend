@@ -95,6 +95,26 @@ public class BookingImplement : BookingService
         _unitOfWork.Save();
         return true;
     }
+    
+    public async Task<bool> CancelBooking_v3(Guid BookingId)
+    {
+        var booking = await _unitOfWork.Booking.GetBookingById(BookingId);
+        booking.Status = BookingStatus.Cancel.ToString();
+        foreach (var s in booking.Schedules)
+        {
+            s.Status = BookingStatus.Cancel.ToString();
+            var sendMail = new Mail
+            {
+                To = _unitOfWork.Customer.GetById(booking.CustomerId).Email,
+                Subject = "Lịch đặt sân bông bị Hủy.",
+                Body = "Sân bóng bạn đặt lúc " + s.StarTime + " đến" + s.EndTime + "đã bị hủy do sự cố của Sân bóng./n Chúng tôi chân thành xin lỗi quý khách" 
+            };
+            await _mailService.SendEmail(sendMail);
+        }
+
+        _unitOfWork.Save();
+        return true;
+    } 
     public async Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking)
     {
         var checkDate = requestBooking.EndTime.Hour - requestBooking.StarTime.Hour;

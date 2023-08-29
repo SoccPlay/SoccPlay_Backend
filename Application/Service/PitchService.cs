@@ -11,6 +11,7 @@ public interface PitchService
     Task<List<ICollection<ResponsePitch>>> GetAllPitchOfOwner(Guid ownerId);
     Task<List<ResponsePitch>> GetAllPitchByNameLandAndOwnerId(Guid ownerId,Guid landId);
     Task<int[]> GetNumPitch(Guid ownerId);
-    Task<bool> InActive(Guid pitchId);
+    Task<ResponsePitch> InActive(Guid pitchId);
+    Task<ResponsePitch> Active(Guid pitchId);
 
 }

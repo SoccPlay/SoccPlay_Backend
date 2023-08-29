@@ -12,6 +12,7 @@ public class Land
     }
 
     public Guid LandId { get; set; }
+    
     public string NameLand { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string Policy { get; set; }

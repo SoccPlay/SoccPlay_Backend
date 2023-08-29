@@ -59,4 +59,18 @@ public class PitchController : ControllerBase
         var create = await _pitchService.GetNumPitch(ownerId);
         return Ok(create);
     }
+    
+    [HttpPut]
+    public async Task<ActionResult<ResponsePitch>> InActivePitch(Guid id)
+    {
+        var pitch = await _pitchService.InActive(id);
+        return Ok(pitch);
+    }
+    
+    [HttpPut]
+    public async Task<ActionResult<ResponsePitch>> ActivePitch(Guid id)
+    {
+        var pitch = await _pitchService.Active(id);
+        return Ok(pitch);
+    }
 }

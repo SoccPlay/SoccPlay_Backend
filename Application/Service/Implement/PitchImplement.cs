@@ -5,6 +5,7 @@ using Application.Model.Response.ResponsePitch;
 using Application.Model.Response.ResponseSchedule;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enum;
 
 namespace Application.Service.Implement;
 
@@ -12,11 +13,13 @@ public class PitchImplement : PitchService
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly BookingService _bookingService;
 
-    public PitchImplement(IUnitOfWork unitOfWork, IMapper mapper)
+    public PitchImplement(IUnitOfWork unitOfWork, IMapper mapper, BookingService bookingService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _bookingService = bookingService;
     }
 
     public async Task<ResponsePitch> CreatePitch(RequestPitch requestPitch)
@@ -51,7 +54,6 @@ public class PitchImplement : PitchService
 
         return response;
     }
-
     public async Task<ResponsePitchV2> GetScheduleList(Guid landId, string date, int size, string name)
     {
         var provider = CultureInfo.InvariantCulture;
@@ -62,7 +64,6 @@ public class PitchImplement : PitchService
         response.Schedules = _mapper.Map<List<ResponseSchedule_v2>>(pitche.Schedules);
         return response;
     }
-
     public async Task<List<ICollection<ResponsePitch>>> GetAllPitchOfOwner(Guid ownerId)
     {
         var pitchs = await _unitOfWork.Pitch.Get(ownerId);
@@ -74,14 +75,30 @@ public class PitchImplement : PitchService
         var pitch = await _unitOfWork.Pitch.GetPitchByNameLandAndOwnerId(landId, ownerId);
         return _mapper.Map<List<ResponsePitch>>(pitch);
     }
-
      public async Task<int[]> GetNumPitch(Guid ownerId)
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
-
-     public Task<bool> InActive(Guid pitchId)
+     public async Task<ResponsePitch> InActive(Guid pitchId)
      {
-         throw new NotImplementedException();
+         var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
+         pitch.Status = PitchStatus.Inactive.ToString();
+         _unitOfWork.Save();
+         if (pitch.Schedules.Count != 0)
+         {
+             foreach (var s in pitch.Schedules)
+             {
+                 await _bookingService.CancelBooking_v3(s.BookingBookingId);
+             }
+         }
+
+         return _mapper.Map<ResponsePitch>(pitch);
+     }
+     public async Task<ResponsePitch> Active(Guid pitchId)
+     {
+         var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
+         pitch.Status = PitchStatus.Active.ToString();
+         _unitOfWork.Save();
+         return _mapper.Map<ResponsePitch>(pitch);
      }
 }
