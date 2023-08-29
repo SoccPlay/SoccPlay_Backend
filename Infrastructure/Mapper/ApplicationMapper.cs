@@ -345,6 +345,7 @@ public class ApplicationMapper : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForPath(dest => dest.nameLand, opt => opt.MapFrom(src => src.Land.NameLand))
             .ForMember(dest => dest.LandId, opt => opt.MapFrom(src => src.LandId))
-            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.nameCustomer, opt => opt.MapFrom(src => src.Customer.FullName));
     }
 }

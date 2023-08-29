@@ -11,4 +11,5 @@ public class ResponseFeedback
     public string size { get; set; }
     public Guid LandId { get; set; }
     public Guid CustomerId { get; set; }
+    public string nameCustomer { get; set; }
 }
