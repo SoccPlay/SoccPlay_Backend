@@ -60,6 +60,13 @@ public class PitchController : ControllerBase
         return Ok(create);
     }
     
+    [HttpGet]
+    public async Task<ActionResult<int[]>> GetNumPitchByLand(Guid landId)
+    {
+        var create = await _pitchService.GetNumPitchByLand(landId);
+        return Ok(create);
+    }
+    
     [HttpPut]
     public async Task<ActionResult<ResponsePitch>> InActivePitch(Guid id, string status)
     {

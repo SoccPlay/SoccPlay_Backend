@@ -79,6 +79,10 @@ public class PitchImplement : PitchService
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
+     public async Task<int[]> GetNumPitchByLand(Guid ownerId)
+     {
+         return await _unitOfWork.Pitch.GetNumPitchByLand(ownerId);
+     }
      public async Task<ResponsePitch> ChangePitchStatus(Guid pitchId, string status)
      {
          var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);

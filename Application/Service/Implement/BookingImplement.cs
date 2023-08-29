@@ -27,6 +27,7 @@ public class BookingImplement : BookingService
         _scheduleService = scheduleService;
         _mailService = mailService;
     }
+
     public async Task<List<ResponseBooking>> GetAllBooking()
     {
         var bookingEntities =
@@ -44,18 +45,19 @@ public class BookingImplement : BookingService
 
     public async Task<List<ResponseManageBooking>> GetByCustomerId(Guid customerId)
     {
-        var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId); 
+        var bookingEntities = await _unitOfWork.Booking.GetAllBookingByCustomerId(customerId);
         var responseBookings = _mapper.Map<List<ResponseManageBooking>>(bookingEntities);
         int count = 0;
         foreach (var Booking in bookingEntities)
         {
-            var firstSchedule = Booking.Schedules.FirstOrDefault( s=> s.BookingBookingId == Booking.BookingId);
+            var firstSchedule = Booking.Schedules.FirstOrDefault(s => s.BookingBookingId == Booking.BookingId);
             if (firstSchedule != null && firstSchedule.PitchPitch != null)
             {
                 responseBookings[count].EndTime = firstSchedule.EndTime;
                 responseBookings[count].StartTime = firstSchedule.StarTime;
                 responseBookings[count].size = firstSchedule.PitchPitch.Size;
             }
+
             count++;
         }
 
@@ -95,7 +97,7 @@ public class BookingImplement : BookingService
         _unitOfWork.Save();
         return true;
     }
-    
+
     public async Task<bool> CancelBooking_v3(Guid BookingId)
     {
         var booking = await _unitOfWork.Booking.GetBookingById(BookingId);
@@ -107,27 +109,30 @@ public class BookingImplement : BookingService
             {
                 To = _unitOfWork.Customer.GetById(booking.CustomerId).Email,
                 Subject = "Lịch đặt sân bông bị Hủy.",
-                Body = "Sân bóng bạn đặt lúc " + s.StarTime + " đến" + s.EndTime + "đã bị hủy do sự cố của Sân bóng./n Chúng tôi chân thành xin lỗi quý khách" 
+                Body = "Sân bóng bạn đặt lúc " + s.StarTime + " đến" + s.EndTime +
+                       "đã bị hủy do sự cố của Sân bóng./n Chúng tôi chân thành xin lỗi quý khách"
             };
             await _mailService.SendEmail(sendMail);
         }
 
         _unitOfWork.Save();
         return true;
-    } 
+    }
+
     public async Task<ResponseBooking_v2> BookingPitch_v3(RequestBooking_v3 requestBooking)
     {
         var checkDate = requestBooking.EndTime.Hour - requestBooking.StarTime.Hour;
-        var checkDate2 = requestBooking.StarTime < DateTime.Now; 
-        if (checkDate > 3 || checkDate < 0 )
+        var checkDate2 = requestBooking.StarTime < DateTime.Now;
+        if (checkDate > 3 || checkDate < 0)
         {
             throw new CultureNotFoundException("Thời gian đặt sân không quá 3 giờ !");
         }
+
         if (checkDate2 == true)
         {
             throw new CultureNotFoundException("Thời gian đặt sân lỗi!");
         }
-        
+
         //Check Schedule
         var pitchs = await _unitOfWork.Pitch.GetPitchToBooking
             (requestBooking.LandId, requestBooking.StarTime, requestBooking.EndTime, requestBooking.Size);
@@ -183,16 +188,19 @@ public class BookingImplement : BookingService
         {
             a = BookingStatus.Cancel.ToString();
         }
+
         if (status.ToUpper().Equals(BookingStatus.Done.ToString().ToUpper()))
         {
             a = BookingStatus.Done.ToString();
         }
+
         var booking = await _unitOfWork.Booking.GetBookingById(id);
         booking.Status = a;
         foreach (var s in booking.Schedules)
         {
             s.Status = a;
         }
+
         _unitOfWork.Save();
         return true;
     }
@@ -213,6 +221,7 @@ public class BookingImplement : BookingService
                 getBooking[i].pitchName = _unitOfWork.Pitch.GetById(b.Schedules.FirstOrDefault().PitchPitchId).Name;
                 i++;
             }
+
             list = list.Concat(getBooking).ToList();
         }
 
@@ -244,5 +253,22 @@ public class BookingImplement : BookingService
     public async Task<int> GetNumBooking(Guid ownerId)
     {
         return await _unitOfWork.Booking.GetNumBooking(ownerId);
+    }
+
+    public async Task<List<BookingSummary>> GetSummryInYearByLand(int year, Guid landId)
+    {
+        var summary = await _unitOfWork.Booking.GetBookingSummariesForYearByLand(year, landId);
+        return summary;
+    }
+
+    public async Task<float> GetSummaryByLand(Guid landId)
+    {
+        return await _unitOfWork.Booking.GetSummaryByLand(landId);
+    }
+
+
+    public async Task<int> GetNumBookingByLand(Guid landId)
+    {
+        return await _unitOfWork.Booking.GetNumBookingByLand(landId);
     }
 }

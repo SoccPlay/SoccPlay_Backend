@@ -20,6 +20,7 @@ public interface IPitchRepository : IGenericRepository<Pitch>
     Task<List<Pitch>> GetPitchByNameLandAndOwnerId(Guid landId, Guid ownerId);
 
     Task<int[]> GetNumPitch(Guid ownerId);
+    Task<int[]> GetNumPitchByLand(Guid landId);
 
     Task<Pitch> GetPitchById(Guid id);
 

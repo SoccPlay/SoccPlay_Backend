@@ -88,6 +88,17 @@ public class PitchRepository : GenericRepository<Pitch>, IPitchRepository
        int[] count = new [] { size5, size7 }; 
        return count;
    }
+   public async Task<int[]> GetNumPitchByLand(Guid landId)
+   {
+       int size5 = await _context.Pitches
+           .Where(p => p.LandId == landId && p.Size == 5)
+           .CountAsync();
+       int size7 = await _context.Pitches
+           .Where(p => p.LandId == landId && p.Size == 7)
+           .CountAsync();
+       int[] count = new [] { size5, size7 }; 
+       return count;
+   }
 
    public async Task<Pitch> GetPitchById(Guid id)
    {

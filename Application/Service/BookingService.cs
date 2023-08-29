@@ -6,7 +6,6 @@ namespace Application.Service;
 
 public interface BookingService
 {
-
     Task<List<ResponseBooking>> GetAllBooking();
     Task<bool> CancelBooking_v2(Guid BookingId);
     Task<bool> CancelBooking_v3(Guid BookingId);
@@ -20,5 +19,7 @@ public interface BookingService
     public Task<List<BookingSummary>> GetSummryInYear(int year, Guid ownerId);
     public Task<float> GetSummary(Guid ownerId);
     public Task<int> GetNumBooking(Guid ownerId);
-
+    public Task<List<BookingSummary>> GetSummryInYearByLand(int year, Guid landId);
+    public Task<float> GetSummaryByLand(Guid landId);
+    public Task<int> GetNumBookingByLand(Guid landId);
 }
