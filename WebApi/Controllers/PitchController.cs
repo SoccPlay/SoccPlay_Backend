@@ -61,16 +61,9 @@ public class PitchController : ControllerBase
     }
     
     [HttpPut]
-    public async Task<ActionResult<ResponsePitch>> InActivePitch(Guid id)
+    public async Task<ActionResult<ResponsePitch>> InActivePitch(Guid id, string status)
     {
-        var pitch = await _pitchService.InActive(id);
-        return Ok(pitch);
-    }
-    
-    [HttpPut]
-    public async Task<ActionResult<ResponsePitch>> ActivePitch(Guid id)
-    {
-        var pitch = await _pitchService.Active(id);
+        var pitch = await _pitchService.ChangePitchStatus(id, status);
         return Ok(pitch);
     }
 }

@@ -79,26 +79,28 @@ public class PitchImplement : PitchService
      {
          return await _unitOfWork.Pitch.GetNumPitch(ownerId);
      }
-     public async Task<ResponsePitch> InActive(Guid pitchId)
+     public async Task<ResponsePitch> ChangePitchStatus(Guid pitchId, string status)
      {
          var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
-         pitch.Status = PitchStatus.Inactive.ToString();
-         _unitOfWork.Save();
-         if (pitch.Schedules.Count != 0)
+         if (status.ToUpper().Contains(PitchStatus.Inactive.ToString().ToUpper()))
          {
-             foreach (var s in pitch.Schedules)
+             pitch.Status = PitchStatus.Inactive.ToString();
+             _unitOfWork.Save();
+             if (pitch.Schedules.Count != 0)
              {
-                 await _bookingService.CancelBooking_v3(s.BookingBookingId);
+                 foreach (var s in pitch.Schedules)
+                 {
+                     await _bookingService.CancelBooking_v3(s.BookingBookingId);
+                 }
              }
-         }
 
-         return _mapper.Map<ResponsePitch>(pitch);
-     }
-     public async Task<ResponsePitch> Active(Guid pitchId)
-     {
-         var pitch = await _unitOfWork.Pitch.GetPitchById(pitchId);
-         pitch.Status = PitchStatus.Active.ToString();
-         _unitOfWork.Save();
-         return _mapper.Map<ResponsePitch>(pitch);
+             return _mapper.Map<ResponsePitch>(pitch);
+         }
+         else
+         {
+             pitch.Status = PitchStatus.Active.ToString();
+             _unitOfWork.Save();
+             return _mapper.Map<ResponsePitch>(pitch);
+         }
      }
 }
